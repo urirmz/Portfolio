@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1 id="title">Survey form</h1>
+    <p id="description">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni impedit necessitatibus vero recusandae, voluptates magnam, aspernatur earum, quidem facere maxime fuga? Nemo delectus commodi quidem harum perspiciatis a quibusdam cupiditate.
+    </p>
+    <form id="survey-form">
+        <label id="name-label" for="name">Name:<input type="text" id="name" placeholder="Enter your name" required></label>
+        <label id="email-label" for="email">E-mail:<input type="email" id="email" placeholder="Enter your email" required></label>
+        <label id="number-label" for="number">Age:<input type="number" id="number" placeholder="Enter your age" min="1" max="120"></label>
+        Which girl will you pick?
+        <label id="label-dropdown" for="dropdown"> 
+            <select name="" id="dropdown"> 
+                <option value="0">(select one)</option>
+                <option value="1">Girl number 1</option>
+                <option value="2">Girl number 2</option>
+                <option value="3">Girl number 3</option>
+            </select>
+        </label>
+        Are you sure?
+            <label for=""><input type="radio" name="girl-acknowledge" value="1" id="">Girl number 1</label>
+            <label for=""><input type="radio" name="girl-acknowledge" value="2" id="">Girl number 2</label>
+            <label for=""><input type="radio" name="girl-acknowledge" value="3" id="">Girl number 3</label>
+        Okay, you can choose more than one
+            <label for=""><input type="checkbox" value="0">Girl number 1</label>
+            <label for=""><input type="checkbox" value="2">Girl number 2</label>
+            <label for=""><input type="checkbox" value="3">Girl number 3</label>
+        Describe why you choose her (or them)?
+        <textarea name="" id="" cols="30" rows="10" placeholder="I like turtles..."></textarea>
+        <input id="submit" type="submit" value="Submit">
+    </form>
+</body>
+</html>

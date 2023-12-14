@@ -1,0 +1,100 @@
+:root {
+    --navbar-height: 4rem;
+}
+
+body {
+    margin: 0;
+    background-color: #eee;
+    font-family:'Inter', sans-serif;
+}
+
+#header-img {
+    width: 5rem;
+}
+
+#nav-bar {
+    display: flex;
+    flex-direction: row;
+    background-color: #eee;
+    width: 100%;
+    height: var(--navbar-height);
+    box-sizing: border-box;
+    justify-content: space-between;
+    position: fixed;
+    top: 0 ;
+    left: 0;
+}
+
+#header-img {
+    flex-basis: 10%;
+    object-fit: contain;
+}
+
+.nav-link {
+    flex-basis: 10%;
+    padding-top: 1rem;
+    padding-right: 2rem;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+}
+
+#trademark {
+    flex-basis: 50%;
+    font-size: 1.5rem;
+    text-align: left;
+}
+
+main {
+    margin-top: calc(var(--navbar-height) + 1rem);
+}
+
+header h2 {
+    text-align: center;
+}
+
+section {
+    display: grid;
+    margin-bottom: 2rem;
+}
+
+section header {
+    grid-column: 1 / -1;
+}
+
+#section1 {
+    grid-template-columns: 1fr 1fr 80% 1fr;
+}
+
+#section1 i {
+    grid-column: 2 / 3;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    padding: 0 1rem;
+    color: darkorange;
+}
+
+.feature-text {
+    grid-column: 3 / 4;
+}
+
+#section2 iframe {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#section3 {
+    grid-template-columns: 1fr 80% 1fr;
+}
+
+#section3 form {
+    grid-column: 2 / 3;
+    justify-content: center;
+}
+
+@media screen and (max-width: 500px) {
+    html {
+        font-size: 10px;
+    }
+}
