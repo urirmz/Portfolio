@@ -43,3 +43,54 @@
 // fruits.indexOf('oranges');
 // fruits.indexOf('pears');
 // indexOf('dates') returns -1, indexOf('oranges') returns 2, and indexOf('pears') returns 1 (the first index at which each element exists).
+
+// Keyvalue pairs 
+// At their most basic, objects are just collections of key-value pairs. In other words, they are pieces of data (values) mapped to unique identifiers called properties (keys). Take a look at an example:
+// const tekkenCharacter = {
+//     player: 'Hwoarang',
+//     fightingStyle: 'Tae Kwon Doe',
+//     human: true
+//   };
+//   The above code defines a Tekken video game character object called tekkenCharacter. It has three properties, each of which map to a specific value. If you want to add an additional property, such as "origin", it can be done by assigning origin to the object:
+//   tekkenCharacter.origin = 'South Korea';
+//   This uses dot notation. If you were to observe the tekkenCharacter object, it will now include the origin property. Hwoarang also had distinct orange hair. You can add this property with bracket notation by doing:
+//   tekkenCharacter['hair color'] = 'dyed orange';
+//   Bracket notation is required if your property has a space in it or if you want to use a variable to name the property. In the above case, the property is enclosed in quotes to denote it as a string and will be added exactly as shown. Without quotes, it will be evaluated as a variable and the name of the property will be whatever value the variable is. Here's an example with a variable:
+//   const eyes = 'eye color';
+//   tekkenCharacter[eyes] = 'brown';
+//   After adding all the examples, the object will look like this:
+//   {
+//     player: 'Hwoarang',
+//     fightingStyle: 'Tae Kwon Doe',
+//     human: true,
+//     origin: 'South Korea',
+//     'hair color': 'dyed orange',
+//     'eye color': 'brown'
+//   };
+
+// Delete object properties
+// we can remove a key-value pair from an object.
+// If we wanted to remove the apples key, we can remove it by using the delete keyword like this:
+// delete foods.apples;
+
+// Check if an object has a property 
+// avaScript provides us with two different ways to do this. One uses the hasOwnProperty() method and the other uses the in keyword. If we have an object users with a property of Alan, we could check for its presence in either of the following ways:
+// users.hasOwnProperty('Alan');
+// 'Alan' in users;
+// Both of these would return true.
+
+// Iterate Through the Keys of an Object with a for...in Statement
+// Sometimes you need to iterate through all the keys within an object. You can use a for...in loop to do this. The for...in loop looks like:
+// const refrigerator = {
+//   'milk': 1,
+//   'eggs': 12,
+// };
+// for (const food in refrigerator) {
+//   console.log(food, refrigerator[food]);
+// }
+// This code logs milk 1 and eggs 12, with each key-value pair on its own line.
+// We defined the variable food in the loop head and this variable was set to each of the object's keys on each iteration, resulting in each food's name being printed to the console.
+// NOTE: Objects do not maintain an ordering to stored keys like arrays do; thus a key's position on an object, or the relative order in which it appears, is irrelevant when referencing or accessing that key.
+
+// Object.keys 
+// We can also generate an array which contains all the keys stored in an object with the Object.keys() method. This method takes an object as the argument and returns an array of strings representing each property in the object. Again, there will be no specific order to the entries in the array.
