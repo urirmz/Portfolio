@@ -141,3 +141,64 @@
 // reverseAlpha(['l', 'h', 'z', 'b', 's']);
 // This would return the value ['z', 's', 'l', 'h', 'b'].
 // JavaScript's default sorting method is by string Unicode point value, which may return unexpected results. Therefore, it is encouraged to provide a callback function to specify how to sort the array items. When such a callback function, normally called compareFunction, is supplied, the array elements are sorted according to the return value of the compareFunction: If compareFunction(a,b) returns a value less than 0 for two elements a and b, then a will come before b. If compareFunction(a,b) returns a value greater than 0 for two elements a and b, then b will come before a. If compareFunction(a,b) returns a value equal to 0 for two elements a and b, then a and b will remain unchanged.
+// A side effect of the sort method is that it changes the order of the elements in the original array. In other words, it mutates the array in place. One way to avoid this is to first concatenate an empty array to the one being sorted (remember that slice and concat return a new array), then run the sort method.
+
+// Split a String into an Array Using the split Method
+// The split method splits a string into an array of strings. It takes an argument for the delimiter, which can be a character to use to break up the string or a regular expression. For example, if the delimiter is a space, you get an array of words, and if the delimiter is an empty string, you get an array of each character in the string.
+// Here are two examples that split one string by spaces, then another by digits using a regular expression:
+// const str = "Hello World";
+// const bySpace = str.split(" ");
+// const otherString = "How9are7you2today";
+// const byDigits = otherString.split(/\d/);
+// bySpace would have the value ["Hello", "World"] and byDigits would have the value ["How", "are", "you", "today"].
+// Since strings are immutable, the split method makes it easier to work with them.
+
+// Join Method
+// The join method is used to join the elements of an array together to create a string. It takes an argument for the delimiter that is used to separate the array elements in the string.
+// Here's an example:
+// const arr = ["Hello", "World"];
+// const str = arr.join(" ");
+// str would have a value of the string Hello World.
+
+// "Every" method
+// The every method works with arrays to check if every element passes a particular test. It returns a Boolean value - true if all values meet the criteria, false if not.
+// For example, the following code would check if every element in the numbers array is less than 10:
+// const numbers = [1, 5, 8, 0, 10, 11];
+// numbers.every(function(currentValue) {
+//   return currentValue < 10;
+// });
+// The every method would return false here.
+
+// "Some" method
+// The some method works with arrays to check if any element passes a particular test. It returns a Boolean value - true if any of the values meet the criteria, false if not.
+// For example, the following code would check if any element in the numbers array is less than 10:
+// const numbers = [10, 50, 8, 220, 110, 11];
+// numbers.some(function(currentValue) {
+//   return currentValue < 10;
+// });
+// The some method would return true.
+
+// Currying and Partial Application
+// The arity of a function is the number of arguments it requires. Currying a function means to convert a function of N arity into N functions of arity 1.
+// In other words, it restructures a function so it takes one argument, then returns another function that takes the next argument, and so on.
+// Here's an example:
+// function unCurried(x, y) {
+//   return x + y;
+// }
+// function curried(x) {
+//   return function(y) {
+//     return x + y;
+//   }
+// }
+// const curried = x => y => x + y
+// curried(1)(2)
+// curried(1)(2) would return 3.
+// This is useful in your program if you can't supply all the arguments to a function at one time. You can save each function call into a variable, which will hold the returned function reference that takes the next argument when it's available. Here's an example using the curried function in the example above:
+// const funcForY = curried(1);
+// console.log(funcForY(2)); // 3
+// Similarly, partial application can be described as applying a few arguments to a function at a time and returning another function that is applied to more arguments. Here's an example:
+// function impartial(x, y, z) {
+//   return x + y + z;
+// }
+// const partialFn = impartial.bind(this, 1, 2);
+// partialFn(10); // 13
