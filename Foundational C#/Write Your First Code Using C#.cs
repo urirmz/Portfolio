@@ -186,3 +186,72 @@
 // * is the multiplication operator
 // / is the division operator
 // However, the resulting quotient of the division example may not be what you may have expected. The values after the decimal are truncated from the quotient since it is defined as an int, and int cannot contain values after the decimal.
+// To see division working properly, you need to use a data type that supports fractional digits after the decimal point like decimal.
+// Delete the code from the previous steps and enter the following code into the .NET Editor:
+// decimal decimalQuotient = 7.0m / 5;
+// Console.WriteLine($"Decimal quotient: {decimalQuotient}");
+// Run the code. You should see the following output:
+// Decimal quotient: 1.4
+// What if you need to divide two variables of type int but do not want the result truncated? In that case, you must perform a data type cast from int to decimal. Casting is one type of data conversion that instructs the compiler to temporarily treat a value as if it were a different data type.
+// To cast int to decimal, you add the cast operator before the value. You use the name of the data type surrounded by parentheses in front of the value to cast it. In this case, you would add (decimal) before the variables first and second.
+// Delete the code from the previous steps and enter the following code into the .NET Editor:
+// int first = 7;
+// int second = 5;
+// decimal quotient = (decimal)first / (decimal)second;
+// Console.WriteLine(quotient);
+// Run the code. You should see the following output:
+// 1.4
+// Note
+// You've seen three uses for the parenthesis operator: method invocation, order of operations and casting.
+// Remainder after integer division
+// The modulus operator % tells you the remainder of int division. What you really learn from this is whether one number is divisible by another. This can be useful during long processing operations when looping through hundreds or thousands of data records and you want to provide feedback to the end user after every 100 data records have been processed.
+// Delete the code from the previous steps and enter the following code into the .NET Editor:
+// Console.WriteLine($"Modulus of 200 / 5 : {200 % 5}");
+// Console.WriteLine($"Modulus of 7 / 5 : {7 % 5}");
+// Run the code. You should see the following output:
+// Modulus of 200 / 5 : 0
+// Modulus of 7 / 5 : 2
+// When the modulus is 0, that means the dividend is divisible by the divisor.
+// In math, PEMDAS is an acronym that helps students remember the order of operations. The order is:
+// Parentheses (whatever is inside the parenthesis is performed first)
+// Exponents
+// Multiplication and Division (from left to right)
+// Addition and Subtraction (from left to right)
+// C# follows the same order as PEMDAS except for exponents. While there's no exponent operator in C#, you can use the System.Math.Pow method. The module "Call methods from the .NET Class Library using C#" will feature this method and others.
+
+// Increment and decrement values
+// Frequently, you'll need to increment and/or decrement values, especially when you're writing looping logic or code that interacts with a data structure.
+// The += operator adds and assigns the value on the right of the operator to the value on the left of the operator. So, lines two and three in the following code snippet are the same:
+// int value = 0;     // value is now 0.
+// value = value + 5; // value is now 5.
+// value += 5;        // value is now 10.
+// The ++ operator increments the value of the variable by 1. So, lines two and three in the following code snippet are the same:
+// int value = 0;     // value is now 0.
+// value = value + 1; // value is now 1.
+// value++;           // value is now 2.
+// These same techniques can be used for subtraction, multiplication, and more. The following exercise steps will highlight a few.
+//  Note
+// Operators like +=, -=, *=, ++, and -- are known as compound assignment operators because they compound some operation in addition to assigning the result to the variable. The += operator is specifically termed the addition assignment operator.
+// Both the increment and decrement operators have an interesting quality — depending on their position, they perform their operation before or after they retrieve their value. In other words, if you use the operator before the value as in ++value, then the increment will happen before the value is retrieved. Likewise, value++ will increment the value after the value has been retrieved.
+
+// Format the decimal output
+// You want to display the first digit of the GPA, a decimal point, followed by the first two digits after the decimal. You can achieve this format by using variables to store the leading and trailing digits respectively, and then printing them together using Console.WriteLine(). You can use the math operations you learned to extract the leading and trailing digits.
+// Navigate to the top of the Console.WriteLine() statements.
+// Create a blank code line above the Console.WriteLine() statements.
+// On the blank code line that you created, to initialize a variable that will store the leading digit of the GPA, enter the following code:
+// int leadingDigit = (int) gradePointAverage;
+// Notice that to extract the leading digit from the decimal, you're casting it to an integer value. This is a simple and reliable method because casting a fractional value will never round up the result. Meaning if the GPA is 2.99, casting the decimal value to an int will result in 2.
+// To initialize a variable that will store the first two digits after the decimal, enter the following code:
+// int firstDigit = (int) (gradePointAverage * 10) % 10;
+// In the first half of this operation, you move the decimal one place to the right and cast it to an integer. In the second half, you use the remainder, or modulo, operator to get the remainder of division by 10, which isolates the last digit in the integer. Here's an example:
+// Suppose gradePointAverage = 2.994573 Then, performing the operation on these values would result in the following steps:
+// int firstDigit = (int) (2.994573 * 10) % 10;
+// int firstDigit = 29 % 10;
+// int firstDigit = 9;
+// And the resulting value of firstDigit is 9.
+// Next, you'll apply the same operation to retrieve the second digit.
+// On a new blank code line, enter the following code:
+// int secondDigit = (int) (gradePointAverage * 100 ) % 10;
+// In this line, you move the decimal two places and use the modulo operator to retrieve the last digit.
+// To correct the final GPA output, update the last Console.WriteLine() statement as follows:
+// Console.WriteLine($"Final GPA: {leadingDigit}.{firstDigit}{secondDigit}");
