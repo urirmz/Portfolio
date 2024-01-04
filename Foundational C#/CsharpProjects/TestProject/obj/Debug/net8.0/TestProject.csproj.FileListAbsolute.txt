@@ -1,0 +1,15 @@
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\bin\Debug\net8.0\TestProject.exe
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\bin\Debug\net8.0\TestProject.deps.json
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\bin\Debug\net8.0\TestProject.runtimeconfig.json
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\bin\Debug\net8.0\TestProject.dll
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\bin\Debug\net8.0\TestProject.pdb
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\obj\Debug\net8.0\TestProject.GeneratedMSBuildEditorConfig.editorconfig
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\obj\Debug\net8.0\TestProject.AssemblyInfoInputs.cache
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\obj\Debug\net8.0\TestProject.AssemblyInfo.cs
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\obj\Debug\net8.0\TestProject.csproj.CoreCompileInputs.cache
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\obj\Debug\net8.0\TestProject.sourcelink.json
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\obj\Debug\net8.0\TestProject.dll
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\obj\Debug\net8.0\refint\TestProject.dll
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\obj\Debug\net8.0\TestProject.pdb
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\obj\Debug\net8.0\TestProject.genruntimeconfig.cache
+D:\Cursos\FreeCodeCamp\Foundational C#\CsharpProjects\TestProject\obj\Debug\net8.0\ref\TestProject.dll
