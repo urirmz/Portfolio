@@ -247,3 +247,71 @@
 // Local variables 
 // A local variable is a variable that is scoped within the body of a method, or a variable in a console application that uses top-level statements (like the code in this module).
 // There are other types of constructs that you can use in your applications, and many have their own conventions. For example, classes are often used in C# programming. Classes support fields, which are members of a class that act like variables inasmuch that they store values, or rather, state. Classes also support accessibility modifiers, which allow some values to be private or public. A private member can only be referenced by other members in the same class. A public member can be referenced outside of the class. So, you can create private fields or public fields
+
+// Code comments
+// A code comment is an instruction to the compiler to ignore everything after the code comment symbols in the current line.
+// // This is a code comment!
+// This may not seem useful at first, however it's useful in three situations:
+// When you want to leave a note about the intent of a passage of code. It can be helpful to include code comments that describe the purpose or the thought process when you're writing a particularly challenging set of coding instructions. Your future self will thank you.
+// When you want to temporarily remove code from your application to try a different approach, but you're not yet convinced your new idea will work. You can comment out the code, write the new code, and once you're convinced the new code will work the way you want it to, you can safely delete the old (commented code).
+// Adding a message like TODO to remind you to look at a given passage of code later. While you should use this judiciously, it's a useful approach. You may be working on another feature when you read a line of code that sparks a concern. Rather than ignoring the new concern, you can mark it for investigation later.
+// To apply a block comment that comments out multiple lines, update your code as follows:
+// /*
+// string firstName = "Bob";
+// int widgetsPurchased = 7;
+// Console.WriteLine($"{firstName} purchased {widgetsPurchased} widgets.");
+// */
+// To add a comment that explains the higher-level purpose of your code, update your code as follows:
+// /*
+//   The following code creates five random OrderIDs
+//   to test the fraud detection process.  OrderIDs 
+//   consist of a letter from A to E, and a three
+//   digit number. Ex. A123.
+// */
+// Random random = new Random();
+// string[] orderIDs = new string[5];
+// for (int i = 0; i < orderIDs.Length; i++)
+// {
+//     int prefixValue = random.Next(65, 70);
+//     string prefix = Convert.ToChar(prefixValue).ToString();
+//     string suffix = random.Next(1, 1000).ToString("000");
+
+//     orderIDs[i] = prefix + suffix;
+// }
+// foreach (var orderID in orderIDs)
+// {
+//     Console.WriteLine(orderID);
+// }
+
+// Whitespace
+// The term "whitespace" refers to individual spaces produced by the space bar, tabs produced by the tab key, and new lines produced by the enter key.
+// The C# compiler ignores whitespace. Whitespace doesn't matter to the compiler. However ...
+// Whitespace, when used properly, can increase your ability to read and comprehend the code.
+
+/* Example readable code
+//  /*
+//    This code reverses a message, counts the number of times 
+//    a particular character appears, then prints the results
+//    to the console window.
+//  */
+
+// string originalMessage = "The quick brown fox jumps over the lazy dog.";
+
+// char[] message = originalMessage.ToCharArray();
+// Array.Reverse(message);
+
+// int letterCount = 0;
+
+// foreach (char letter in message)
+// {
+//     if (letter == 'o')
+//     {
+//         letterCount++;
+//     }
+// }
+
+// string newMessage = new String(message);
+
+// Console.WriteLine(newMessage);
+// Console.WriteLine($"'o' appears {letterCount} times.");
+*/
