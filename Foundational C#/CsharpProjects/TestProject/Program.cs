@@ -187,22 +187,26 @@
 //     Console.WriteLine($"{value}{message}");
 // }
 
+// string? readResult;
+// bool validEntry = false;
+// Console.WriteLine("Enter a string containing at least three characters:");
+// do
+// {
+//     readResult = Console.ReadLine();
+//     if (readResult != null)
+//     {
+//         if (readResult.Length >= 3)
+//         {
+//             validEntry = true;
+//         }
+//         else
+//         {
+//             Console.WriteLine("Your input is invalid, please try again.");
+//         }
+//     }
+// } while (validEntry == false);
 
-string? readResult;
-bool validEntry = false;
-Console.WriteLine("Enter a string containing at least three characters:");
-do
+for (int i = 1; i <= 35; i++)
 {
-    readResult = Console.ReadLine();
-    if (readResult != null)
-    {
-        if (readResult.Length >= 3)
-        {
-            validEntry = true;
-        }
-        else
-        {
-            Console.WriteLine("Your input is invalid, please try again.");
-        }
-    }
-} while (validEntry == false);
+    Console.WriteLine($"salidasMotorModbus{i}   := Motores.Motores[{i}].salidas;");
+};

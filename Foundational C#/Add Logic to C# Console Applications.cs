@@ -212,3 +212,10 @@
 // bool validNumber = false;
 // validNumber = int.TryParse(readResult, out numericValue);
 // If the string value assigned to readResult represents a valid integer, the value will be assigned to the integer variable named numericValue, and true will be assigned to the Boolean variable named validNumber. If the value assigned to readResult doesn't represent a valid integer, validNumber will be assigned a value of false.
+
+// Data type casting and conversion
+// If you need to change a value from the original data type to a new data type and the change could produce an exception at run time, you must perform a data conversion.
+// To perform data conversion, you can use one of several techniques:
+// Use a helper method on the data type
+// Use a helper method on the variable
+// Use the Convert class' methods
