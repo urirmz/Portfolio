@@ -388,3 +388,180 @@
 // a
 // The items array created using string[] items = result.Split(','); is used in the foreach loop and displays the individual characters from the original string contained in the value variable.
 
+// Composite Formatting
+// Composite formatting uses numbered placeholders within a string. At run time, everything inside the braces is resolved to a value that is also passed in based on their position.
+// This example of composite formatting uses a built-in method Format() on the string data type keyword. Update your code in the Visual Studio Code Editor as follows:
+// string first = "Hello";
+// string second = "World";
+// string result = string.Format("{0} {1}!", first, second);
+// Console.WriteLine(result);
+// If you run this code, you observe the following output.
+// Hello World!
+// There are a few important things to notice about this code.
+// Data types and variables of a given data type have built-in "helper methods" to make certain tasks easy.
+// The literal string "{0} {1}!" forms a template, parts of which are replaced at run time.
+// The token {0} is replaced by the first argument after the string template, in other words, the value of the variable first.
+// The token {1} is replaced by the second argument after the string template, in other words, the value of the variable second.
+
+// String interpolation
+// In order for a string to be interpolated, you must prefix it with the $ directive. Now, create the same examples from earlier using string interpolation instead of composite formatting. Update your code as follows:
+// string first = "Hello";
+// string second = "World";
+// Console.WriteLine($"{first} {second}!");
+// Console.WriteLine($"{second} {first}!");
+// Console.WriteLine($"{first} {first} {first}!");
+// Save your code file, and then use Visual Studio Code to run your code.
+// You should see the following output:
+// Hello World!
+// World Hello!
+// Hello Hello Hello!
+
+// Formatting currency
+// Composite formatting and string interpolation can be used to format values for display given a specific language and culture. In the following example, the :C currency format specifier is used to present the price and discount variables as currency. Update your code as follows:
+// decimal price = 123.45m;
+// int discount = 50;
+// Console.WriteLine($"Price: {price:C} (Save {discount:C})");
+// If you executed this code on a computer that has its Windows display language set to "English (United States)", you observe the following output.
+// Price: $123.45 (Save $50.00)
+// Notice how adding the :C to the tokens inside of the curly braces formats the number as currency regardless of whether you use int or decimal.
+
+// How the user's country/region and language affect string formatting
+// What if you execute the previous code on a computer in France that has its Windows Display Language set to French? In that case you would see the following output.
+// Price: 123,45 € (Save 50,00 €)
+// The reason for the previous "€" output is that the string currency formatting feature is dependent on the local computer setting for culture. In this context, the term "culture" refers to the country/region and language of the end user. The culture code is a five character string that computers use to identify the location and language of the end user. The culture code ensures certain information like dates and currency can be presented properly.
+
+// Formatting numbers
+// The N numeric format specifier makes numbers more readable. Update your code as follows:
+// decimal measurement = 123456.78912m;
+// Console.WriteLine($"Measurement: {measurement:N} units");
+// If you're viewing this from the en-US culture, you observe the following output.
+// Measurement: 123,456.79 units
+// By default, the N numeric format specifier displays only two digits after the decimal point.
+// If you want to display more precision, you can do that by adding a number after the specifier. The following code will display four digits after the decimal point using the N4 specifier. Update your code as follows:
+// decimal measurement = 123456.78912m;
+// Console.WriteLine($"Measurement: {measurement:N4} units");
+// If you're viewing this from the en-US culture, you observe the following output.
+// Measurement: 123,456.7891 units
+
+// Formatting percentages
+// Use the P format specifier to format percentages. Add a number afterwards to control the number of values displayed after the decimal point. Update your code as follows:
+// decimal tax = .36785m;
+// Console.WriteLine($"Tax rate: {tax:P2}");
+// If you're viewing this from the en-US culture, you observe the following output.
+// Tax rate: 36.79 %
+
+// Formatting strings
+// The PadLeft() method adds blank spaces to the left-hand side of the string so that the total number of characters equals the argument you send it. In this case, you want the total length of the string to be 12 characters.
+// Update your code in the Visual Studio Code Editor as follows:
+//  string input = "Pad this";
+//  Console.WriteLine(input.PadLeft(12));
+//  When you run the code, you observe four characters prefixed to the left of the string bring the length to 12 characters long.
+//  	Pad this
+// To add space or characters to the right side of your string, use the PadRight() method instead.
+// You can also call a second overloaded version of the method and pass in whatever character you want to use instead of a space
+// Update your code in the Visual Studio Code Editor as follows:
+//  Console.WriteLine(input.PadLeft(12, '-'));
+//  Console.WriteLine(input.PadRight(12, '-'));
+// Save your code file, and then use Visual Studio Code to run your code. You should see four dashes prefixing the left of the string that is 12 characters long.
+//  ----Pad this
+//  Pad this----
+
+// IndexOf()
+// Type the following code into the Visual Studio Code Editor:
+// string message = "Find what is (inside the parentheses)";
+// int openingPosition = message.IndexOf('(');
+// int closingPosition = message.IndexOf(')');
+// Console.WriteLine(openingPosition);
+// Console.WriteLine(closingPosition);
+// You should see the following output:
+// 13
+// 36
+// In this case, the index of the ( character is 13. Remember, these values are zero-based, so it's the 14th character in the string. The index of the ) character is 36.
+
+// Substring()
+// The Substring() method needs the starting position and the number of characters, or length, to retrieve. So, you calculate the length in a temporary variable called length, and pass it with the openingPosition value to retrieve the string inside of the parenthesis.
+// Update your code in the Visual Studio Code Editor as follows:
+// string message = "Find what is (inside the parentheses)";
+// int openingPosition = message.IndexOf('(');
+// int closingPosition = message.IndexOf(')');
+// openingPosition += 1;
+// int length = closingPosition - openingPosition;
+// Console.WriteLine(message.Substring(openingPosition, length));
+// Save your code file, and then use Visual Studio Code to run your code. You should see the following output:
+// inside the parentheses
+
+// LastIndexOf()
+// You increase the complexity of the message variable by adding many sets of parentheses, then write code to retrieve the content inside the last set of parentheses.
+// Update your code in the Visual Studio Code Editor as follows:
+// string message = "(What if) I am (only interested) in the last (set of parentheses)?";
+// int openingPosition = message.LastIndexOf('(');
+// openingPosition += 1;
+// int closingPosition = message.LastIndexOf(')');
+// int length = closingPosition - openingPosition;
+// Console.WriteLine(message.Substring(openingPosition, length));
+// Save your code file, and then use Visual Studio Code to run your code. You should see the following output:
+// set of parentheses
+// The key to this example is the use of LastIndexOf(), which you use to get the positions of the last opening and closing parentheses.
+
+// Retrieve all instances of substrings inside parentheses
+// This time, you update the message to have three sets of parentheses, and you write code to extract any text inside of the parentheses. You're able to reuse portions of the previous work, but need to add a while statement to iterate through the string until all sets of parentheses are discovered, extracted, and displayed.
+// Update your code in the Visual Studio Code Editor as follows:
+// string message = "(What if) there are (more than) one (set of parentheses)?";
+// while (true)
+// {
+//     int openingPosition = message.IndexOf('(');
+//     if (openingPosition == -1) break;
+
+//     openingPosition += 1;
+//     int closingPosition = message.IndexOf(')');
+//     int length = closingPosition - openingPosition;
+//     Console.WriteLine(message.Substring(openingPosition, length));
+
+//     // Note the overload of the Substring to return only the remaining 
+//     // unprocessed message:
+//     message = message.Substring(closingPosition + 1);
+// }
+// Save your code file, and then use Visual Studio Code to run your code. You should see the following output:
+// What if
+// more than
+// set of parentheses
+
+// IndexOfAny()
+// This time, you search for several different symbols, not just a set of parentheses.
+// You update the message string, adding different types of symbols like square [] brackets and curly braces {}. To search for multiple symbols simultaneously, use on .IndexOfAny(). You search with .IndexOfAny() to return the index of the first symbol from the array openSymbols found in the message string.
+// Update your code in the Visual Studio Code editor as follows:
+// string message = "Help (find) the {opening symbols}";
+// Console.WriteLine($"Searching THIS Message: {message}");
+// char[] openSymbols = { '[', '{', '(' };
+// int startPosition = 6;
+// int openingPosition = message.IndexOfAny(openSymbols);
+// Console.WriteLine($"Found WITHOUT using startPosition: {message.Substring(openingPosition)}");
+// openingPosition = message.IndexOfAny(openSymbols, startPosition);
+// Console.WriteLine($"Found WITH using startPosition {startPosition}: {message.Substring(openingPosition)}");
+// Save your code file, and then use Visual Studio Code to run your code.
+// You should see the following output:
+// Searching THIS message: Help (find) the {opening symbols}
+// Found WITHOUT using startPosition: (find) the {opening symbols}
+// Found WITH using startPosition 6: {opening symbols}
+
+// Remove()
+// You would typically use Remove() when there's a standard and consistent position of the characters you want to remove from the string.
+// Update your code in the Visual Studio Code Editor as follows:
+// string data = "12345John Smith          5000  3  ";
+// string updatedData = data.Remove(5, 20);
+// Console.WriteLine(updatedData);
+// You should see the following output:
+// 123455000  3  
+// The Remove() method works similarly to the Substring() method. You supply a starting position and the length to remove those characters from the string.
+
+// Replace()
+// You would use the Replace() method when you must replace one or more characters with a different character (or no character). The Replace() method is different from the other methods you've used so far, it will replace every instance of the given characters, not just the first or last instance.
+// Update your code in the Visual Studio Code Editor as follows:
+// string message = "This--is--ex-amp-le--da-ta";
+// message = message.Replace("--", " ");
+// message = message.Replace("-", "");
+// Console.WriteLine(message);
+// Save your code file, and then use Visual Studio Code to run your code.
+// You should see the following output:
+// This is example data
+// Here you used the Replace() method twice. The first time you replaced the string -- with an empty space. The second time you replaced the string - with an empty string, which completely removes the character from the string.
