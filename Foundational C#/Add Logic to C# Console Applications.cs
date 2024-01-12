@@ -219,3 +219,172 @@
 // Use a helper method on the data type
 // Use a helper method on the variable
 // Use the Convert class' methods
+// The term widening conversion means that you're attempting to convert a value from a data type that could hold less information to a data type that can hold more information. For example, a value stored in a variable of type int converted to a variable of type decimal, doesn't lose information.
+// Add the following code:
+// decimal myDecimal = 3.14m;
+// Console.WriteLine($"decimal: {myDecimal}");
+// int myInt = (int)myDecimal;
+// Console.WriteLine($"int: {myInt}");
+// To perform a cast, you use the casting operator () to surround a data type, then place it next to the variable you want to convert (example: (int)myDecimal). You perform an explicit conversion to the defined cast data type (int).
+// Save your code file, and then use Visual Studio Code to run your code.
+// You should see the following output:
+// decimal: 3.14
+// int: 3
+// The key to this example is this line of code:
+// int myInt = (int)myDecimal;
+// The variable myDecimal holds a value that has precision after the decimal point. By adding the casting instruction (int), you're telling the C# compiler that you understand it's possible you'll lose that precision, and in this situation, it's fine. You're telling the compiler that you're performing an intentional conversion, an explicit conversion.
+// The term narrowing conversion means that you're attempting to convert a value from a data type that can hold more information to a data type that can hold less information. In this case, you may lose information such as precision (that is, the number of values after the decimal point). An example is converting value stored in a variable of type decimal into a variable of type int. If you print the two values, you would possibly notice the loss of information.
+// When you know you're performing a narrowing conversion, you need to perform a cast. Casting is an instruction to the C# compiler that you know precision may be lost, but you're willing to accept it.
+
+// ToString()
+// Every data type variable has a ToString() method. What the ToString() method does depends on how it's implemented on a given type. However, on most primitives, it performs a widening conversion. While this isn't strictly necessary (since you can rely on implicit conversion in most cases) it can communicate to other developers that you understand what you're doing and it's intentional.
+// Parse()
+// Most of the numeric data types have a Parse() method, which converts a string into the given data type.
+// Convert class
+// The Convert class has many helper methods to convert a value from one type into another. In the following code example, you convert a couple of strings into values of type int.
+// string value1 = "5";
+// string value2 = "7";
+// int result = Convert.ToInt32(value1) * Convert.ToInt32(value2);
+// Console.WriteLine(result);
+// You should see the following output:
+// 35
+
+// Casting vs converting
+// The following example demonstrates what happens when you attempt to cast a decimal into an int (a narrowing conversion) versus using the Convert.ToInt32() method to convert the same decimal into an int.
+// int value = (int)1.5m; // casting truncates
+// Console.WriteLine(value);
+// int value2 = Convert.ToInt32(1.5m); // converting rounds up
+// Console.WriteLine(value2);
+// You should see the following output:
+// 1
+// 2
+// When you're casting int value = (int)1.5m;, the value of the float is truncated so the result is 1, meaning the value after the decimal is ignored completely. you could change the literal float to 1.999m and the result of casting would be the same.
+// When you're converting using Convert.ToInt32(), the literal float value is properly rounded up to 2. If you changed the literal value to 1.499m, it would be rounded down to 1.
+
+// TryParse()
+// The TryParse() method does several things simultaneously:
+// It attempts to parse a string into the given numeric data type.
+// If successful, it stores the converted value in an out parameter.
+// It returns a bool to indicate whether the action succeeded or failed.
+// You can use the Boolean return value to take action on the value (like performing some calculation), or display a message if the parse operation was unsuccessful.
+
+// Out parameters
+// Methods can return a value or return "void" - meaning they return no value. Methods can also return values through out parameters, which are defined just like an input parameter, but include the out keyword.
+// Update your code in the Visual Studio Code Editor as follows:
+// string value = "102";
+// int result = 0;
+// if (int.TryParse(value, out result))
+// {
+//    Console.WriteLine($"Measurement: {result}");
+// }
+// else
+// {
+//    Console.WriteLine("Unable to report the measurement.");
+// }
+// When calling a method with an out parameter, you must use the keyword out before the variable, which holds the value. The out parameter is assigned to the result variable in the code (int.TryParse(value, out result). You can then use the value the out parameter contains throughout the rest of your code using the variable result.
+// The int.TryParse() method returns true if it successfully converted the string variable value into an int; otherwise, it returns false. So, surround the statement in an if statement, and then perform the decision logic, accordingly.
+// The converted value is stored in the int variable result. The int variable result is declared and initialized before this line of code, so it should be accessible both inside the code blocks that belong to the if and else statements, as well as outside of them.
+// The out keyword instructs the compiler that the TryParse() method won't return a value the traditional way only (as a return value), but also will communicate an output through this two-way parameter.
+
+// Array methods
+// Sort()
+// Type the following code into the Visual Studio Code Editor:
+// string[] pallets = { "B14", "A11", "B12", "A13" };
+// Console.WriteLine("Sorted...");
+// Array.Sort(pallets);
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
+// Take a minute to review the Array.Sort(pallets); line from the previous code you added.
+// Here you're using the Sort() method of the Array class to sort the items in the array alphanumerically.
+// Reverse()
+// To reverse the order of the pallets using the Array.Reverse() method, update your code as follows:
+// string[] pallets = { "B14", "A11", "B12", "A13" };
+// Console.WriteLine("Sorted...");
+// Array.Sort(pallets);
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
+// Console.WriteLine("");
+// Console.WriteLine("Reversed...");
+// Array.Reverse(pallets);
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
+// Focus on the line of code Array.Reverse(pallets); line from the previous code you added.
+// Here, you're using the Reverse() method of the Array class to reverse the order of items.
+// Clear()
+// The Array.Clear() method allows you to remove the contents of specific elements in your array and replace it with the array default value. For example, in a string array the element value cleared is replaced with null, when you clear a int array element the replacement is done with 0 (zero).
+// Update your code in the Visual Studio Code Editor as follows:
+// string[] pallets = { "B14", "A11", "B12", "A13" };
+// Console.WriteLine("");
+// Array.Clear(pallets, 0, 2);
+// Console.WriteLine($"Clearing 2 ... count: {pallets.Length}");
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
+// Take a minute to focus on the line of code Array.Clear(pallets, 0, 2);.
+// Here you're using the Array.Clear() method to clear the values stored in the elements of the pallets array starting at index 0 and clearing 2 elements.
+// Resize()
+// The Array.Resize() method adds or removes elements from your array.
+// Rework the code to include code to resize the array. When complete, your code should match the following code listing:
+// string[] pallets = { "B14", "A11", "B12", "A13" };
+// Console.WriteLine("");
+// Array.Clear(pallets, 0, 2);
+// Console.WriteLine($"Clearing 2 ... count: {pallets.Length}");
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
+// Console.WriteLine("");
+// Array.Resize(ref pallets, 6);
+// Console.WriteLine($"Resizing 6 ... count: {pallets.Length}");
+// pallets[4] = "C01";
+// pallets[5] = "C02";
+// foreach (var pallet in pallets)
+// {
+//     Console.WriteLine($"-- {pallet}");
+// }
+// Take a few minutes to focus on the line Array.Resize(ref pallets, 6);.
+// Here, you're calling the Resize() method passing in the pallets array by reference, using the ref keyword. In some cases, methods require you pass arguments by value (the default) or by reference (using the ref keyword).
+// Conversely, you can remove array elements using Array.Resize().
+// ToCharArray()
+// Update your code in the Visual Studio Code Editor as follows:
+// string value = "abc123";
+// char[] valueArray = value.ToCharArray();
+// Here you're using the ToCharArray() method to create an array of char, each element of the array has one character of the original string.
+// Join()
+// Perhaps you need to separate each element of the char array using a comma, as is common when working with data that is represented as ASCII text. To do that, you'll use the String class' Join() method, passing in the char you want to delimit each segment (the comma) and the array itself.
+// Update your code in the Visual Studio Code Editor as follows:
+// string value = "abc123";
+// char[] valueArray = value.ToCharArray();
+// Array.Reverse(valueArray);
+// string result = String.Join(",", valueArray);
+// Console.WriteLine(result);
+// Save your code file, and then use Visual Studio Code to run your code.
+// You should see the following output:
+// 3,2,1,c,b,a
+// Split()
+// The Split() method is used with variables of type string to create an array of strings.
+// Use the Visual Studio Code Editor to add the following lines of code at the bottom of the file:
+// string[] items = result.Split(',');
+// foreach (string item in items)
+// {
+//     Console.WriteLine(item);
+// }
+// Take a minute to review the previous code.
+// The comma is supplied to .Split() as the delimiter to split one long string into smaller strings. The code then uses a foreach loop to iterate through each element of the newly created array of strings, items.
+// When you run the code, you'll see the following output:
+// 3,2,1,c,b,a
+// 3
+// 2
+// 1
+// c
+// b
+// a
+// The items array created using string[] items = result.Split(','); is used in the foreach loop and displays the individual characters from the original string contained in the value variable.
+
