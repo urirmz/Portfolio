@@ -79,3 +79,17 @@
 // To define optional parameters, update the RSVP method signature as follows:
 // void RSVP(string name, int partySize = 1, string allergies = "none", bool inviteOnly = true)
 // Take a moment to observe the syntax. The parameters are still separated by commas, but the parameters partySize, allergies, and inviteOnly are each assigned to a value.
+
+// Return types
+// Not only can methods perform operations, they can return a value as well. Methods can return a value by including the return type in the method signature. Methods can return any data type, or they can return nothing at all. The return type must always be specified before the method name.
+// Using void as the return type means the method only performs operations and doesn't return a value. For example:
+// void PrintMessage(string message)
+// When a data type (such as int, string, bool, etc.) is used, the method performs operations and then returns the specified type upon completion. Inside the method, the keyword return is used to return the result. In void methods, you can also use the return keyword to terminate the method.
+// Update the following code:
+// double GetDiscountedPrice(int itemIndex)
+// {
+//     double result = items[itemIndex] * (1 - discounts[itemIndex]);
+//     return result;
+// }
+// To return a value from a method, add a value or expression after the return keyword. The value returned must match the data type specified in the method signature.
+
