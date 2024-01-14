@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj": {}
+    "C:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj": {}
   },
   "projects": {
-    "d:\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj": {
+    "C:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj",
+        "projectUniqueName": "C:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj",
         "projectName": "TestProject",
-        "projectPath": "d:\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj",
-        "packagesPath": "C:\\Users\\servi\\.nuget\\packages\\",
-        "outputPath": "d:\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\obj\\",
+        "projectPath": "C:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj",
+        "packagesPath": "C:\\Users\\ingur\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\servi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\ingur\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
