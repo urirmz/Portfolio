@@ -14,11 +14,15 @@
 
 -- Tables
 -- You can create a table like this: CREATE TABLE table_name();
+-- Inside those parenthesis you can put columns for a table so you don't need to add them with a separate command, like this: CREATE TABLE table_name(column_name DATATYPE CONSTRAINTS);
 -- You can delete tables with: DROP TABLE table_name;
+-- A primary key it's a column that uniquely identifies each row in the table. Here's an example of how to set a PRIMARY KEY: ALTER TABLE table_name ADD PRIMARY KEY(column_name); You should set a primary key on every table and there can only be one per table. 
+-- You can drop a constraint with: ALTER TABLE table_name DROP CONSTRAINT constraint_name;
+-- You can create a primary key from two columns, known as a composite primary key. Here's an example: ALTER TABLE table_name ADD PRIMARY KEY(column1, column2);
 
 -- Columns
 -- Tables need columns to describe the data in them, yours doesn't have any yet. Here's an example of how to add one: ALTER TABLE table_name ADD COLUMN column_name DATATYPE;
--- You can add a constraint by putting it right after the data type.
+-- You can add a constraint by putting it right after the data type. 
 -- You can remove columns with: ALTER TABLE table_name DROP COLUMN column_name;
 -- Here's how you can rename a column: ALTER TABLE table_name RENAME COLUMN column_name TO new_name;
 
@@ -30,10 +34,29 @@
 -- ('Luigi', 'Mushroom Kingdom', 'Green'),
 -- ('Peach', 'Mushroom Kingdom', 'Pink');
 -- You can view the data in a table by querying it with the SELECT statement. Here's how it looks: SELECT columns FROM table_name;
--- You can use an asterisk (*) to denote that you want to see all the columns.
+-- You can separate the column names with a comma to view more than one column.
+-- You can use an asterisk (*) to denote that you want to see all the columns. Like this: SELECT * FROM table_name;
+-- You can view a row with a WHERE condition. Here's an example: SELECT columns FROM table_name WHERE condition;
 -- Here's an example of how to delete a row: DELETE FROM table_name WHERE condition;
 -- You can change a value in a row like this: UPDATE table_name SET column_name=new_value WHERE condition;
+-- To order rows in a table, you can use: SELECT columns FROM table_name ORDER BY column_name;
+-- You can left a value from a row in blank giving it the value NULL.
 
 -- Data types
 -- A common data type is VARCHAR. It's a short string of characters. You need to give it a maximum length when using it like this: VARCHAR(30). Make sure to use single quotes where needed when adding a VARCHAR type value
 -- The SERIAL type will make your column an INT with a NOT NULL constraint, and automatically increment the integer when a new row is added.
+-- NUMERIC(a, b) is a data type for decimals. NUMERIC(4, 1) has up to four digits and one of them has to be to the right of the decimal.
+-- DATE values need a string with the format: 'YYYY-MM-DD'.
+
+-- Relating tables
+-- You need to set a foreign key so you can relate rows from a table to rows from another table. Here's an example that creates a column as a foreign key: ALTER TABLE table_name ADD COLUMN column_name DATATYPE REFERENCES referenced_table_name(referenced_column_name); 
+-- You can also set a foreign key to an existing column with: ALTER TABLE table_name ADD FOREIGN KEY(column_name) REFERENCES referenced_table(referenced_column);
+-- These tables have a "one-to-one" relationship. One row in the characters table will be related to exactly one row in more_info and vice versa. Enforce that by adding the UNIQUE constraint to your foreign key. Here's an example: ALTER TABLE table_name ADD UNIQUE(column_name);
+-- The column should also be NOT NULL since you don't want to have a row that is for nobody. Here's an example: ALTER TABLE table_name ALTER COLUMN column_name SET NOT NULL;
+-- One-to-many relationship. This means a row from one table can have many rows from another
+-- "Many-to-many" relationships usually use a junction table to link two tables together, forming two "one-to-many" relationships
+-- When you foreign key, you can get all the data from both tables with a JOIN command: SELECT columns FROM table_1 FULL JOIN table_2 ON table_1.primary_key_column = table_2.foreign_key_column;
+-- You can also join more than two tables with: 
+-- SELECT columns FROM junction_table
+-- FULL JOIN table_1 ON junction_table.foreign_key_column = table_1.primary_key_column
+-- FULL JOIN table_2 ON junction_table.foreign_key_column = table_2.primary_key_column;
