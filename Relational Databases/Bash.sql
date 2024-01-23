@@ -21,3 +21,29 @@
 -- You can use find to find things or view a file tree. A single dot represents the actual folder.  You can use find <folder_name> to display the tree of a different folder.
 --  You can search for something with find -name <filename>
 -- You can use rmdir <directory_name> to remove a folder. rmdir stands for "remove directory".
+
+-- Scripts 
+-- You can run commands in the terminal or put them in a file to be run as a script. You can run a script file with command "sh script.sh". sh stands for shell.
+-- Using sh to run your script uses the shell interpreter. You can also run a script with command "bash script.sh" to use the bash interpreter. bash stands for bourne-again shell
+-- You can look for the exact path of and interpreter with the "which" command, like "which bash"
+-- You can tell your program to use an specified interpreter by placing a shebang at the very top of the file like this: #!<path_to_interpreter>
+-- Instead of using sh or bash to run your script. You can run it by executing the file and it will default to bash. Execute your script with ./script.sh
+-- You can look for file permissions with "ls -l". Next to your file is -rw-r--r--. All but the first character (-) describe permissions different users have with the file. r means read, w means write, x means execute
+-- "chmod" command is used to change permissions
+-- Bash has variables, functions, and other things you might be familiar with. You can create a variable with VARIABLE_NAME=VALUE. There cannot be any spaces around the equal (=) sign. If a variable has any spaces in it, place double quotes around it.
+-- To use a variable, place $ in front of it like this: $VARIABLE_NAME. Shell scripts run from top to bottom, so you can only use variable below where it's created
+-- You want to be able to accept input from a user. You can do that with read like this: read VARIABLE_NAME. This will get user input and store it into a new variable.
+-- Another way to find information about a command is with man. It stands for manual and you can use it like this: man <command>
+-- Comments in bash look like this: # <comment>
+-- Programs can take arguments. You can access them a few different ways with $. Add echo $* in your script to print all arguments passed to it.
+-- To access any one of them, use $<number>
+-- "help" command in bash prints out some of the bash commands. "help <command>" prints more information about the specified command
+-- You can view the exit status of the last command with "echo $?". 0 means true and 1 means false. Anything but 0 means there was an error with the command
+-- You can separate commands on a single line with ;
+
+-- If
+-- if [[ CONDITION ]]
+-- then
+--   STATEMENTS
+-- fi
+-- You can compare integers inside the brackets ([[ ... ]]) of your if with -eq (equal), -ne (not equal), -lt (less than), -le (less than or equal), -gt (greater than), -ge (greater than or equal). 
