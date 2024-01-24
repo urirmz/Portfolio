@@ -49,6 +49,10 @@
 -- The RANDOM variable will generate a random number between 0 and 32767. You can use the modulus operator to make it in the range you want. In your script, change the NUMBER variable to $RANDOM%75.
 -- (( ... )) will perform a calculation or operation and output nothing. $(( ... )) will replace the calculation with the result of it.
 --  You can view the type of a command with type <command>
+-- cat is a terminal command for printing the contents of a file. 
+
+-- IFS
+-- There's a default IFS variable in bash. IFS stands for "Internal Field Separator". View it with declare -p IFS. This variable is used to determine word boundaries. It defaults to spaces, tabs, and new lines. This is why the MAJOR variable was set to only the first word on each line from the data. Between the while and read commands, set the IFS to a comma like this: IFS=","
 
 -- Patterns 
 -- An important operator in bash is =~. It allows for pattern matching

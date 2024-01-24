@@ -32,7 +32,7 @@
 
 -- Primary Keys
 -- A primary key it's a column that uniquely identifies each row in the table. Here's an example of how to set a PRIMARY KEY: ALTER TABLE table_name ADD PRIMARY KEY(column_name); You should set a primary key on every table and there can only be one per table. 
--- You can create a primary key from two columns, known as a composite primary key. Here's an example: ALTER TABLE table_name ADD PRIMARY KEY(column1, column2);
+-- You can create a composite primary key that uses more than one column as a unique pair like this: ALTER TABLE <table_name> ADD PRIMARY KEY(<column_name>, <column_name>);
 -- You can drop a constraint with: ALTER TABLE table_name DROP CONSTRAINT constraint_name;
 
 -- Columns
@@ -81,3 +81,7 @@
 
 -- Creating and retriving dumps
 -- You can make a dump of a created database by entering pg_dump -cC --inserts -U freecodecamp universe > universe.sql in a bash terminal (not the psql one). It will save the commands to rebuild your database in universe.sql. The file will be located where the command was entered. If it's anything inside the project folder, the file will be saved in the VM. You can rebuild the database by entering psql -U postgres < universe.sql in a terminal where the .sql file is.
+
+-- Run single commands
+-- You used the psql command to log in and interact with the database. You can use it to just run a single command and exit. Above your loop, add a PSQL variable that looks like this: PSQL="psql -X --username=freecodecamp --dbname=students --no-align --tuples-only -c". This will allow you to query your database from your script. The important parts are the username, dbname, and the -c flag that is for running a single command and exiting. The rest of the flags are for formatting.
+-- Now, you can query your database using the PSQL variable like this: $($PSQL "<query_here>"). The code in the parenthesis will run in a subshell, which is a separate bash process
