@@ -34,12 +34,26 @@
 -- To use a variable, place $ in front of it like this: $VARIABLE_NAME. Shell scripts run from top to bottom, so you can only use variable below where it's created
 -- You want to be able to accept input from a user. You can do that with read like this: read VARIABLE_NAME. This will get user input and store it into a new variable.
 -- Another way to find information about a command is with man. It stands for manual and you can use it like this: man <command>
--- Comments in bash look like this: # <comment>
+-- Comments in bash look like this: # <comment>. You can create a multiline comment like this:
+-- : '
+--   comment here
+--   more comment here
+-- '
 -- Programs can take arguments. You can access them a few different ways with $. Add echo $* in your script to print all arguments passed to it.
 -- To access any one of them, use $<number>
 -- "help" command in bash prints out some of the bash commands. "help <command>" prints more information about the specified command
 -- You can view the exit status of the last command with "echo $?". 0 means true and 1 means false. Anything but 0 means there was an error with the command
 -- You can separate commands on a single line with ;
+-- A shell comes with environment variables. View them by entering printenv in the terminal.
+-- You can view all variables in the shell with declare -p. -p stands for print. declare can be used to create variables
+-- The RANDOM variable will generate a random number between 0 and 32767. You can use the modulus operator to make it in the range you want. In your script, change the NUMBER variable to $RANDOM%75.
+-- (( ... )) will perform a calculation or operation and output nothing. $(( ... )) will replace the calculation with the result of it.
+--  You can view the type of a command with type <command>
+
+-- Patterns 
+-- An important operator in bash is =~. It allows for pattern matching
+-- You can use regular expression characters as well, but you can't put the pattern in quotes when you do. Using the same syntax, check if hello world starts with an h by using ^h as the pattern. 
+-- ^h.+d$ is the pattern to see if the string starts with an h, has at least one character after it, and ends with a d.
 
 -- If
 -- if [[ CONDITION ]]
@@ -47,3 +61,33 @@
 --   STATEMENTS
 -- fi
 -- You can compare integers inside the brackets ([[ ... ]]) of your if with -eq (equal), -ne (not equal), -lt (less than), -le (less than or equal), -gt (greater than), -ge (greater than or equal). 
+
+-- For
+-- for (( i = 10; i > 0; i-- ))
+-- do
+--   echo $i
+-- done
+
+-- while [[ CONDITION ]]
+-- do
+--   STATEMENTS
+-- done
+
+-- Until loop
+-- The until loop is very similar to the while loop you used. It will execute the loop until a condition is met. Here's an example:
+-- until [[ CONDITION ]]
+-- do
+--   STATEMENTS
+-- done
+
+-- Arrays
+-- You can create an array like this: ARR=("a" "b" "c")
+-- You can print an item of the array like this: echo ${ARR[1]}
+-- You were able to print all the arguments of an script with echo $*. echo $@ would have worked as well. Similarly, you can use the * or @ to print your whole array, like this: echo ${ARR[*]}
+
+-- Functions
+-- You can create a function like this:
+-- FUNCTION_NAME() {
+--   STATEMENTS
+-- }
+-- You can call it with: FUNCTION_NAME argument
