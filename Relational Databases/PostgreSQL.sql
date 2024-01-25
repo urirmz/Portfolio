@@ -23,6 +23,8 @@
 --   CONSTRAINT constraint_name UNIQUE (uc_col1, uc_col2, ... uc_col_n)
 -- );
 -- You can delete tables with: DROP TABLE table_name;
+-- You can use TRUNCATE to delete all data from a table
+-- You "cannot truncate a table referenced in a foreign key constraint." So if you want to delete the data from majors, you need to delete the data from the referenced tables at the same time.
 
 -- Constraints
 -- To create set a NOT NULL to a column of a table you can use: ALTER TABLE table ALTER COLUMN column SET NOT NULL;

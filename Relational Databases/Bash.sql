@@ -65,6 +65,7 @@
 --   STATEMENTS
 -- fi
 -- You can compare integers inside the brackets ([[ ... ]]) of your if with -eq (equal), -ne (not equal), -lt (less than), -le (less than or equal), -gt (greater than), -ge (greater than or equal). 
+-- You can test if a variable is empty with [[ -z $MAJOR_ID ]]
 
 -- For
 -- for (( i = 10; i > 0; i-- ))
