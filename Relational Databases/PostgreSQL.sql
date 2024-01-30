@@ -48,6 +48,7 @@
 -- You can change the data type of a column with: 
 -- ALTER TABLE table_name
 -- ALTER COLUMN column_name [SET DATA] TYPE new_data_type;
+-- You can add a default value by adding DEFAULT keyword. Example: ALTER TABLE table_name ADD COLUMN column_name DATATYPE DEFAULT default_value; The default value DATE DEFAULT NOW() will return the date of today
 
 -- Rows
 -- Rows are the actual data in the table. You can add one like this: INSERT INTO table_name(column_1, column_2) VALUES(value1, value2);
