@@ -178,13 +178,13 @@ ALTER TABLE ONLY public.rentals ALTER COLUMN rental_id SET DEFAULT nextval('publ
 
 INSERT INTO public.bikes VALUES (8, 'BMX', 20, true);
 INSERT INTO public.bikes VALUES (9, 'BMX', 21, true);
-INSERT INTO public.bikes VALUES (1, 'Mountain', 27, false);
-INSERT INTO public.bikes VALUES (2, 'Mountain', 28, false);
-INSERT INTO public.bikes VALUES (3, 'Mountain', 29, false);
-INSERT INTO public.bikes VALUES (4, 'Road', 27, false);
-INSERT INTO public.bikes VALUES (5, 'Road', 28, false);
-INSERT INTO public.bikes VALUES (6, 'Road', 29, false);
-INSERT INTO public.bikes VALUES (7, 'BMX', 19, false);
+INSERT INTO public.bikes VALUES (1, 'Mountain', 27, true);
+INSERT INTO public.bikes VALUES (2, 'Mountain', 28, true);
+INSERT INTO public.bikes VALUES (3, 'Mountain', 29, true);
+INSERT INTO public.bikes VALUES (4, 'Road', 27, true);
+INSERT INTO public.bikes VALUES (5, 'Road', 28, true);
+INSERT INTO public.bikes VALUES (6, 'Road', 29, true);
+INSERT INTO public.bikes VALUES (7, 'BMX', 19, true);
 
 
 --
@@ -199,13 +199,13 @@ INSERT INTO public.customers VALUES (2, '000-0000', 'Test');
 -- Data for Name: rentals; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.rentals VALUES (1, 1, 1, '2024-01-30', NULL);
-INSERT INTO public.rentals VALUES (2, 1, 2, '2024-01-30', NULL);
-INSERT INTO public.rentals VALUES (3, 1, 3, '2024-01-30', NULL);
-INSERT INTO public.rentals VALUES (4, 1, 4, '2024-01-30', NULL);
-INSERT INTO public.rentals VALUES (5, 1, 5, '2024-01-30', NULL);
-INSERT INTO public.rentals VALUES (6, 2, 6, '2024-01-30', NULL);
-INSERT INTO public.rentals VALUES (7, 2, 7, '2024-01-30', NULL);
+INSERT INTO public.rentals VALUES (1, 1, 1, '2021-05-25', '2024-01-30');
+INSERT INTO public.rentals VALUES (2, 1, 2, '2021-05-25', '2024-01-30');
+INSERT INTO public.rentals VALUES (3, 1, 3, '2021-05-27', '2024-01-30');
+INSERT INTO public.rentals VALUES (4, 1, 4, '2021-05-27', '2024-01-30');
+INSERT INTO public.rentals VALUES (5, 1, 5, '2021-05-27', '2024-01-30');
+INSERT INTO public.rentals VALUES (6, 2, 6, '2021-05-27', '2024-01-30');
+INSERT INTO public.rentals VALUES (7, 2, 7, '2021-05-27', '2024-01-30');
 
 
 --

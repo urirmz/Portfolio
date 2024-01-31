@@ -27,6 +27,7 @@
 # Using sh to run your script uses the shell interpreter. You can also run a script with command "bash script.sh" to use the bash interpreter. bash stands for bourne-again shell
 # You can look for the exact path of and interpreter with the "which" command, like "which bash"
 # You can tell your program to use an specified interpreter by placing a shebang at the very top of the file like this: #!<path_to_interpreter>
+# You can run a bash script contained in a file with bash <filename>
 # Instead of using sh or bash to run your script. You can run it by executing the file and it will default to bash. Execute your script with ./script.sh
 # You can look for file permissions with "ls -l". Next to your file is -rw-r--r--. All but the first character (-) describe permissions different users have with the file. r means read, w means write, x means execute
 # "chmod" command is used to change permissions

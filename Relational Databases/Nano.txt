@@ -1,0 +1,3 @@
+Nano is a program for editing files that runs in the terminal. You can open a file with nano filename
+When using nano, the ^ in front of all the commands at the bottom means to press control and the letter to run the command
+The M- in front of all the commands at the bottom means to press alt and the letter to run the command
