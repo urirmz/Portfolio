@@ -32,8 +32,7 @@
 -- Constraints
 -- To create set a NOT NULL to a column of a table you can use: ALTER TABLE table ALTER COLUMN column SET NOT NULL;
 -- The syntax for creating a unique constraint using an ALTER TABLE statement in PostgreSQL is:
--- ALTER TABLE table_name
--- ADD CONSTRAINT constraint_name UNIQUE (column1, column2, ... column_n);
+-- ALTER TABLE table_name ADD CONSTRAINT constraint_name UNIQUE (column1, column2, ... column_n);
 -- You can drop a constraint with: ALTER TABLE table_name DROP CONSTRAINT constraint_name;
 
 -- Primary Keys
@@ -41,13 +40,10 @@
 -- You can create a composite primary key that uses more than one column as a unique pair like this: ALTER TABLE <table_name> ADD PRIMARY KEY(<column_name>, <column_name>);
 
 -- Columns
--- Tables need columns to describe the data in them, yours doesn't have any yet. Here's an example of how to add one: ALTER TABLE table_name ADD COLUMN column_name DATATYPE;
--- You can add a constraint by putting it right after the data type. 
+-- Tables need columns to describe the data in them, yours doesn't have any yet. Here's an example of how to add one: ALTER TABLE table_name ADD COLUMN column_name DATATYPE CONSTRAINT; Constraints are optional
 -- You can remove columns with: ALTER TABLE table_name DROP COLUMN column_name;
 -- Here's how you can rename a column: ALTER TABLE table_name RENAME COLUMN column_name TO new_name;
--- You can change the data type of a column with: 
--- ALTER TABLE table_name
--- ALTER COLUMN column_name [SET DATA] TYPE new_data_type;
+-- You can change the data type of a column with: ALTER TABLE table_name ALTER COLUMN column_name TYPE new_data_type;
 -- You can add a default value by adding DEFAULT keyword. Example: ALTER TABLE table_name ADD COLUMN column_name DATATYPE DEFAULT default_value; The default value DATE DEFAULT NOW() will return the date of today
 
 -- Rows
