@@ -1,0 +1,24 @@
+{
+  "name": "fcc-learn-npm-package-json",
+  "author": "Uri",
+  "description": "A project that does something awesome",
+  "keywords": [
+    "descriptive",
+    "related",
+    "words",
+    "freecodecamp"
+  ],
+  "license": "GNU",
+  "version": "1.0.0.",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freeCodeCamp/boilerplate-npm.git"
+  }
+}
