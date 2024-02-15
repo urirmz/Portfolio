@@ -51,4 +51,3 @@ The SchemaType for name is String and for age is Number. Note that you can defin
 Also, notice that the SchemaType for name has the option required set to true. To use options like required and lowercase for a field, you need to use an object to set the SchemaType.
 At the bottom of the snippet, puppySchema is compiled into a model named Puppy, which can then be used to construct documents in an application.
 
-mongodb+srv://urirmz:Uvasdemar123.@cluster0.hohuadm.mongodb.net/?retryWrites=true&w=majority
