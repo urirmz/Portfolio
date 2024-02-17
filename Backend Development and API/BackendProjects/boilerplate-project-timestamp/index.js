@@ -24,28 +24,12 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/", (req, res) => {
+  res.json(getUnixUTCDate());
+})
+
 app.get("/api/:date", (req, res) => {
-  let utcDate;
-  let unixDate;
-
-  if (!isNaN(req.params.date)) {
-
-    unixDate = parseInt(req.params.date);
-    utcDate = new Date(unixDate).toUTCString();
-
-  } else if (typeof req.params.date == "string" ) {
-
-    utcDate = new Date(req.params.date).toUTCString();
-    unixDate = Date.parse(utcDate);
-
-  } else {
-
-    res.json({ "error" : "Invalid Date" })
-    return;
-  
-  }
-
-  res.json({ "unix": unixDate, "utc": `${utcDate}` });
+  res.json(getUnixUTCDate(req.params.date));
 })
 
 
@@ -53,3 +37,27 @@ app.get("/api/:date", (req, res) => {
 var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
+
+
+function getUnixUTCDate(date) {
+  let utcDate;
+  let unixDate;
+ 
+  if (!date) {
+    unixDate = Date.now();
+    utcDate = new Date(unixDate).toUTCString();
+  } else if (!isNaN(date)) {
+    unixDate = parseInt(date);
+    utcDate = new Date(unixDate).toUTCString();
+  } else if (typeof date == "string" ) {
+    utcDate = new Date(date).toUTCString();
+    unixDate = Date.parse(utcDate);
+  }
+
+  if (utcDate == "Invalid Date") {
+    return { "error" : "Invalid Date" };
+  } else {
+    return { "unix": unixDate, "utc": utcDate };
+  }
+
+}
