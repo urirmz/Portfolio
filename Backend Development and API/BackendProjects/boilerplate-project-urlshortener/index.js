@@ -4,6 +4,11 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require("body-parser");
 const dns = require('dns');
+const { doesNotMatch } = require('assert');
+const { error } = require('console');
+const res = require('express/lib/response');
+
+const shortenedUrls = [];
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -28,36 +33,43 @@ app.listen(port, function() {
 });
 
 app.post('/api/shorturl', (req, res) => {
-  res.json(submitUrl(req.body.url));
-})
+  let errorMessage = { error: 'invalid url' };
 
-let shortenedUrls = [];
-
-function submitUrl(url) {
+  let urlObject; try {
+    urlObject = new URL(req.body.url);
+  } catch {
+    return res.json(errorMessage);
+  }
+  
   let urlIndex = null;
-  let validUrl;
 
   for (let i = 0; i < shortenedUrls.length; i++) {
-    if (shortenedUrls[i] == url) {
+    if (shortenedUrls[i] == urlObject.origin) {
       urlIndex = i;
     }
   }
 
   if (urlIndex == null) {
-    dns.lookup(url, (err, address, family) => {
-      validUrl = address;
-    })
-    console.log(validUrl);
-    if (validUrl) {
-      shortenedUrls.push(url);
+    let urlVerification = new Promise((resolve, reject) => {
+      dns.lookup(urlObject.hostname, (error) => {
+        if (error) reject(error);
+        else resolve(true);
+      });
+    });
+    urlVerification.then(() => {
+      shortenedUrls.push(urlObject.origin);
       urlIndex = shortenedUrls.length - 1;
-    } else {
-      return { error: 'invalid url' };
-    }
-  }  
-  
-  return {
-    "original_url": url,
-    "short_url": urlIndex
-  };
-}
+      res.json({ "original_url" : shortenedUrls[urlIndex], "short_url" : urlIndex});
+    }).catch(() => {
+      return res.json(errorMessage);
+    });
+  } else {
+    return res.json({ "original_url" : shortenedUrls[urlIndex], "short_url" : urlIndex});
+  }
+})
+
+app.get('/api/shorturl/:shortUrl', (req, res) => {
+  return res.redirect(shortenedUrls[req.params.shortUrl]);
+})
+
+
