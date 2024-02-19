@@ -7,8 +7,17 @@ const dns = require('dns');
 const { doesNotMatch } = require('assert');
 const { error } = require('console');
 const res = require('express/lib/response');
+const mongoose = require('mongoose');
 
-const shortenedUrls = [];
+mongoose.connect(process.env.MONGO_URI);
+
+const urlSchema = new mongoose.Schema({ 
+  originalUrl: { type: String, required: true },
+  shortUrl: { type: Number, required: true }
+});
+const urlDoc = mongoose.model("Url", urlSchema);
+
+const errorMessage = { error: 'invalid url' };
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -32,44 +41,45 @@ app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 });
 
-app.post('/api/shorturl', (req, res) => {
-  let errorMessage = { error: 'invalid url' };
-
+app.post('/api/shorturl', async (req, res) => {
   let urlObject; try {
     urlObject = new URL(req.body.url);
   } catch {
     return res.json(errorMessage);
   }
   
-  let urlIndex = null;
+  url = req.body.url;
 
-  for (let i = 0; i < shortenedUrls.length; i++) {
-    if (shortenedUrls[i] == urlObject.origin) {
-      urlIndex = i;
-    }
-  }
-
-  if (urlIndex == null) {
-    let urlVerification = new Promise((resolve, reject) => {
-      dns.lookup(urlObject.hostname, (error) => {
-        if (error) reject(error);
-        else resolve(true);
-      });
-    });
-    urlVerification.then(() => {
-      shortenedUrls.push(urlObject.origin);
-      urlIndex = shortenedUrls.length - 1;
-      res.json({ "original_url" : shortenedUrls[urlIndex], "short_url" : urlIndex});
-    }).catch(() => {
-      return res.json(errorMessage);
-    });
+  let urlDocFound = await urlDoc.findOne({ originalUrl: url }).exec();
+  
+  if (urlDocFound) {
+    return res.json({ original_url : url, short_url : urlDocFound.shortUrl });
   } else {
-    return res.json({ "original_url" : shortenedUrls[urlIndex], "short_url" : urlIndex});
+    dns.lookup(urlObject.hostname, async (error) => {
+      if (error) { 
+        return res.json(errorMessage);
+      } else {
+        let currentMaxShortUrl = await urlDoc.findOne().sort({ shortUrl: -1 }).exec();
+        let newShortUrl;
+        if (currentMaxShortUrl) {
+          newShortUrl = currentMaxShortUrl.shortUrl + 1;
+        } else {
+          newShortUrl = 1;
+        }
+        let newUrlDoc = new urlDoc({ originalUrl: url, shortUrl: newShortUrl});
+        let saveResult = await newUrlDoc.save();
+        return res.json({ original_url : url, short_url : saveResult.shortUrl });
+      }
+    });
   }
 })
 
-app.get('/api/shorturl/:shortUrl', (req, res) => {
-  return res.redirect(shortenedUrls[req.params.shortUrl]);
+app.get('/api/shorturl/:shortUrl', async (req, res) => {
+  let validUrl = await urlDoc.findOne({ shortUrl: req.params.shortUrl });
+  if (validUrl) {
+    return res.redirect(validUrl.originalUrl);
+  } else {
+    return res.json(errorMessage);
+  }
 })
-
 
