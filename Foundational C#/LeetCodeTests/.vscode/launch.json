@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "C#: LeetCodeTests",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}\\LeetCodeTests.csproj",
+            "launchConfigurationId": "TargetFramework=;LeetCodeTests"
+        }
+    ]
+}
