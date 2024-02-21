@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj": {}
+    "C:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj": {}
   },
   "projects": {
-    "c:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj": {
+    "C:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj",
+        "projectUniqueName": "C:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj",
         "projectName": "TestProject",
-        "projectPath": "c:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj",
+        "projectPath": "C:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\TestProject.csproj",
         "packagesPath": "C:\\Users\\ingur\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\obj\\",
+        "outputPath": "C:\\Users\\ingur\\Documents\\Educación y cursos\\Cursos\\FreeCodeCamp\\Foundational C#\\CsharpProjects\\TestProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ingur\\AppData\\Roaming\\NuGet\\NuGet.Config"
