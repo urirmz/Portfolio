@@ -20,7 +20,7 @@ const excersiseSchema = new mongoose.Schema({
         },
   description: { type: String, required: true },
   duration: { type: Number, required: true },
-  date: String
+  date: Number
 });
 const Excersise = mongoose.model("excersises", excersiseSchema);
 
@@ -61,7 +61,7 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
     user: { $ref: "users", $id: req.params._id },
     description: req.body.description,
     duration: req.body.duration,
-    date: date.toDateString(),
+    date: date,
   });
 
   let excersiseRegistered = await newExcersise.save();
@@ -71,12 +71,50 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
     username: user.username,
     description: excersiseRegistered.description,
     duration: excersiseRegistered.duration,
-    date: excersiseRegistered.date,
+    date: date.toDateString(),
     _id: excersiseRegistered.user.$id
   });
 })
 
 app.get("/api/users/:id/logs", async (req, res) => {
-  userExcersiseLogs = await Excersise.find({ "user.$id" : req.params.id });
-  res.json({ userExcersiseLogs });
+  let user = await User.findOne({ _id: req.params.id });
+
+  let queryFilters = { "user.$id" : req.params.id };
+  if (req.query.from && req.query.to) {
+    let from = new Date(req.query.from);
+    let to = new Date(req.query.to);
+    queryFilters = {...queryFilters, date: { $gte: from, $lte: to }};
+  } else if (req.query.from) { 
+    let from = new Date(req.query.from);
+    queryFilters = {...queryFilters, date: { $gte: from }};
+  } else if (req.query.to) {
+    let to = new Date(req.query.to);
+    queryFilters = {...queryFilters, date: { $lte: to }};
+  }
+
+  console.log(queryFilters);
+
+  let logsQuery = Excersise.find(queryFilters);
+
+  if (req.query.limit)
+    {logsQuery = logsQuery.limit(req.query.limit);};
+
+  let userExcersiseLogs = await logsQuery.exec();
+  let userExcersiseCount = userExcersiseLogs.length;
+
+  let parsedLogs = [];
+  userExcersiseLogs.forEach((log) => {
+    parsedLogs.push({
+			description: log.description,
+			duration: log.duration,
+			date: new Date(log.date).toDateString()
+    });
+  });
+
+  res.json({
+    username: user.username,
+    count: userExcersiseCount,
+    _id: user._id,
+    log: parsedLogs
+  });
 });
