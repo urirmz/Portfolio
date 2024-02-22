@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeetCodeTests", "LeetCodeTests.csproj", "{93CEB6F6-8D25-4897-B927-A4328915DB21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeetCodeTests", "LeetCodeTests.csproj", "{C7BFFBE0-9D13-430A-82C9-09C49A30C322}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{93CEB6F6-8D25-4897-B927-A4328915DB21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93CEB6F6-8D25-4897-B927-A4328915DB21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93CEB6F6-8D25-4897-B927-A4328915DB21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93CEB6F6-8D25-4897-B927-A4328915DB21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7BFFBE0-9D13-430A-82C9-09C49A30C322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7BFFBE0-9D13-430A-82C9-09C49A30C322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7BFFBE0-9D13-430A-82C9-09C49A30C322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7BFFBE0-9D13-430A-82C9-09C49A30C322}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8F567E42-E316-4F67-995F-32D77D6FF469}
+		SolutionGuid = {C3ECC3D7-D872-4F78-889B-3942615678BE}
 	EndGlobalSection
 EndGlobal
