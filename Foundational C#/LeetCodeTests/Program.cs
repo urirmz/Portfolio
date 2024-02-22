@@ -6,7 +6,7 @@
 
         // leetCode.Merge([1,2,3,0,0,0], 3, [2,5,6], 3); leetCode.Merge([1], 1, [0], 0); leetCode.Merge([0], 0, [1], 1);
         // leetCode.CanConstruct("ab", "a");
-        leetCode.SummaryRanges([0,1,2,4,5,7]);
+        // leetCode.SummaryRanges([0,1,2,4,5,7]); leetCode.SummaryRanges([0,2,3,4,6,8,9]); 
     }
 
 
@@ -55,41 +55,49 @@ public class LeetCode
     }
 
      public IList<string> SummaryRanges(int[] nums) {
+        IList<string> ranges = new List<string>();
         int a;
-        int b;
-        IList<string> range = new List<string>();
+        int b;        
         
         for (int i = 0; i < nums.Length; i++) 
         {
             a = nums[i];
-            
+            b = a;
+
             int j = i;
-            if (i < nums.Length - 1) 
+            if (i != nums.Length - 1) // Next number exists
             {
                 j = i + 1;
-            }            
-            do
-            {
-                b = nums[j];
-                if (j < nums.Length - 1) 
+                while (b + 1 == nums[j])
                 {
-                    j++;    
-                }                                   
-            } while ( b + 1 == nums[j]);
-            i = j - 1;
+                    b = nums[j];
+                    if (j != nums.Length - 1)
+                    {
+                        j++;
+                    }
+                }
+                if (b != nums[nums.Length - 1]) 
+                {
+                    i = j - 1;
+                } 
+                else 
+                {
+                    i = nums.Length;
+                }
+            } 
             
             if (a == b)
             {
-                range.Add(a.ToString()); 
+                ranges.Add(a.ToString()); 
             } 
             else
             {
-                range.Add(a.ToString() + "->" + b.ToString());
+                ranges.Add(a.ToString() + "->" + b.ToString());
             }
                 
         }
         
-        return range;
+        return ranges;
     }
 }
 
