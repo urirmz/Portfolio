@@ -7,6 +7,9 @@
         // leetCode.Merge([1,2,3,0,0,0], 3, [2,5,6], 3); leetCode.Merge([1], 1, [0], 0); leetCode.Merge([0], 0, [1], 1);
         // leetCode.CanConstruct("ab", "a");
         // leetCode.SummaryRanges([0,1,2,4,5,7]); leetCode.SummaryRanges([0,2,3,4,6,8,9]); 
+        // leetCode.IsValid("(([]){})"); 
+        // leetCode.IsValid("(){}}{");
+        leetCode.IsValid("[({(())}[()])]");
     }
 
 
@@ -98,6 +101,70 @@ public class LeetCode
         }
         
         return ranges;
+    }
+
+    public bool IsValid(string s) {
+        char[] parenthesesList = s.ToCharArray();
+        IList<int[]> pairs = new List<int[]>();
+        
+        for (int i = 0; i < parenthesesList.Length; i++)
+        {
+            char closingChar = '\0';
+            
+            switch(parenthesesList[i])
+            {
+                case '(':
+                    closingChar = ')';
+                    break;
+                case '{':
+                    closingChar = '}';
+                    break;
+                case '[':
+                    closingChar = ']';
+                    break;
+            }
+            
+            if (closingChar != '\0') 
+            {
+                int lastClosingCharIndex = -1;
+                for (int j = i + 1; j < parenthesesList.Length; j++)
+                {
+                    if (parenthesesList[j] == closingChar)
+                    {
+                        lastClosingCharIndex = j;
+                    }
+                }
+                if (lastClosingCharIndex != -1)
+                {
+                   pairs.Add([i, lastClosingCharIndex]);
+                    parenthesesList[i] = '\0';
+                    parenthesesList[lastClosingCharIndex] = '\0'; 
+                }
+            }            
+        }
+        
+        bool rangeInterference = false;
+        for (int i = 0; i < pairs.Count; i++)
+        {
+            int[] outsideRange = pairs[i];
+            for (int j = i + 1; j < pairs.Count; j++)
+            {
+                 if (outsideRange[0] < pairs[j][0] && pairs[j][0] < outsideRange[1])
+                 {
+                     int[] insideRange = pairs[j];
+                     if (insideRange[1] > outsideRange[1])
+                     {
+                         rangeInterference = true;
+                     }
+                 }
+            
+            }                
+        }
+        
+        Console.WriteLine((float) pairs.Count);
+        
+        return !rangeInterference && ((float) pairs.Count == (float) s.Length / 2);
+        
     }
 }
 
