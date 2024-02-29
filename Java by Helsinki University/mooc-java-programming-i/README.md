@@ -1,6 +1,7 @@
 Printing
 You can use the pre-defined Java command System.out.println(), to which you need to provide the text inside the parentheses that you'd like to be printed:
 System.out.println("Hello World");
+System.out.print  works exactly like System.out.println, but it doesn't add a line break to the end of the output.
 
 Program Boilerplate
 In Java, our programs have to include some boilerplate code to function. This boilerplate, an example of which is shown below, for example tells the computer what your program is called. Below, the name of the program is Example. This name has to correspond to the name of the file that contains the source code (e.g. Example.java).
@@ -301,3 +302,120 @@ if (number == 1) {
 }
 Sample output
 The number must be three!
+
+Conditional Statement Expression and the Boolean Variable
+The value that goes between the parentheses of the conditional statement should be of type boolean after the evaluation. boolean type variables are either true or false.
+boolean isItTrue = true;
+System.out.println("The value of the boolean variable is " + isItTrue);
+Sample output
+The value of the boolean variable is true
+Comparison operators can also be used outside of conditionals. In those cases, the boolean value resulting from the comparison is stored in a boolean variable for later use.
+int first = 1;
+int second = 3;
+boolean isGreater = first > second;
+
+Remainder
+The modulo operator is a slightly less-used operator, which is, however, very handy when we want to check the divisibility of a number, for example. The symbol for the modulo operator is %.
+int remainder = 7 % 2;
+System.out.println(remainder); // prints 1
+System.out.println(5 % 3); // prints 2
+System.out.println(7 % 4); // prints 3
+System.out.println(8 % 4); // prints 0
+System.out.println(1 % 2); // prints 1
+
+Conditional Statements and Comparing Strings
+Even though we can compare integers, floating point numbers, and boolean values using two equals signs (variable1 == variable2), we cannot compare the equality of strings using two equals signs.
+This has to do with the internal workings of strings as well as how variable comparison is implemented in Java. In practice, the comparison is affected by how much information a variable can hold — strings can hold a limitless amount of characters, whereas integers, floating-point numbers, and boolean values always contain a single number or value only. Variables that always contain only one number or value can be compared using an equals sign, whereas this doesn't work for variables containing more information. We will return to this topic later in this course.
+When comparing strings we use the equals-command, which is related to string variables. The command works in the following way:
+Scanner reader = new Scanner(System.in);
+System.out.println("Enter a string");
+String input = reader.nextLine();
+if (input.equals("a string")) {
+    System.out.println("Great! You read the instructions correctly.");
+} else {
+    System.out.println("Missed the mark!");
+}
+The equals command is written after a string by attaching it to the string to be compared with a dot. The command is given a parameter, which is the string that the variable will be compared against. If the string variable is being directly compared with a string, then the string can be placed inside the parentheses of the equals-command within quotation marks. Otherwise, the name of the string variable that holds the string to be compared is placed inside the parentheses.
+
+Logical Operators
+The expression of a conditional statement may consist of multiple parts, in which the logical operators and &&, or ||, and not ! are used.
+
+You can calculate the square root of an integer with the command Math.sqrt like this:
+int number = 42;
+double squareRoot = Math.sqrt(number);
+System.out.println(squareRoot);
+
+Loops and Infinite Loops
+A loop consists of an expression that determines whether or not the code within the loop should be repeated, along with a block containing the source code to be repeated. A loop takes the following form.
+while (_expression_) {
+    // The content of the block wrapped in curly brackets
+    // The block can have an unlimited amount of content
+}
+We'll use the value true as the loop's expression for now. This way, the loop's execution is always continued when the program arrives at the point that decides whether it should be repeated or not. This happens when the execution of the program first arrives at the loop expression for the first time, and also when it reaches the end of the loop's block.
+The loop execution proceeds line-by-line. The following program outputs I can program an infinite number of times.
+while (true) {
+    System.out.println("I can program!");
+}
+A program that runs infinitely does not end on its own. In NetBeans, it can be shut down by clicking the red button located on the left side of the output window.
+
+Ending a Loop
+The loop can be broken out of with command 'break'. When a computer executes the command 'break', the program execution moves onto the next command following the loop block.
+The example below is a program that prints numbers from one to five. Note how the variable that's used within the loop is defined before the loop. This way the variable can be incremented inside the loop and the change sticks between multiple iterations of the loop.
+int number = 1;
+while (true) {
+    System.out.println(number);
+    if (number >= 5) {
+        break;
+    }
+
+    number = number + 1;
+}
+System.out.println("Ready!");
+Sample output
+1
+2
+3
+4
+5
+Ready!
+Users can also be asked for input within a loop. The variables that are commonly used in loops (such as Scanner readers) are defined before the loop, whereas variables (such as the value read from the user) that are specific to the loop are defined within it.
+In the example below, the program asks the user whether to exit the loop or not. If the user inputs the string "y", the execution of the program moves to the command following the loop block, after which the execution of the program ends.
+Scanner scanner = new Scanner(System.in);
+while (true) {
+    System.out.println("Exit? (y exits)");
+    String input = scanner.nextLine();
+    if (input.equals("y")) {
+        break;
+    }
+
+    System.out.println("Ok! Let's carry on!");
+}
+System.out.println("Ready!");
+The program in the example works as follows. The user's inputs are marked in red.
+Sample output
+Exit? (y exits)
+no
+Ok! Let's carry on!
+Exit? (y exits)
+non
+Ok! Let's carry on!
+Exit? (y exits)
+y
+Ready!
+
+Returning to the Start of the Loop
+When the execution reaches the end of the loop, the execution starts again from the start of the loop. This means that all the commands in the loop have been executed. You can also return to the beginning from other places besides the end with the command continue. When the computer executes the command continue, the execution of the program moves to the beginning of the loop.
+The example below demonstrates the use of the continue command. The program asks the user to input positive numbers. If the user inputs a negative number or a zero, the program prints the message "Unfit number, try again", after which the execution returns to the beginning of the loop. In the previous example, the program read inputs of type string from the user. Similar programs with different input types are also possible. In the example below, the user is asked for numbers until they input a zero.
+Scanner scanner = new Scanner(System.in);
+while (true) {
+    System.out.println("Insert positive integers");
+    int number = Integer.valueOf(scanner.nextLine());
+
+    if (number <= 0) {
+        System.out.println("Unfit number! Try again.");
+        continue;
+    }
+
+    System.out.println("Your input was " + number);
+}
+The program in the example above is repeated infinitely since the break command used for exiting the loop is not used. To exit the loop, the break command must be added to it.
