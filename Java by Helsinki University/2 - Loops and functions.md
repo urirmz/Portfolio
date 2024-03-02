@@ -195,3 +195,131 @@ Methods cannot be defined e.g. inside other methods.
 
 On Naming Methods
 The names of methods begin with a word written entirely with lower-case letters, and the rest of the words begin with an upper-case letter - this style of writing is known as camelCase. Additionally, the code inside methods is indented by four characters.
+
+Method Parameters
+Parameters are values given to a method that can be used in its execution. The parameters of a method are defined on the uppermost line of the method within the parentheses following its name. The values of the parameters that the method can use are copied from the values given to the method when it is executed.
+In the following example a parameterized method greet is defined. It has an int type parameter called numOfTimes.
+public static void greet(int numOfTimes) {
+    int i = 0;
+    while (i < numOfTimes) {
+        System.out.println("Greetings!");
+        i++;
+    }
+}
+We will call the method greet with different values. The parameter numOfTimes is assigned the value 1on the first call, and 3on the second.
+public static void main(String[] args) {
+    greet(1);
+    System.out.println("");
+    greet(3);
+}
+Sample output
+Greetings!
+Greetings!
+Greetings!
+Greetings!
+
+Multiple Parameters
+A method can be defined with multiple parameters. When calling such a method, the parameters are passed in the same order.
+public static void sum(int first, int second) {
+    System.out.println("The sum of numbers " + first + " and " + second + " is " + (first + second));
+}
+sum(3, 5);
+int number1 = 2;
+int number2 = 4;
+sum(number1, number2);
+Sample output
+The sum of numbers 3 and 5 is 8
+The sum of numbers 2 and 4 is 6
+
+Parameter Values Are Copied in a Method Call
+As a method is called the values of its parameters are copied. In practice, this means that both the main method and the method to be called can use variables with the same name. However, changing the value of the variables inside the method does not affect the value of the variable in the main method that has the same name.
+So, method parameters are distinct from the variables (or parameters) of other methods, even if they had the same name. As a variable is passed to a method during a method call, the value of that variable gets copied to be used as the value of the parameter variable declared in the method definition. Variables in two separate methods are independent of one another.
+
+Methods Can Return Values
+The definition of a method tells whether that method returns a value or not. If it does, the method definition has to include the type of the returned value. Otherwise the keyword void is used in the definition.
+public static **void** incrementByThree() {
+    ...
+}
+The keyword void means that the method returns nothing. If we want the method to return a value, the keyword must be replaced with the type of the return variable. In the following example, there is a method called alwaysReturnsTen which returns an integer-type (int) variable (in this case the value 10).
+To actually return a value, we use the command return followed by the value to be returned (or the name of the variable whose value is to be returned).
+public static int alwaysReturnsTen() {
+    return 10;
+}
+The method defined above returns an int-type value of 10 when called. For the return value to be used, it must be stored in a variable. This is done the same way as regular value assignment to a variable, by using an equals sign.
+public static void main(String[] args) {
+    int number = alwaysReturnsTen();
+
+    System.out.println("the method returned the number " + number);
+}
+The return value of the method is placed in an int type variable as with any other int value. The return value can also be used in any other expression.
+double number = 4 * alwaysReturnsTen() + (alwaysReturnsTen() / 2) - 8;
+System.out.println("the result of the calculation " + number);
+All the variable types we've encountered so far can be returned from a method.
+When execution inside a method reaches the command return, the execution of that method ends and the value is returned to the calling method.
+The lines of source code following the command return are never executed. If a programmer adds source code after the return to a place which can never be reached during the method's execution, the IDE will produce an error message.
+For the IDE, a method such as the following is faulty.
+public static int faultyMethod() {
+    return 10;
+    System.out.println("I claim to return an integer, but I don't.");
+}
+
+Defining Variables Inside Methods
+Defining variables inside methods is done in the same manner as in the "main program". The following method calculates the average of the numbers it receives as parameters. Variables sum and avg are used to help in the calculation.
+public static double average(int number1, int number2, int number3) {
+    int sum = number1 + number2 + number3;
+    double avg = sum / 3.0;
+    return avg;
+}
+Variables defined in a method are only visible inside that method. In the example above, this means that the variables sum and avg defined inside the method average are not visible in the main program. 
+
+Calculating the Return Value Inside a Method
+The return value does not need to be entirely pre-defined - it can also be calculated. The return command that returns a value from the method can also be given an expression that is evaluated before the value is returned.
+In the following example, we'll define a method sum that adds the values of two variables and returns their sum. The values of the variables to be summed are received as method parameters.
+public static int sum(int first, int second) {
+    return first + second;
+}
+
+Execution of Method Calls and the Call Stack
+How does the computer remember where to return after the execution of a method?
+The environment that executes Java source code keeps track of the method being executed in the call stack. The call stack contains frames, each of which includes information about a specific method's internal variables and their values. When a method is called, a new frame containing its variables is created in the call stack. When the execution of a method ends, the frame relating to a method is removed from the call stack, which leads to execution resuming at the previous method of the stack.
+
+Call Stack and Method Parameters
+Let's examine the call stack in a situation where parameters have been defined for the method.
+public static void main(String[] args) {
+    int beginning = 1;
+    int end = 5;
+
+    printStars(beginning, end);
+}
+public static void printStars(int beginning, int end) {
+    while (beginning < end) {
+        System.out.print("*");
+        beginning++; // same as beginning = beginning + 1
+    }
+}
+The execution of the program begins on the first line of the main method. The next two lines create the variables beginning and end, and also assign values to them. The state of the program prior to calling the method printStars
+Sample output
+main
+  beginning = 1
+  end = 5
+When printStars is called, the main method enters a waiting state. The method call causes new variables beginning and end to be created for the method printStars, to which the values passed as parameters are assigned to. These values are copied from the variables beginning and end of the main method. The state of the program on the first line of the execution of the method printStars is illustrated below.
+Sample output
+printStars
+  beginning = 1
+  end = 5
+main
+  beginning = 1
+  end = 5
+When the command beginning++ is executed within the loop, the value of the variable beginning that belongs to the method currently being executed changes.
+Sample output
+printStars
+  beginning = 2
+  end = 5
+main
+  beginning = 1
+  end = 5
+As such, the values of the variables in the method main remain unchanged. The execution of the method printStart would continue for some time after this. When the execution of that method ends, the execution resumes inside the main method.
+Sample output
+main
+  beginning = 1
+  end = 5

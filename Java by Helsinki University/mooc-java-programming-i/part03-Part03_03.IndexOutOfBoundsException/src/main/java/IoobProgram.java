@@ -17,6 +17,8 @@ public class IoobProgram {
         for (String line : lines) {
             System.out.println(line);
         }
+        
+        lines.get(7);
 
     }
 }
