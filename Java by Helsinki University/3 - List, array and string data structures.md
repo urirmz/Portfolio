@@ -89,3 +89,235 @@ The error message provides hints of the internal implementation of an ArrayList 
 
 A Place in a List Is Called an Index
 Numbering places, i.e., indexing, always begins with zero. The list's first value is located at index 0, the second value at index 1, the third value at index 2, and so on. In programs, an index is denoted with a variable called i.
+
+Importing multiple premade Java tools into the program
+Each tool offered by Java has a name and location. The program can use a tool after it has been imported with the import command. The command is given the location and the name of the desired class. For example, the use of an ArrayList necessitates placing the command import java.util.ArrayList; to the top of the program.
+import java.util.ArrayList;
+public class ListProgram {
+
+    public static void main(String[] args) {
+        ArrayList<String> wordList = new ArrayList<>();
+
+        wordList.add("First");
+        wordList.add("Second");
+    }
+}
+
+Iterating Over a List
+The number of values on a list is provided by the list's size method which returns the number of elements the list contains. The number is an integer (int), and it can be used as a part of an expression or stored in an integer variable for later use.
+ArrayList<String> list = new ArrayList<>();
+System.out.println("Number of values on the list: " + list.size());
+list.add("First");
+System.out.println("Number of values on the list: " + list.size());
+int values = list.size();
+list.add("Second");
+System.out.println("Number of values on the list: " + values);
+Sample output
+Number of values on the list: 0
+Number of values on the list: 1
+Number of values on the list: 1
+
+Iterating Over a List Continued
+We can convert the if statements into a while loop that is repeated until the condition index < teachers.size() no longer holds (i.e., the value of the variable index grows too great).
+ArrayList<String> teachers = new ArrayList<>();
+teachers.add("Simon");
+teachers.add("Samuel");
+teachers.add("Ann");
+teachers.add("Anna");
+int index = 0;
+// Repeat for as long as the value of the variable `index`
+// is smaller than the size of the teachers list
+while (index < teachers.size()) {
+    System.out.println(teachers.get(index));
+    index = index + 1;
+}
+Now the printing works regardless of the number of elements.
+The for-loop we inspected earlier used to iterate over a known number of elements is extremely handy here. We can convert the loop above to a for-loop, after which the program looks like this.
+ArrayList<String> teachers = new ArrayList<>();
+teachers.add("Simon");
+teachers.add("Samuel");
+teachers.add("Ann");
+teachers.add("Anna");
+for (int index = 0; index < teachers.size(); index++) {
+    System.out.println(teachers.get(index));
+}
+Sample output
+Simon
+Samuel
+Ann
+Anna
+The index variable of the for-loop is typically labelled i:
+for (int i = 0; i < teachers.size(); i++) {
+    System.out.println(teachers.get(i));
+}
+
+Iterating Over a List with a For-Each Loop
+If you don't need to keep track of the index as you're going through a list's values, you can make use of the for-each loop. It differs from the previous loops in that it has no separate condition for repeating or incrementing.
+ArrayList<String> teachers = new ArrayList<>();
+teachers.add("Simon");
+teachers.add("Samuel");
+teachers.add("Ann");
+teachers.add("Anna");
+for (String teacher: teachers) {
+    System.out.println(teacher);
+}
+In practical terms, the for-each loop described above hides some parts of the for-loop we practiced earlier. The for-each loop would look like this if implemented as a for-loop:
+ArrayList<String> teachers = new ArrayList<>();
+teachers.add("Simon");
+teachers.add("Samuel");
+teachers.add("Ann");
+teachers.add("Anna");
+for (int i = 0; i < teachers.size(); i++) {
+    String teacher = teachers.get(i);
+    // contents of the for each loop:
+    System.out.println(teacher);
+}
+In practice, the for-each loop examines the values of the list in order one at a time. The expression is defined in the following format: for (TypeOfVariable nameOfVariable: nameOfList), where TypeOfVariable is the list's element type, and nameOfVariable is the variable that is used to store each value in the list as we go through it.
+
+Removing from a List
+The list's remove method removes the value that is located at the index that's given as the parameter. The parameter is an integer.
+ArrayList<String> list = new ArrayList<>();
+list.add("First");
+list.add("Second");
+list.add("Third");
+list.remove(1);
+System.out.println("Index 0 so the first value: " + list.get(0));
+System.out.println("Index 1 so the second value: " + list.get(1));
+Sample output
+Index 0 so the first value: First
+Index 1 so the second value: Third
+If the parameter given to remove is the same type as the values in the list, but not an integer, (integers are used to remove from a given index), it can be used to remove a value directly from the list.
+ArrayList<String> list = new ArrayList<>();
+list.add("First");
+list.add("Second");
+list.add("Third");
+list.remove("First");
+System.out.println("Index 0 so the first value: " + list.get(0));
+System.out.println("Index 1 so the second value: " + list.get(1));
+Sample output
+Index 0 so the first value: Second
+Index 1 so the second value: Third
+If the list contains integers, you cannot remove a number value by giving an int type parameter to the remove method. This would remove the number from the index that the parameter indicates, instead of an element on the list that has the same value as the parameter. To remove an integer type value you can convert the parameter to Integer type; this is achieved by the valueOf method of the Integer class.
+ArrayList<Integer> list = new ArrayList<>();
+list.add(15);
+list.add(18);
+list.add(21);
+list.add(24);
+list.remove(2);
+list.remove(Integer.valueOf(15));
+System.out.println("Index 0 so the first value: " + list.get(0));
+System.out.println("Index 1 so the second value: " + list.get(1));
+Sample output
+Index 0 so the first value: 18
+Index 1 so the second value: 24
+
+Checking the Existence of a Value
+The list method contains can be used to check the existence of a value in the list. The method receives the value to be searched as its parameter, and it returns a boolean type value (true or false) that indicates whether or not that value is stored in the list.
+ArrayList<String> list = new ArrayList<>();
+list.add("First");
+list.add("Second");
+list.add("Third");
+System.out.println("Is the first found? " + list.contains("First"));
+boolean found = list.contains("Second");
+if (found) {
+    System.out.println("Second was found");
+}
+// or more simply
+if (list.contains("Second")) {
+    System.out.println("Second can still be found");
+}
+Sample output
+Is the first found? true
+Second was found
+Second can still be found
+
+List as a Method Parameter
+Like other variables, a list can be used as a parameter to a method too. When the method is defined to take a list as a parameter, the type of the parameter is defined as the type of the list and the type of the values contained in that list. Below, the method print prints the values in the list one by one.
+public static void print(ArrayList<String> list) {
+    for (String value: list) {
+        System.out.println(value);
+    }
+}
+We're by now familiar with methods, and it works in the same way here. In the example below we use the print method that was implemented above.
+ArrayList<String> strings = new ArrayList<>();
+strings.add("First");
+strings.add("Second");
+strings.add("Third");
+print(strings);
+Sample output
+First
+Second
+Third
+
+On Copying the List to a Method Parameter
+Earlier we have used integers, floating point numbers, etc. as method parameters. When variables such as int are used as method parameters, the value of the variable is copied for the method's use. The same occurs in the case that the parameter is a list.
+Lists, among practically all the variables that can store large amounts of information, are reference-type variables. This means that the value of the variable is a reference that points to the location that contains the information.
+When a list (or any reference-type variable) is copied for a method's use, the method receives the value of the list variable, i.e., a reference. In such a case the method receives a reference to the real value of a reference-type variable, and the method is able to modify the value of the original reference type variable, such as a list. In practice, the list that the method receives as a parameter is the same list that is used in the program that calls the method.
+Let's look at this briefly with the following method.
+public static void removeFirst(ArrayList<Integer> numbers) {
+    if (numbers.size() == 0) {
+        return;
+    }
+
+    numbers.remove(0);
+}
+ArrayList<Integer> numbers = new ArrayList<>();
+numbers.add(3);
+numbers.add(2);
+numbers.add(6);
+numbers.add(-1);
+System.out.println(numbers);
+removeFirst(numbers);
+System.out.println(numbers);
+removeFirst(numbers);
+removeFirst(numbers);
+removeFirst(numbers);
+System.out.println(numbers);
+Sample output
+[3, 2, 6, -1]
+[2, 6, -1]
+[]
+
+Arrays
+From the point of view of the programmer, the size of the ArrayList is unlimited. In reality there are no magic tricks in the ArrayList — they have been programmed like any other programs or tools offered by the programming language. When you create a list, a limited space is reserved in the memory of the computer. When the ArrayList runs out of space, a larger space is reserved and the data from the previous space is copied to the new one.
+Even though the ArrayList is simple to use, sometimes we need the ancestor of the ArrayList, the Array.
+An Array contains a limited amount of numbered spots (indices) for values. The length (or size) of an Array is the amount of these spots, i.e. how many values can you place in the Array. The values in an Array are called elements.
+
+Creating an Array
+There are two ways to create an Array. In the first one you have to explicitly define the size upon the creating. This is how you create an Array to hold three integers:
+int[] numbers = new int[3];
+An array is declared by adding square brackets after the type of the elements it contains (typeofelements[]). A new Array is created by calling new followed by the type of the elements, square brackets and the number of the elements in the square brackets.
+An Array to hold 5 Strings can be created like this:
+String[] strings = new String[5];
+
+Assigning and accessing elements
+An element of an Array is referred to by its index. In the example below we create an Array to hold 3 integers, and then assign values to indices 0 and 2. After that we print the values.
+int[] numbers = new int[3];
+numbers[0] = 2;
+numbers[2] = 5;
+System.out.println(numbers[0]);
+System.out.println(numbers[2]);
+Assigning a value to a specific spot of an Array works much like assigning a value in a normal variable, but in the Array you must specify the index, i.e. to which spot you want to assign the value. The index is specified in square brackets. The ArrayList get-method works very similarly to accessing an element of an Array. Just the syntax, i.e. the way things are written, is different.
+The index is an integer, and its value is between [0, length of the Array - 1]. For example an Array to hold 5 elements has indices 0, 1, 2, 3, and 4.
+Scanner reader = new Scanner(System.in);
+int[] numbers = new int[5];
+numbers[0] = 42;
+numbers[1] = 13;
+numbers[2] = 12;
+numbers[3] = 7;
+numbers[4] = 1;
+System.out.println("Which index should we access? ");
+int index = Integer.valueOf(reader.nextLine());
+System.out.println(numbers[index]);
+The value held in an Array can also be assigned to be the value of another variable.
+Scanner reader = new Scanner(System.in);
+int[] numbers = new int[5];
+numbers[0] = 42;
+numbers[1] = 13;
+numbers[2] = 12;
+numbers[3] = 7;
+numbers[4] = 1;
+System.out.println("Which index should we access? ");
+int index = Integer.valueOf(reader.nextLine());
+int number = numbers[index];
+System.out.println(number);
