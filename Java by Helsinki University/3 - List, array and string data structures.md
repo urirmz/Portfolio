@@ -321,3 +321,137 @@ System.out.println("Which index should we access? ");
 int index = Integer.valueOf(reader.nextLine());
 int number = numbers[index];
 System.out.println(number);
+If the index is pointing outside the Array, i.e. the element doesn't exist, we get an ArrayIndexOutOfBoundsException. This error tells, that the Array doesn't contain the given index. You cannot access outside of the Array, i.e. index that's less than 0 or greater or equal to the size of the Array.
+
+Type of the elements
+You can create an array stating the type of the elements of the array followed by square brackets (typeofelements[]). Therefore the elements of the array can be of any type. Here's a few examples:
+String[] months = new String[12];
+double[] approximations = new double[100];
+months[0] = "January";
+approximations[0] = 3.14;
+
+Array as a parameter of a method
+You can use arrays as a parameter of a method just like any other variable. As an array is a reference type, the value of the array is a reference to the information contained in the array. When you use array as a parameter of a method, the method receives a copy of the reference to the array.
+public static void listElements(int[] integerArray) {
+    System.out.println("the elements of the array are: ");
+    int index = 0;
+    while (index < integerArray.length) {
+        int number = integerArray[index];
+        System.out.print(number + " ");
+        index = index + 1;
+    }
+    System.out.println("");
+}
+int[] numbers = new int[3];
+numbers[0] = 1;
+numbers[1] = 2;
+numbers[2] = 3;
+listElements(numbers);
+Sample output
+the elements of the array are: 1 2 3
+As noticed earlier, you can freely choose the name of the parameter inside the method, the name doesn't have to be the same as the name of the variable when you call the method. In the example above, we call the array integerArray, meanwhile the caller of the method has named the same array numbers.
+Array is an object, so when you change the array inside the method, the changes persist after the execution of the method.
+
+The shorter way to create an array
+Just like for Strings, there's also a shortcut to create an array. Here we create an array to hold 3 integers, and initiate it with values 100, 1 and 42 in it:
+int[] numbers = {100, 1, 42};
+So apart from calling for new, we can also initialize an array with a block, that contains comma-separated values to be assigned in the array. This works for all the types: below we initialize an array of strings, then an array of floating-point numbers. Finally the values are printed.
+String[] arrayOfStrings = {"Matti L.", "Matti P.", "Matti V."};
+double[] arrayOfFloatingpoints = {1.20, 3.14, 100.0, 0.6666666667};
+for (int i = 0; i < arrayOfStrings.length; i++) {
+    System.out.println(arrayOfStrings[i] + " " +  arrayOfFloatingpoints[i]);
+}
+Sample output
+Matti L. 1.20
+Matti P. 3.14
+Matti V. 100.0
+When you initialize an array with a block, the length of the array is precisely the number of the values specified in the block. The values of the block are assigned to the array in the order, eg. the first value is assigned to index 0, the second value to index 1 etc.
+// index           0   1    2    3   4   5     6     7
+int[] numbers = {100,  1,  42,  23,  1,  1, 3200, 3201};
+
+Reading and Printing Strings
+You can read a string using the nextLine-method offered by Scanner. The program below reads the name of the user and prints it:
+Scanner reader = new Scanner(System.in);
+System.out.print("What's your name? ");
+// reading a line from the user and assigning it to the name variable
+String name = reader.nextLine();
+System.out.println(name);
+Sample output
+What's your name? Vicky
+Vicky
+Strings can also be concatenated. If you place a + operator between two strings, you get a new string that's a combination of those two strings. Be mindful of any white spaces in your variables!
+String greeting = "Hi ";
+String name = "Lily";
+String goodbye = " and see you later!";
+String phrase = greeting + name + goodbye;
+System.out.println(phrase);
+Sample output
+Hi Lily and see you later!
+
+String Comparisons And "Equals"
+Strings can't be compared with with the equals operator ==. For strings, there exists a separate equals-command, which is always appended to the end of the string that we want to compare.
+String text = "course";
+if (text.equals("marzipan")) {
+    System.out.println("The text variable contains the text marzipan.");
+} else {
+    System.out.println("The text variable does not contain the text marzipan.");
+}
+The equals command is always appended to the end of the string that we want to compare, "string variable dot equals some text". You can also compare a string variable to another string variable.
+String text = "course";
+String anotherText = "horse";
+if (text.equals(anotherText)) {
+    System.out.println("The two texts are equal!");
+} else {
+    System.out.println("The two texts are not equal!");
+}
+When comparing strings, you should make sure the string variable has some value assigned to it. If it doesn't have a value, the program will produce a NullPointerException error, which means that no value has been assigned to the variable, or that it is empty (null).
+
+Splitting a String
+You can split a string to multiple pieces with the split-method of the String class. The method takes as a parameter a string denoting the place around which the string should be split. The split method returns an array of the resulting sub-parts. In the example below, the string has been split around a space.
+String text = "first second third fourth";
+String[] pieces = text.split(" ");
+System.out.println(pieces[0]);
+System.out.println(pieces[1]);
+System.out.println(pieces[2]);
+System.out.println(pieces[3]);
+System.out.println();
+for (int i = 0; i < pieces.length; i++) {
+    System.out.println(pieces[i]);
+}
+Sample output
+first
+second
+third
+fourth
+first
+second
+third
+fourth
+
+Strings have a contains-method, which tells if a string contains another string. It works like this:
+String text = "volcanologist";
+if (text.contains("can")) {
+    System.out.println("can was found");
+}
+if (!text.contains("tin")) {
+    System.out.println("tin wasn't found");
+}
+Sample output
+can was found
+tin wasn't found
+
+CharAt Method
+You can get a character at a specified index of a string with the charAt method.
+String text = "Hello world!";
+char character = text.charAt(0);
+System.out.println(character);
+Sample output
+H
+
+Length of string
+You can find out the length of a string with length()-method:
+String word = "equisterian";
+int length = word.length();
+System.out.println("The length of the word" + word + " is " + length);
+Sample output
+The length of the word equisterian is 11
