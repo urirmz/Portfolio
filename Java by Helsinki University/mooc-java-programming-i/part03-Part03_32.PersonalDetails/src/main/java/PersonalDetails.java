@@ -32,7 +32,7 @@ public class PersonalDetails {
         for (int birthYear : birthYears) {
             birthYearsSum += birthYear;
         }
-        double birthYearsAverage = birthYearsSum / birthYears.size();
+        double birthYearsAverage = birthYearsSum / (double) birthYears.size();
         
         System.out.println("Longest name: " + longestName);
         System.out.println("Average of the birth years: " + birthYearsAverage);
