@@ -9,6 +9,20 @@ public class Items {
 
         ArrayList<Item> items = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-
+        
+        while (true) {
+            System.out.println("Name?");
+            String input = scanner.nextLine();
+            
+            if (input.isEmpty()) {
+                break;
+            } else {
+                items.add(new Item(input));
+            }
+        }
+        
+        for (Item item : items) {
+            System.out.println(item);
+        }
     }
 }
