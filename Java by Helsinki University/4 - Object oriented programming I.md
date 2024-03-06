@@ -183,3 +183,111 @@ Sample output
 John, age 0 years
 Matthew, age 0 years
 Martin, age 0 years
+
+Reading From the Keyboard
+We've been using the Scanner-class since the beginning of this course to read user input. The block in which data is read has been a while-true loop where the reading ends at a specific input.
+Scanner scanner = new Scanner(System.in);
+while (true) {
+    String line = scanner.nextLine();
+
+    if (line.equals("end")) {
+        break;
+    }
+
+    // add the read line to a list for later
+    // handling or handle the line immediately
+
+}
+In the example above, we pass system input (System.in) as a parameter to the constructor of the Scanner-class. In text-based user interfaces, the input of the user is directed into the input stream one line at a time, which means that the information is sent to be handled every time the user enters a new line.
+
+The Concrete File Storage Format
+Files exist on the hard drive of a computer, which is, in reality, a large set of ones and zeros, i.e., bits. Information is made up of these bits, e.g., one variable of type int takes up 32 bits (i.e., 32 ones or zeros). Modern terabyte-sized hard drives hold about 8 trillion bits (written out the number is 8,000,000,000,000). On this scale, a single integer is very small.
+Files can exist practically anywhere on a hard drive, even separated into multiple pieces. The computer's filesystem has the responsibility of keeping track of the locations of files on the hard drive as well as providing the ability to create new files and modify them. The filesystem's main responsibility is abstracting the true structure of the hard drive; a user or a program using a file doesn't need to care about how, or where, the file is actually stored.
+
+Reading From a File
+Reading a file is done using the Scanner-class. When we want to read a file using the Scanner-class, we give the path for the file we want to read as a parameter to the constructor of the class. The path to the file can be acquired using Java's Paths.get command, which is given the file's name in string format as a parameter: Paths.get("filename.extension").
+When the Scanner-object that reads the file has been created, the file can be read using a while-loop. The reading proceeds until all the lines of the file have been read, i.e., until the scanner finds no more lines to read. Reading a file may result in an error, and it's for this reason that the process requires separate blocks - one for the try, and another to catch potential errors. We'll be returning to the topic of error handling later.
+// first
+import java.util.Scanner;
+import java.nio.file.Paths;
+// in the program:
+// we create a scanner for reading the file
+try (Scanner scanner = new Scanner(Paths.get("file.txt"))) {
+
+    // we read the file until all lines have been read
+    while (scanner.hasNextLine()) {
+        // we read one line
+        String row = scanner.nextLine();
+        // we print the line that we read
+        System.out.println(row);
+    }
+} catch (Exception e) {
+    System.out.println("Error: " + e.getMessage());
+}
+A file is read from the project root by default ( when new Scanner(Paths.get("file.txt")) is called), i.e., the folder that contains the folder src and the file pom.xml (and possibly other files as well). The contents of this folder can the inspected using the Files-tab in NetBeans.
+
+An Empty Line In a File
+Sometimes an empty line finds it way into a file. Skipping an empty line can be done using the command continue and the isEmpty-method of the string.
+In the example below, we read from a file
+Reading data is straightforward.
+// we create a scanner for reading the file
+try (Scanner scanner = new Scanner(Paths.get("henkilot.csv"))) {
+
+    // we read all the lines of the file
+    while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+
+        // if the line is blank we do nothing
+        if (line.isEmpty()) {
+            continue;
+        }
+
+        // do something with the data
+
+    }
+} catch (Exception e) {
+    System.out.println("Error: " + e.getMessage());
+}
+
+Reading Data of a Specific Format From a File
+The world is full of data that are related to other data — these form collections. For example, personal information can include a name, date of birth and a phone number. Address information, on the other hand, can include a country, city, street address, postal number and so on.
+Data is often stored in files using a specific format. One such format that's already familiar to us is comma-separated values (CSV) format, i.e., data separated by commas.
+Scanner scanner = new Scanner(System.in);
+while (true) {
+    System.out.print("Enter name and age separated by a comma: ");
+    String line = scanner.nextLine();
+    if (line.equals("")) {
+        break;
+    }
+    String[] parts = line.split(",");
+    String name = parts[0];
+    int age = Integer.valueOf(parts[1]);
+
+    System.out.println("Name: " + name);
+    System.out.println("Age: " + age);
+}
+The program works as follows:
+Sample output
+Enter name and age separated by a comma:
+virpi,19
+Name: virpi
+Age: 19
+Enter name and age separated by a comma:
+jenna,21
+Name: jenna
+Age: 21
+Enter name and age separated by a comma:
+ada,20
+Name: ada
+Age: 20
+Reading the same data from a file called records.txt would look like so:
+try (Scanner scanner = new Scanner(Paths.get("records.txt"))) {
+    while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        String[] parts = line.split(",");
+        String name = parts[0];
+        int age = Integer.valueOf(parts[1]);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
