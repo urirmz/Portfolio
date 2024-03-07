@@ -269,3 +269,28 @@ We have seen both primitive and reference variables act as method parameters. Si
 Assisted creation of constructors, getters, and setters
 Development environments can help the programmer. If you have created object variables for a class, creating constructors, getters, and setters can be done almost automatically.
 Go inside the code block of the class, but outside of all the methods, and simultaneously press ctrl and space. If your class has e.g. an object variable balance, NetBeans offers the option to generate the getter and setter methods for the object variable, and a constuctor that assigns an initial value for that variable.
+
+Object as object variable
+Objects may contain references to objects.
+
+Date in Java programs
+If you want to handle dates in your own programs, it's worth reading about the premade Java class LocalDate. It contains a significant amount of functionality that can be used to handle dates.
+For example, the current date can be used with the existing LocalDate class in the following manner:
+import java.time.LocalDate;
+public class Example {
+
+    public static void main(String[] args) {
+
+        LocalDate now = LocalDate.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+
+        System.out.println("today is  " + day + "." + month + "." + year);
+
+    }
+}
+
+Object of same type as method parameter
+The idea behind abstraction is to conceptualize the programming code so that each concept has its own clear responsibilities.
+A private variable can be accessed from all the methods contained by that class.
