@@ -278,19 +278,185 @@ If you want to handle dates in your own programs, it's worth reading about the p
 For example, the current date can be used with the existing LocalDate class in the following manner:
 import java.time.LocalDate;
 public class Example {
-
     public static void main(String[] args) {
-
         LocalDate now = LocalDate.now();
         int year = now.getYear();
         int month = now.getMonthValue();
         int day = now.getDayOfMonth();
-
         System.out.println("today is  " + day + "." + month + "." + year);
-
     }
 }
 
 Object of same type as method parameter
 The idea behind abstraction is to conceptualize the programming code so that each concept has its own clear responsibilities.
 A private variable can be accessed from all the methods contained by that class.
+
+Comparing the equality of objects (equals)
+While working with strings, we learned that strings must be compared using the equals method. This is how it's done.
+Scanner scanner = new Scanner(System.in);
+System.out.println("Enter two words, each on its own line.")
+String first = scanner.nextLine();
+String second = scanner.nextLine();
+if (first.equals(second)) {
+    System.out.println("The words were the same.");
+} else {
+    System.out.println("The words were not the same.");
+}
+With primitive variables such as int, comparing two variables can be done with two equality signs. This is because the value of a primitive variable is stored directly in the "variable's box". The value of reference variables, in contrast, is an address of the object that is referenced; so the "box" contains a reference to the memory location. Using two equality signs compares the equality of the values stored in the "boxes of the variables" — with reference variables, such comparisons would examine the equality of the memory references.
+If we want to be able to compare two objects of our own design with the equals method, that method must be defined in the class. The method equals is defined as a method that returns a boolean type value — the return value indicates whether the objects are equal.
+The equals method is implemented in such a way that it can be used to compare the current object with any other object. The method receives an Object-type object as its single parameter — all objects are Object-type, in addition to their own type. The equals method first compares if the addresses are equal: if so, the objects are equal. After this, we examine if the types of the objects are the same: if not, the objects are not equal. Next, the Object-type object passed as the parameter is converted to the type of the object that is being examined by using a type cast, so that the values of the object variables can be compared. Below the equality comparison has been implemented for the SimpleDate class.
+public class SimpleDate {
+    private int day;
+    private int month;
+    private int year;
+    public boolean equals(Object compared) {
+        // if the variables are located in the same position, they are equal
+        if (this == compared) {
+            return true;
+        }
+        // if the type of the compared object is not SimpleDate, the objects are not equal
+        if (!(compared instanceof SimpleDate)) {
+            return false;
+        }
+        // convert the Object type compared object
+        // into a SimpleDate type object called comparedSimpleDate
+        SimpleDate comparedSimpleDate = (SimpleDate) compared;
+        // if the values of the object variables are the same, the objects are equal
+        if (this.day == comparedSimpleDate.day &&
+            this.month == comparedSimpleDate.month &&
+            this.year == comparedSimpleDate.year) {
+            return true;
+        }
+        // otherwise the objects are not equal
+        return false;
+    }
+}
+
+What is Object?
+Every class we create (and every ready-made Java class) inherits the class Object, even though it is not specially visible in the program code. This is why an instance of any class can be passed as a parameter to a method that receives an Object type variable as its parameter. Inheriting the Object can be seen elsewhere, too: for instance, the toString method exists even if you have not implemented it yourself, just as the equals method does.
+To illustrate, the following source code compiles successfully: equals method can be found in the Object class inherited by all classes.
+public class Bird {
+    private String name;
+
+    public Bird(String name) {
+        this.name = name;
+    }
+}
+Bird red = new Bird("Red");
+System.out.println(red);
+Bird chuck = new Bird("Chuck");
+System.out.println(chuck);
+if (red.equals(chuck)) {
+    System.out.println(red + " equals " + chuck);
+}
+
+Object equality and lists
+Let's examine how the equals method is used with lists. Let's assume we have the previously described class Bird without any equals method.
+
+public class Bird {
+    private String name;
+
+    public Bird(String name) {
+        this.name = name;
+    }
+}
+Let's create a list and add a bird to it. After this we'll check if that bird is contained in it.
+ArrayList<Bird> birds = new ArrayList<>()
+Bird red = new Bird("Red");
+if (birds.contains(red)) {
+    System.out.println("Red is on the list.");
+} else {
+    System.out.println("Red is not on the list.");
+}
+birds.add(red);
+if (birds.contains(red)) {
+    System.out.println("Red is on the list.");
+} else {
+    System.out.println("Red is not on the list.");
+}
+System.out.println("However!");
+red = new Bird("Red");
+if (birds.contains(red)) {
+    System.out.println("Red is on the list.");
+} else {
+    System.out.println("Red is not on the list.");
+}
+Sample output
+Red is not on the list.
+Red is on the list.
+However!
+Red is not on the list.
+We can notice in the example above that we can search a list for our own objects. First, when the bird had not been added to the list, it is not found — and after adding it is found. When the program switches the red object into a new object, with exactly the same contents as before, it is no longer equal to the object on the list, and therefore cannot be found on the list.
+The contains method of a list uses the equals method that is defined for the objects in its search for objects. In the example above, the Bird class has no definition for that method, so a bird with exactly the same contents — but a different reference — cannot be found on the list.
+
+Object as a method's return value
+We have seen methods return boolean values, numbers, and strings. Easy to guess, a method can return an object of any type.
+In the next example we present a simple counter that has the method clone. The method can be used to create a clone of the counter; i.e. a new counter object that has the same value at the time of its creation as the counter that is being cloned.
+public class Counter {
+    private int value;
+    // example of using multiple constructors:
+    // you can call another constructor from a constructor by calling this
+    // notice that the this call must be on the first line of the constructor
+    public Counter() {
+        this(0);
+    }
+    public Counter(int initialValue) {
+        this.value = initialValue;
+    }
+    public void increase() {
+        this.value = this.value + 1;
+    }
+    public String toString() {
+        return "value: " + value;
+    }
+    public Counter clone() {
+        // create a new counter object that receives the value of the cloned counter as its initial value
+        Counter clone = new Counter(this.value);
+        // return the clone to the caller
+        return clone;
+    }
+}
+An example of using counters follows:
+Counter counter = new Counter();
+counter.increase();
+counter.increase();
+System.out.println(counter);         // prints 2
+Counter clone = counter.clone();
+System.out.println(counter);         // prints 2
+System.out.println(clone);          // prints 2
+counter.increase();
+counter.increase();
+counter.increase();
+counter.increase();
+System.out.println(counter);         // prints 6
+System.out.println(clone);          // prints 2
+clone.increase();
+System.out.println(counter);         // prints 6
+System.out.println(clone);          // prints 3
+Immediately after the cloning operation, the values contained by the clone and the cloned object are the same. However, they are two different objects, so increasing the value of one counter does not affect the value of the other in any way.
+
+Final object variables
+In the Payment card exercise we used a double-type object variable to store the amount of money. In real applications this is not the approach you want to take, since as we have seen, calculating with doubles is not exact. A more reasonable way to handle amounts of money is create an own class for that purpose. Here is a layout for the class:
+public class Money {
+    private final int euros;
+    private final int cents;
+    public Money(int euros, int cents) {
+        this.euros = euros;
+        this.cents = cents;
+    }
+    public int euros() {
+        return euros;
+    }
+    public int cents() {
+        return cents;
+    }
+    public String toString() {
+        String zero = "";
+        if (cents <= 10) {
+            zero = "0";
+        }
+        return euros + "." + zero + cents + "e";
+    }
+}
+The word final used in the definition of object variables catches attention. The result of this word is that the values of these object variables cannot be modified after they have been set in the constructor. The objects of Money class are unchangeable so immutable — if we want to e.g. increase the amount of money, we must create a new object to represent that new amount of money.
+
