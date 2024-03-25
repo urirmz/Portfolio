@@ -1,0 +1,121 @@
+-- SQL
+-- SQL stands for "Structured Query Language"
+
+-- PostgreSQL
+-- Log in by typing psql --username=freecodecamp --dbname=postgres into the terminal and pressing enter.
+-- Type \l into the prompt to list the databases available.
+
+-- Databases
+-- You can make your own data base like this: CREATE DATABASE database_name;
+-- The capitalized words are keywords telling PostgreSQL what to do. The name of the database is the lowercase word. Note that all commands need a semi-colon at the end. If you don't get a message after entering a command, it means it's incomplete and you likely forgot the semi-colon
+-- If you don't get a message after a command, it is likely incomplete. This is because you can put a command on multiple lines.
+-- You can connect to a database by entering \c database_name. You need to connect to add information. 
+-- In PostgreSQL, your prompt changes to the database you are connected, like: database=>
+-- You can display tables with \d. You can view more details about a table by adding the table name after the display command like this: \d table_name
+-- You can rename a database like this: ALTER DATABASE database_name RENAME TO new_database_name;
+-- You can delete a data base with: DROP DATABASE database_name; 
+
+-- Tables
+-- You can create a table like this: CREATE TABLE table_name();
+-- Inside those parenthesis you can put columns for a table so you don't need to add them with a separate command, like this: 
+-- CREATE TABLE table_name
+-- (
+--   column1 datatype [ NULL | NOT NULL ],
+--   column2 datatype [ NULL | NOT NULL ],
+--   ...
+--   CONSTRAINT constraint_name UNIQUE (uc_col1, uc_col2, ... uc_col_n)
+-- );
+-- You can delete tables with: DROP TABLE table_name;
+-- You can use TRUNCATE to delete all data from a table
+-- You "cannot truncate a table referenced in a foreign key constraint." So if you want to delete the data from majors, you need to delete the data from the referenced tables at the same time.
+
+-- Constraints
+-- To create set a NOT NULL to a column of a table you can use: ALTER TABLE table ALTER COLUMN column SET NOT NULL;
+-- The syntax for creating a unique constraint using an ALTER TABLE statement in PostgreSQL is:
+-- ALTER TABLE table_name ADD CONSTRAINT constraint_name UNIQUE (column1, column2, ... column_n);
+-- You can drop a constraint with: ALTER TABLE table_name DROP CONSTRAINT constraint_name;
+
+-- Primary Keys
+-- A primary key it's a column that uniquely identifies each row in the table. Here's an example of how to set a PRIMARY KEY: ALTER TABLE table_name ADD PRIMARY KEY(column_name); You should set a primary key on every table and there can only be one per table. 
+-- You can create a composite primary key that uses more than one column as a unique pair like this: ALTER TABLE <table_name> ADD PRIMARY KEY(<column_name>, <column_name>);
+
+-- Columns
+-- Tables need columns to describe the data in them, yours doesn't have any yet. Here's an example of how to add one: ALTER TABLE table_name ADD COLUMN column_name DATATYPE CONSTRAINT; Constraints are optional
+-- You can remove columns with: ALTER TABLE table_name DROP COLUMN column_name;
+-- Here's how you can rename a column: ALTER TABLE table_name RENAME COLUMN column_name TO new_name;
+-- You can change the data type of a column with: ALTER TABLE table_name ALTER COLUMN column_name TYPE new_data_type;
+-- You can add a default value by adding DEFAULT keyword. Example: ALTER TABLE table_name ADD COLUMN column_name DATATYPE DEFAULT default_value; The default value DATE DEFAULT NOW() will return the date of today
+
+-- Rows
+-- Rows are the actual data in the table. You can add one like this: INSERT INTO table_name(column_1, column_2) VALUES(value1, value2);
+-- Adding rows one at a time is quite tedious. Here's an example of how you could have added the previous three rows at once:
+-- INSERT INTO characters(name, homeland, favorite_color)
+-- VALUES('Mario', 'Mushroom Kingdom', 'Red'),
+-- ('Luigi', 'Mushroom Kingdom', 'Green'),
+-- ('Peach', 'Mushroom Kingdom', 'Pink');
+-- You can view the data in a table by querying it with the SELECT statement. Here's how it looks: SELECT columns FROM table_name;
+-- You can separate the column names with a comma to view more than one column.
+-- You can use an asterisk (*) to denote that you want to see all the columns. Like this: SELECT * FROM table_name;
+-- You can view a row with a WHERE condition. Here's an example: SELECT columns FROM table_name WHERE condition; A condition can consist of a column, an operator, and a value. You can use the greater than operator to see rows that come after alphabetically.
+-- Here's an example of how to delete a row: DELETE FROM table_name WHERE condition;
+-- You can change a value in a row like this: UPDATE table_name SET column_name=new_value WHERE condition;
+-- To order rows in a table, you can use: SELECT columns FROM table_name ORDER BY column_name;
+-- You can left a value from a row in blank giving it the value NULL.
+
+-- Data types
+-- A common data type is VARCHAR. It's a short string of characters. You need to give it a maximum length when using it like this: VARCHAR(30). Make sure to use single quotes where needed when adding a VARCHAR type value
+-- The SERIAL type will make your column an INT with a NOT NULL constraint, and automatically increment the integer when a new row is added.
+-- NUMERIC(a, b) is a data type for decimals. NUMERIC(4, 1) has up to four digits and one of them has to be to the right of the decimal.
+-- DATE values need a string with the format: 'YYYY-MM-DD'.
+
+-- Relating tables
+-- You need to set a foreign key so you can relate rows from a table to rows from another table. Here's an example that creates a column as a foreign key: ALTER TABLE table_name ADD COLUMN column_name DATATYPE REFERENCES referenced_table_name(referenced_column_name); 
+-- You can also set a foreign key to an existing column with: ALTER TABLE table_name ADD FOREIGN KEY(column_name) REFERENCES referenced_table(referenced_column);
+-- These tables have a "one-to-one" relationship. One row in the characters table will be related to exactly one row in more_info and vice versa. Enforce that by adding the UNIQUE constraint to your foreign key. Here's an example: ALTER TABLE table_name ADD UNIQUE(column_name);
+-- The column should also be NOT NULL since you don't want to have a row that is for nobody. Here's an example: ALTER TABLE table_name ALTER COLUMN column_name SET NOT NULL;
+-- One-to-many relationship. This means a row from one table can have many rows from another
+-- "Many-to-many" relationships usually use a junction table to link two tables together, forming two "one-to-many" relationships
+-- When you foreign key, you can get all the data from both tables with a JOIN command: SELECT columns FROM table_1 FULL JOIN table_2 ON table_1.primary_key_column = table_2.foreign_key_column;
+-- You can also join more than two tables with: 
+-- SELECT columns FROM junction_table
+-- FULL JOIN table_1 ON junction_table.foreign_key_column = table_1.primary_key_column
+-- FULL JOIN table_2 ON junction_table.foreign_key_column = table_2.primary_key_column;
+
+-- Creating and retriving dumps
+-- You can make a dump of a created database by entering pg_dump -cC --inserts -U freecodecamp universe > universe.sql in a bash terminal (not the psql one). It will save the commands to rebuild your database in universe.sql. The file will be located where the command was entered. If it's anything inside the project folder, the file will be saved in the VM. You can rebuild the database by entering psql -U postgres < universe.sql in a terminal where the .sql file is.
+
+-- Run single commands
+-- You used the psql command to log in and interact with the database. You can use it to just run a single command and exit. Above your loop, add a PSQL variable that looks like this: PSQL="psql -X --username=freecodecamp --dbname=students --no-align --tuples-only -c". This will allow you to query your database from your script. The important parts are the username, dbname, and the -c flag that is for running a single command and exiting. The rest of the flags are for formatting.
+-- Now, you can query your database using the PSQL variable like this: $($PSQL "<query_here>"). The code in the parenthesis will run in a subshell, which is a separate bash process
+
+-- Queries 
+-- You can view a row with a WHERE condition. Here's an example: SELECT columns FROM table_name WHERE condition; A condition can consist of a column, an operator, and a value. 
+-- You can use the greater than operator to see rows that come after alphabetically. An example: SELECT * FROM students WHERE last_name < 'M' will return only students which first letter of their last name comes alphabetically before 'M'
+-- You can group conditions together with parenthesis like this: WHERE <condition_1> AND (<condition_2> OR <condition_2>). This would only return rows where <condition_1> is true and one of the others is true.
+-- You can use LIKE to find patterns in text like this: WHERE <column> LIKE '<pattern>'. An underscore (_) in a pattern will return rows that have any character in that spot. 
+-- Another pattern character is %. It means anything can be there. For example, to find names that start with W, you could use W%
+-- You can use NOT LIKE to find things that don't match a pattern
+-- ILIKE will ignore the case of the letters when matching. You can put NOT in front of ILIKE
+-- You combine these like any other conditions. For example, to view the courses that don't have a capital or lowercase A and have a space you can use:  SELECT * FROM courses WHERE course NOT ILIKE '%A%'AND course LIKE '% %';
+-- You can access fields that are empty or blank using IS NULL as a condition like this: WHERE <column> IS NULL
+-- You can specify the order you want your results to be in by adding ORDER BY <column_name> at the end of a query. When using ORDER BY, it will be in ascending (ASC) order by default. Add DESC (descending) at the end of the query to put the highest ones at the top.
+-- You can add more columns to the order by separating them with a comma like this: ORDER BY <column_1>, <column_2>
+-- Many times, you only want to return a certain number of rows. You can add LIMIT <number> at the end of the query to only get the amount you want.
+-- The order of the keywords in your query matters. You cannot put LIMIT before ORDER BY, or either of them before WHERE
+-- There's a number of mathematic functions to use with numerical columns. One of them is MIN, you can use it when selecting a column like this: SELECT MIN(<column>) FROM <table>. It will find the lowest value in the column. Another one is MAX
+-- SUM function adds all the values from a column
+-- AVG will give you the average of all the values in a column
+-- You can round decimals up or down to the nearest whole number with CEIL and FLOOR, respectively. Or, you can round a number to the nearest whole number with ROUND. You can round to a specific number of decimal places by adding a comma and number to ROUND, like this: ROUND(<number_to_round>, <decimals_places>)
+-- Another function is COUNT. You can use it like this: COUNT(<column>). It will tell you how many entries are in a table for the column. COUNT function doesn't count the empty entries
+-- DISTINCT is a function that will show you only unique values. You can use it like this: DISTINCT(<column>). You can get the same results with GROUP BY. Here's an example of how to use it: SELECT <column> FROM <table> GROUP BY <column>. But with GROUP BY you can add any of the aggregate functions (MIN, MAX, COUNT, etc) to it to find more information. For instance, if you wanted to see how many students were in each major you could use SELECT COUNT(*) FROM students GROUP BY major_id. When using GROUP BY, any columns in the SELECT area must be included in the GROUP BY area. Other columns must be used with any of the aggregate functions (MAX, AVG, COUNT, etc). 
+-- Another option with GROUP BY is HAVING. You can add it at the end like this: SELECT <column> FROM <table> GROUP BY <column> HAVING <condition>. The condition must be an aggregate function with a test. An example to might be to use HAVING COUNT(*) > 0 to only show what whatever column is grouped that have at least one row. 
+-- You can rename a column with AS like this: SELECT <column> AS <new_column_name>
+-- The majors and students table are linked with the major_id foreign key. If you want to see the name of a major that a student is taking, you need to JOIN the two tables into one. Here's an example of how to do that: SELECT * FROM <table_1> FULL JOIN <table_2> ON <table_1>.<foreign_key_column> = <table_2>.<foreign_key_column>;
+-- It's showing all the columns from both tables, the two major_id columns are the same in each row for the ones that have it. You can see that there are some students without a major, and some majors without any students. The FULL JOIN you used will include all rows from both tables, whether or not they have a row using that foreign key in the other. From there, you could use any of the previous methods to narrow down, group, order, etc. 
+-- A LEFT JOIN gets all rows from the left table, but only rows from the right table that are linked to from the left one. 
+-- The RIGHT join shows all the rows from the right table, but only rows from the left table that are linked to from the right one.
+-- The INNER JOIN only returns rows if they have a value in the foreign key column of the opposite table.
+-- When making a join, if you look at the column names, it shows two major_id columns. One from the students table and one from the majors table. If you were to try and query it using major_id, you would get an error. You would need to specify what table you want the column from like this: <table>.<column>
+-- You used AS to rename columns. You can use it to rename tables, or give them aliases, as well. Here's an example: SELECT * FROM <table> AS <new_name>;. Enter the same query you just entered, but rename the majors table to m. Anywhere the majors table is referenced, you will need to use m instead of majors.
+-- There's a shortcut keyword, USING to join tables if the foreign key column has the same name in both tables. Here's an example: SELECT * FROM <table_1> FULL JOIN <table_2> USING(<column>); When using this method, both columns will turn into one in the resulting table
+-- You can add a third table to a join like this: SELECT * FROM <table_1> FULL JOIN <table_2> USING(<column>) FULL JOIN <table_3> USING(<column>). This example will join the first two tables into one, turning it into the left table for the second join.
