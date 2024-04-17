@@ -72,3 +72,24 @@ Bootstrap uses a responsive grid system, which makes it easy to put elements int
       <a href="#"><img class="img-responsive thick-green-border" src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/relaxing-cat.jpg" alt="A cute orange cat lying on its back."></a>
     </div>
   </div>
+
+Add Font Awesome Icons to our Buttons
+Font Awesome is a convenient library of icons. These icons can be webfonts or vector graphics. These icons are treated just like fonts. You can specify their size using pixels, and they will assume the font size of their parent HTML elements.
+You can include Font Awesome in any app by adding the following code to the top of your HTML:
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+The i element was originally used to make other elements italic, but is now commonly used for icons. You can add the Font Awesome classes to the i element to turn it into an icon, for example:
+<i class="fas fa-info-circle"></i>
+Note that the span element is also acceptable for use with icons.
+
+Responsively Style Radio Buttons
+You can use Bootstrap's col-xs-* classes on form elements, too! This way, our radio buttons will be evenly spread out across the page, regardless of how wide the screen resolution is.
+
+form-control
+All textual <input>, <textarea>, and <select> elements with the class .form-control have a width of 100%.
+
+Create Bootstrap Wells
+Bootstrap has a class called well that can create a visual sense of depth for your columns.
+
+Create a Class to Target with jQuery Selectors
+Not every class needs to have corresponding CSS. Sometimes we create classes just for the purpose of selecting these elements more easily using jQuery.
+Give each of your button elements the class target.
