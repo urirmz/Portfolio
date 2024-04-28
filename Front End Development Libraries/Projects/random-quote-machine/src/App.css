@@ -9,6 +9,11 @@
   border-radius: 15% 15%;
 }
 
+.quote-icon {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
 #text {
   font-weight: 500;
   font-size: 1.75em;
@@ -22,4 +27,8 @@
 #new-quote {
   color: white;
   font-size: 0.85em;
+}
+
+.social-link {
+  color: "white";
 }

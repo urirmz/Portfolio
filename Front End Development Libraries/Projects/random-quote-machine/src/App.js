@@ -1,13 +1,12 @@
 import React from 'react';
 import './App.css';
-import $ from 'jquery';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       quote: new Quote(),
-      color: []
+      color: ''
     }
     this.newQuoteAndColor = this.newQuoteAndColor.bind(this);
   }
@@ -16,27 +15,31 @@ class App extends React.Component {
     this.newQuoteAndColor();
   }
 
-  render() {  
-    const mainColor = `rgb(${this.state.color[0]}, ${this.state.color[1]}, ${this.state.color[2]})`;
-    const spaceQuoteIcons = {marginLeft: 10, marginRight: 10};
+  render() {
+    const twitterLink = ``;
+    const tumblerLink = ``;
 
+    const transitionProperties = "all 2s ease";
+    const fadeColorText = { color: this.state.color, transition: transitionProperties };
+    const fadeColorBackground = { color: "white", backgroundColor: this.state.color, transition: transitionProperties };
+    
     return (      
-      <div id="page" className="container-fluid row align-items-center fade-in" style={{backgroundColor: mainColor}}>
+      <div id="page" className="container-fluid row align-items-center" style={fadeColorBackground}>
         <div id="quote-box" className="container-sm col-4 rounded-2">
-          <p id="text" className="fade-in" style={{color: mainColor}}>
-            <i className="fa fa-quote-left" style={spaceQuoteIcons}></i>
+          <p id="text" style={fadeColorText}>
+            <i className="fa fa-quote-left quote-icon"></i>
             {this.state.quote.phrase}
-            <i className="fa fa-quote-right" style={spaceQuoteIcons}></i>
+            <i className="fa fa-quote-right quote-icon"></i>
           </p>
-          <p id="author" className="fade-in" style={{color: mainColor}}>- {this.state.quote.author}</p>
+          <p id="author" style={fadeColorText}>- {this.state.quote.author}</p>
           <div className="buttons row gap-2">
-            <a className="btn btn-default col-1 rounded-1 fade-in" style={{backgroundColor: mainColor, color: "white"}}>
+            <a href={twitterLink} id="tweet-quote" target="_blank" className="btn btn-default col-1 rounded-1" style={fadeColorBackground}>
               <i className="fa fa-twitter"></i>
             </a>
-            <a className="btn btn-default col-1 rounded-1 fade-in" style={{backgroundColor: mainColor, color: "white"}}>
+            <a href={tumblerLink}  id="tumblr-quote" target="_blank" className="btn btn-default col-1 rounded-1" style={fadeColorBackground}>
               <i className="fa fa-tumblr"></i>
             </a>
-            <button id="new-quote" className="btn btn-default col-auto ms-auto rounded-1 fade-in" onClick={this.newQuoteAndColor} style={{background: mainColor}}>
+            <button id="new-quote" className="btn btn-default col-auto ms-auto rounded-1" style={fadeColorBackground} onClick={this.newQuoteAndColor}>
               New quote
             </button>
           </div>          
@@ -50,7 +53,7 @@ class App extends React.Component {
     const r = Math.floor(Math.random() * 255);
     const g = Math.floor(Math.random() * 255);
     const b = Math.floor(Math.random() * 255);
-    const color = [r, g, b];
+    const newColor = `rgb(${r}, ${g}, ${b})`;
   
     const quotes = [];
     quotes.push(new Quote("There are no traffic jams along the extra mile.", "Roger Staubach")); 
@@ -63,18 +66,9 @@ class App extends React.Component {
     quotes.push(new Quote("The only way to do great work is to love what you do.", "Steve Jobs"));
     quotes.push(new Quote("You take your life in your own hands, and what happens? A terrible thing, no one to blame.", " Erica Jong"));
     quotes.push(new Quote("A person who never made a mistake never tried anything new.", "Albert Einstein"));
-    const selectedQuote = Math.floor(Math.random() * (quotes.length - 1)); 
+    const newQuoteIndex = Math.floor(Math.random() * (quotes.length - 1)); 
 
-    $(".fade-in").animate(
-      {
-        color: `rgb(${color[0]}, ${color[1]}, ${color[2]})`,
-        backgroundColor: `rgb(${color[0]}, ${color[1]}, ${color[2]})`        
-      }, 
-      {
-        duration: 1500,
-        complete: this.setState({quote: quotes[selectedQuote], color: color})
-      }        
-    );
+    this.setState({quote: quotes[newQuoteIndex], color: newColor});
   }
 }
 
