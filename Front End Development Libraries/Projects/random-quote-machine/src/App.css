@@ -1,0 +1,25 @@
+#page {
+  height: 100vh;
+  margin: 0;
+}
+
+#quote-box {
+  background-color: white;
+  padding: 2em;
+  border-radius: 15% 15%;
+}
+
+#text {
+  font-weight: 500;
+  font-size: 1.75em;
+  font-family: 'Raleway';
+}
+
+#author {
+  text-align: right;
+}
+
+#new-quote {
+  color: white;
+  font-size: 0.85em;
+}
