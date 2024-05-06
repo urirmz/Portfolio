@@ -32,3 +32,13 @@
 .social-link {
   color: "white";
 }
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
