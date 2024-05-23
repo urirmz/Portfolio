@@ -1,0 +1,74 @@
+body {
+  background: #8D8D8D;
+}
+
+#drum-machine {
+  border: 0.3em solid #0D6EFD;
+  margin-top: 28vh;
+  background: #B3B3B3;
+  padding: 2em;
+}
+
+#drumpad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.5em;
+}
+
+.drumpad {  
+  font-size: 1.5em;
+  font-weight: bold;
+  background-color: #808080;
+  text-align: center;
+  box-shadow: 0.2em 0.2em 0.5em  black;
+  height: 3em;
+  padding-top: 0.8em;
+}
+
+.drumpad:hover {
+  cursor: pointer;
+}
+
+.drumpad audio {
+  display: none;
+}
+
+#Q,
+#A,
+#Z {
+  grid-column: 1/2;
+}
+
+#W,
+#S,
+#X {
+  grid-column: 2/3;
+}
+
+#controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#power {
+  font-size: 1.2em;
+  font-weight: bold;
+  display: block;
+  margin: 0.5em;
+}
+
+#status-box {
+  display: block;
+  margin: 0.5em;
+  background-color: #808080;
+  width: 80%;
+  padding: 0.7em;
+  text-align: center;
+  font-weight: bold;
+}
+
+#volume {
+  margin: 1em 0.5em;
+  width: 80%;
+}
