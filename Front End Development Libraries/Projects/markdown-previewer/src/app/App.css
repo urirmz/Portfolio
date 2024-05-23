@@ -1,0 +1,58 @@
+body {
+  background: #87b5b5;
+}
+
+.toolbar {
+  margin-top: 1em;
+  background-color: #4aa3a3;
+  border: 1px solid #1d2f2f;
+  box-shadow: 1px 1px 10px 2px #3a5f5f;
+  font-weight: bold;
+  font-size: 1.2em;
+  height: 2em;
+  display: flex;
+  align-items: center;
+}
+
+#editor-maximize-icon:hover,
+#previewer-maximize-icon:hover {
+  color: #57e2b1;
+  cursor: pointer;
+}
+
+#editor-maximize-icon,
+#previewer-maximize-icon {
+  margin-left: auto;
+}
+
+#editor {
+  min-height: 15em;  
+  padding: 1em;
+}
+
+#editor, 
+#previewer {
+  margin-top: 0;
+  background: #C0D8D8;
+  border: 1px solid #1d2f2f;
+  box-shadow: 1px 1px 10px 2px #3a5f5f;
+}
+
+#previewer {
+  margin-bottom: 1em;
+  padding: 2em;
+}
+
+#previewer pre {
+  background: white;
+}
+
+#previewer td, #previewer th {
+  border: 2px solid #224b4b;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#previewer img {
+  max-width: 100%;
+}
