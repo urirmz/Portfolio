@@ -18,30 +18,28 @@ const soundC = require('./sounds/Cev_H2.mp3');
 class App extends React.Component {
   render() {
     return (
-      <div className='container-fluid'>
-        <div className='row justify-content-center'>
-          <div id='drum-machine' className='col-5 row'> 
-            <div id='drumpad-grid' className='col-6'>
-              <Provider store={store}>
-                <Drumpad id='Q' sound={soundQ}/>
-                <Drumpad id='W' sound={soundW}/>
-                <Drumpad id='E' sound={soundE}/>
-                <Drumpad id='A' sound={soundA}/>
-                <Drumpad id='S' sound={soundS}/>
-                <Drumpad id='D' sound={soundD}/>
-                <Drumpad id='Z' sound={soundZ}/>
-                <Drumpad id='X' sound={soundX}/>
-                <Drumpad id='C' sound={soundC}/>
-              </Provider>
-            </div> 
-            <div className='col-6'>
-              <Provider store={store}>
-                <Controls/>
-              </Provider>
-            </div>            
-          </div>    
-        </div>          
-      </div>      
+      <Provider store={store}>
+        <div className='container-fluid'>
+          <div className='row justify-content-center'>
+            <div id='drum-machine' className='col-5 row'> 
+              <div id='drumpad-grid' className='col-6'>
+                  <Drumpad id='Q' soundSrc={soundQ}/>
+                  <Drumpad id='W' soundSrc={soundW}/>
+                  <Drumpad id='E' soundSrc={soundE}/>
+                  <Drumpad id='A' soundSrc={soundA}/>
+                  <Drumpad id='S' soundSrc={soundS}/>
+                  <Drumpad id='D' soundSrc={soundD}/>
+                  <Drumpad id='Z' soundSrc={soundZ}/>
+                  <Drumpad id='X' soundSrc={soundX}/>
+                  <Drumpad id='C' soundSrc={soundC}/>
+              </div> 
+              <div className='col-6'>
+                  <Controls/>
+              </div>            
+            </div>    
+          </div>          
+        </div>    
+      </Provider>  
     )
   }  
 }

@@ -25,7 +25,7 @@ class Controls extends React.Component {
           <input className='form-check-input' type='checkbox' id='power-switch' checked={this.props.on} readOnly onClick={this.turnOnOff}/>
         </div>
         <div id='status-box'>
-          {this.props.sound}
+          {this.props.soundName}
         </div>
         <input type="range" min='0' max='100' onChange={this.changeVolume} value={this.props.volume} className="form-range" id="volume"></input>
       </div>      
@@ -36,7 +36,7 @@ class Controls extends React.Component {
 function mapStateToProps(state) {
   return {
     on: state.on,
-    sound: state.sound,
+    soundName: state.soundName,
     volume: state.volume
   };
 };

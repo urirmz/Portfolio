@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
 
 const TURNONOFF = 'ONOFF';
-const PLAYSOUND = 'PLAY';
+const CHANGESOUNDNAME = 'PLAY';
 const CHANGEVOLUME = 'VOLUME';
 
 export function turnOnOff() {
@@ -10,10 +10,10 @@ export function turnOnOff() {
     }
 };
 
-export function playSound(sound) {
+export function changeSoundName(soundName) {
     return {
-      type: PLAYSOUND,
-      sound: sound
+      type: CHANGESOUNDNAME,
+      soundName: soundName
     }
 };
 
@@ -26,7 +26,7 @@ export function changeVolume(value) {
 
 const controlsDefaultState = {
     on: true,
-    sound: '',
+    soundName: '',
     volume: 30
 };
 
@@ -35,19 +35,19 @@ const controlsReducer = (state = controlsDefaultState, action) => {
         case TURNONOFF: 
             return {
                 on: !state.on,
-                sound: state.sound,
+                soundName: state.sound,
                 volume: state.volume
             }
-        case PLAYSOUND: 
+        case CHANGESOUNDNAME: 
         return {
             on: state.on,
-            sound: action.sound,
+            soundName: action.soundName,
             volume: state.volume
         }
         case CHANGEVOLUME: 
         return {
             on: state.on,
-            sound: state.sound,
+            soundName: state.sound,
             volume: action.value
         }
         default:
