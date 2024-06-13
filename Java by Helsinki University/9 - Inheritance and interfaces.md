@@ -486,3 +486,13 @@ hai
 Values:
 yes
 good luck
+
+Object polymorphism
+We've encountered situations where reference-type variables have other types besides their own one. For example, all objects are of type Object, i.e., any given object can be represented as a Object-type variable in addition to its own type.
+String text = "text";
+Object textString = "another string";
+String text = "text";
+Object textString = text;
+In the examples above, a string variable is represented as both a String type and an Object type. Also, a String-type variable is assigned to an Object-type variable. However, assignment in the other direction, i.e., setting an Object-type variable to a String type, will not work. This is because Object-type variables are not of type String
+Object textString = "another string";
+String text = textString; // WON'T WORK!

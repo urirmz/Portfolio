@@ -53,6 +53,6 @@ const controlsReducer = (state = controlsDefaultState, action) => {
         default:
             return state;
     }
-  };
+};
 
-  export const store = createStore(controlsReducer);
+export const store = createStore(controlsReducer);
