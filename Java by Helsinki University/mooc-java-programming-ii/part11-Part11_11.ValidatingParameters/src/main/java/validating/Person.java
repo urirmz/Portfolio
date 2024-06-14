@@ -6,7 +6,16 @@ public class Person {
     private int age;
 
     public Person(String name, int age) {
-
+        
+        if (name == null) {
+            throw new IllegalArgumentException();
+        }
+        
+        if ((name.isEmpty() || name.length() > 40) 
+            || (age < 0 || age > 120)) {
+            throw new IllegalArgumentException();
+        }
+        
         this.name = name;
         this.age = age;
     }
