@@ -15,17 +15,60 @@ public class MagicSquare {
         this.square = new int[size][size];
     }
 
-    // implement these three methods
     public ArrayList<Integer> sumsOfRows() {
-        return new ArrayList<>();
+        ArrayList<Integer> sumsOfRows = new ArrayList<>();
+
+        for (int row = 0; row < square.length; row++) {
+            int sumOfRow = 0;
+            for (int column = 0; column < square[row].length; column++) {
+                sumOfRow += square[row][column];
+            }
+            sumsOfRows.add(sumOfRow);
+        }
+
+        return sumsOfRows;
     }
 
     public ArrayList<Integer> sumsOfColumns() {
-        return new ArrayList<>();
+        ArrayList<Integer> sumsOfColumns = new ArrayList<>();
+        int columnsInSquare = square[0].length;
+
+        for (int column = 0; column < columnsInSquare; column++) {
+            int sumOfColumn = 0;
+            for (int row = 0; row < square.length; row++) {
+                sumOfColumn += square[row][column];
+            }
+            sumsOfColumns.add(sumOfColumn);
+        }
+
+        return sumsOfColumns;
     }
 
     public ArrayList<Integer> sumsOfDiagonals() {
-        return new ArrayList<>();
+        ArrayList<Integer> sumsOfDiagonals = new ArrayList<>();
+                
+        int rowDiagonal1 = 0;
+        int columnDiagonal1 = 0;
+        int sumDiagonal1 = 0;
+        
+        int rowDiagonal2 = square.length - 1;
+        int columnDiagonal2 = 0;
+        int sumDiagonal2 = 0;
+        
+        while (rowDiagonal1 < square.length) {
+            sumDiagonal1 += square[rowDiagonal1][columnDiagonal1];
+            rowDiagonal1++;
+            columnDiagonal1++;
+            
+            sumDiagonal2 += square[rowDiagonal2][columnDiagonal2];
+            rowDiagonal2--;
+            columnDiagonal2++;
+        }
+        
+        sumsOfDiagonals.add(sumDiagonal1);
+        sumsOfDiagonals.add(sumDiagonal2);
+        
+        return sumsOfDiagonals;
     }
 
     // ready-made helper methods -- don't touch these
