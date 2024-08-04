@@ -1,6 +1,12 @@
 <h1 align="center">Welcome to Uriel Ramirez' portfolio</h1>
 <h3 align="center">A passionate full stack developer</h3>
 
+<h3 align="left">Structure of the portfolio:</h3>
+<p align="left"> 
+    There's a folder named after each certification I've earned. Inside you'll find a pdf file with the certificate, along with 
+    projects and annotations made in order to get it. Feel free to explore
+</p>
+
 <h3 align="left">Connect with me:</h3>
 <p align="left">
 <a href="https://linkedin.com/in/uriel-ram%c3%adrez-89005722b/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="uriel-ram%c3%adrez-89005722b/" height="30" width="40" /></a>
