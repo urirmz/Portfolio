@@ -1,57 +1,7 @@
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_01.Cubes/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_02.AverageOfPositiveNumbers/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_03.LiquidContainers/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_04.LiquidContainers2/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_05.TodoList/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_06.Nicknames/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_07.Abbreviations/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_08.PrintMeMyHashmap/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_09.PrintMeAnotherHashmap/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_10.IOweYou/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_11.SameDate/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_13.VehicleRegistry/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_14.DictionaryOfManyTranslations/target/
-/Java by Helsinki University/mooc-java-programming-ii/part08-Part08_15.StorageFacility/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_01.ABC/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_02.PersonAndSubclasses/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_03.Warehousing/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_04.DifferentKindsOfBoxes/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_06.InterfaceInABox/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_07.ListAsAMethodParameter/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_08.MapAsAMethodParameter/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_09.SetAsMethodParameter/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_10.OnlineShop/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_11.Herds/target/
-/Java by Helsinki University/mooc-java-programming-ii/part09-Part09_12.Animals/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_01.AverageOfNumbers/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_02.AverageOfSelectedNumbers/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_04.Divisible/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_05.PrintingUserInput/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_06.LimitedNumbers/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_07.UniqueLastNames/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_09.ReadingFilesPerLine/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_10.BooksFromFile/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_11.WageOrder/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_12.StudentsOnAlphabeticalOrder/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_13.LiteracyComparison/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_14.Literature/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_15.RegularExpressions/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_16.EnumAndIterator/target/
-/Java by Helsinki University/mooc-java-programming-ii/part10-Part10_17.SortThemCards/target/
-/Java by Helsinki University/mooc-java-programming-ii/part11-Part11_08.FirstPackages/target/
-/Java by Helsinki University/mooc-java-programming-ii/part11-Part11_10.FlightControl/target/
-/Java by Helsinki University/mooc-java-programming-ii/part11-Part11_12.SensorsAndTemperature/target/
-/Java by Helsinki University/mooc-java-programming-ii/part11-Part11_13.SaveableDictionary/target/
-/Java by Helsinki University/mooc-java-programming-ii/part12-Part12_01.Hideout/target/
-/Java by Helsinki University/mooc-java-programming-ii/part12-Part12_02.Pipe/target/
-/Java by Helsinki University/mooc-java-programming-ii/part12-Part12_03.SumTheseForMe/target/
-/Java by Helsinki University/mooc-java-programming-ii/part12-Part12_06.Numbers/target/
-/Java by Helsinki University/mooc-java-programming-ii/part12-Part12_07.Die/target/
-/Java by Helsinki University/mooc-java-programming-ii/part12-Part12_08.Lottery/target/
-/Java by Helsinki University/mooc-java-programming-ii/part12-Part12_09.ArrayAsAString/target/
-/Java by Helsinki University/mooc-java-programming-ii/part12-Part12_10.MagicSquare/target/
-/Java by Helsinki University/mooc-java-programming-ii/part13-Part13_01.MyFirstApplication/target/
-/Java by Helsinki University/mooc-java-programming-ii/part13-Part13_02.ButtonAndLabel/target/
-/Java by Helsinki University/mooc-java-programming-ii/part13-Part13_03.ButtonAndTextField/target/
-/Java by Helsinki University/mooc-java-programming-ii/part13-Part13_04.BorderPane/target/
-/Java by Helsinki University/mooc-java-programming-ii/part13-Part13_05.TextStatistics/target/
+**/.env
+**/.vscode
+**/build/
+**/node_modules/
+**/bin/
+**/obj/
+**/target/
