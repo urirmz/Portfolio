@@ -4,7 +4,7 @@
 <h3 align="left">Structure of the portfolio:</h3>
 <p align="left"> 
     There's a folder named after each certification I've earned. Inside you'll find a pdf file with the certificate, along with 
-    projects and annotations made in order to get it. Feel free to explore
+    projects and annotations made in order to get it. Feel free to explore.
 </p>
 
 <h3 align="left">Connect with me:</h3>
