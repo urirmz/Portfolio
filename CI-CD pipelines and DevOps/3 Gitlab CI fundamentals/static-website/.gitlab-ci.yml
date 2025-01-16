@@ -1,0 +1,141 @@
+stages:
+  - update_cache
+  - build
+  - test
+  - deploy_review
+  - deploy_to_staging
+  - deploy_to_production
+  - production_test
+
+image: node:22
+
+cache: 
+  policy: pull
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - ./node_modules
+
+variables:
+  REVIEW_DOMAIN: http://gastby-pipeline-$CI_ENVIRONMENT_SLUG.surge.sh
+  STAGING_DOMAIN: http://gastby-pipeline-staging.surge.sh
+  PRODUCTION_DOMAIN: http://gastby-pipeline-production.surge.sh
+
+update_cache:
+  stage: update_cache
+  only: 
+    - schedules
+  cache:  
+    policy: push
+  script:
+    - npm install
+
+build_website:
+  stage: build
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
+      when: never
+    - if: $CI_PIPELINE_SOURCE == 'push'
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  script:
+    - npm install
+    - npm instal -g gatsby-cli
+    - gatsby build
+    - sed -i "s/%%VERSION%%/$CI_COMMIT_SHORT_SHA/" ./public/index.html
+    - echo "Replaced version " $CI_COMMIT_SHORT_SHA
+  artifacts:
+    paths:
+      - ./public
+
+test_artifact:
+  stage: test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
+      when: never
+    - if: $CI_PIPELINE_SOURCE == 'push'
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  image: alpine
+  cache: {}
+  script:
+    - cd ./public
+    - grep -q "Gatsby" index.html
+
+test_server:
+  stage: test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
+      when: never
+    - if: $CI_PIPELINE_SOURCE == 'push'
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  script:
+    - npm install
+    - npm instal -g gatsby-cli
+    - gatsby serve &
+    - sleep 5
+    - curl "http://localhost:9000" | tac | tac | grep -q "Gatsby"
+
+deploy_review:
+  stage: deploy_review
+  only:
+    - merge_requests
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: $REVIEW_DOMAIN
+    on_stop: stop_review
+  script:
+    - npm install -g surge
+    - surge --project=./public --domain=$REVIEW_DOMAIN
+
+stop_review:
+  stage: deploy_review
+  only: 
+    - merge_requests
+  variables:
+    GIT_STRATEGY: none
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  when: manual
+  script:
+    - npm install -g surge
+    - surge teardown --domain=$REVIEW_DOMAIN
+
+deploy_to_staging:
+  stage: deploy_to_staging
+  only: 
+    - master
+  except: 
+    - schedules
+  environment:
+    name: staging
+    url: $STAGING_DOMAIN
+  script:
+    - npm install -g surge
+    - surge --project=./public --domain=$STAGING_DOMAIN
+
+deploy_to_production:
+  stage: deploy_to_production
+  when: manual
+  allow_failure: false
+  only: 
+    - master
+  except: 
+    - schedules
+  environment:
+    name: production
+    url: $PRODUCTION_DOMAIN
+  script:
+    - npm install -g surge
+    - surge --project=./public --domain=$PRODUCTION_DOMAIN
+
+production_test:
+  stage: production_test
+  only: 
+    - master
+  except: 
+    - schedules
+  image: alpine
+  cache: {}
+  script:
+    - apk add curl
+    - curl "$PRODUCTION_DOMAIN" | grep -q "Gatsby"
+    - curl "$PRODUCTION_DOMAIN" | grep -q "$CI_COMMIT_SHORT_SHA"
