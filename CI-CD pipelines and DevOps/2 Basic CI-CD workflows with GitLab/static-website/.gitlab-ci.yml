@@ -1,0 +1,46 @@
+image: node:22
+
+stages:
+  - build
+  - test
+  - deploy
+  - deployment_test
+
+build_website:
+  stage: build
+  script:
+    - npm install
+    - npm instal -g gatsby-cli
+    - gatsby build
+  artifacts:
+    paths:
+      - ./public
+
+test_artifact:
+  image: alpine
+  stage: test
+  script:
+    - cd ./public
+    - grep -q "Gatsby" index.html
+
+test_server:
+  stage: test
+  script:
+    - npm install
+    - npm instal -g gatsby-cli
+    - gatsby serve &
+    - sleep 5
+    - curl "http://localhost:9000" | tac | tac | grep -q "Gatsby"
+
+deploy_to_surge:
+  stage: deploy
+  script:
+    - npm install -g surge
+    - surge --project=./public --domain=gastby-test-pipeline.surge.sh
+
+deployment_test:
+  stage: deployment_test
+  image: alpine
+  script:
+    - apk add curl
+    - curl "http://gastby-test-pipeline.surge.sh" | grep -q "Gatsby"

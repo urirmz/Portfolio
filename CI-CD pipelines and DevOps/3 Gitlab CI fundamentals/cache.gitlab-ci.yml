@@ -1,0 +1,77 @@
+image: node:22
+
+stages:
+  - update_cache
+  - build
+  - test
+  - deploy
+  - deployment_test
+
+cache: 
+  policy: pull
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - ./node_modules
+
+update_cache:
+  stage: update_cache
+  only: 
+    - schedules
+  cache:  
+    policy: push
+  script:
+    - npm install
+
+build_website:
+  stage: build
+  except: 
+    - schedules
+  script:
+    - npm install
+    - npm instal -g gatsby-cli
+    - gatsby build
+    - sed -i "s/%%VERSION%%/$CI_COMMIT_SHORT_SHA/" ./public/index.html
+    - echo "Replaced version " $CI_COMMIT_SHORT_SHA
+  artifacts:
+    paths:
+      - ./public
+
+test_artifact:
+  stage: test
+  except: 
+    - schedules
+  image: alpine
+  cache: {}
+  script:
+    - cd ./public
+    - grep -q "Gatsby" index.html
+
+test_server:
+  stage: test
+  except: 
+    - schedules
+  script:
+    - npm install
+    - npm instal -g gatsby-cli
+    - gatsby serve &
+    - sleep 5
+    - curl "http://localhost:9000" | tac | tac | grep -q "Gatsby"
+
+deploy_to_surge:
+  stage: deploy
+  except: 
+    - schedules
+  script:
+    - npm install -g surge
+    - surge --project=./public --domain=gastby-test-pipeline.surge.sh
+
+deployment_test:
+  stage: deployment_test
+  except: 
+    - schedules
+  image: alpine
+  cache: {}
+  script:
+    - apk add curl
+    - curl "http://gastby-test-pipeline.surge.sh" | grep -q "Gatsby"
+    - curl "http://gastby-test-pipeline.surge.sh" | grep -q "$CI_COMMIT_SHORT_SHA"
