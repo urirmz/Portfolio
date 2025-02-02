@@ -10,7 +10,7 @@ Annotations
 			Marks a class as a source of bean definitions. Defines beans using @Bean-annotated methods.
 		@Controller
 			Marks a class as a Spring MVC controller. Handles HTTP requests and integrates with view resolvers.
-		@Qualifier("${x}")
+		@Qualifier("${bean_name}")
 			Resolves ambiguity when multiple beans of the same type exist. Specifies which bean to inject by name.
 		@Repository
 			Marks a class as a Data Access Object (DAO). Enables exception translation from JDBC to Spring's DataAccessException.
@@ -47,7 +47,7 @@ Annotations
 		@RestController
 			Combines @Controller and @ResponseBody. Simplifies RESTful web service development.
 	Data Access & JPA Annotations
-	  @Column(name="${x}")
+	  @Column(name="${column_name}")
 			Maps a field to a database column. Customizes column name and properties (e.g., nullable, length).
 	  @Entity
 			Marks a class as a JPA entity. Maps the class to a database table.
@@ -55,10 +55,37 @@ Annotations
 			Configures primary key generation strategy. Supports auto-increment, sequence, or UUID strategies.
 		@Id
 			Marks a field as the primary key. Identifies the unique identifier for an entity.
-		@Table(name="${x}")
+		@Table(name="${table_name}")
 			Specifies the database table name for an entity. Overrides the default table name.
 		@Transactional
 			Defines transaction boundaries for methods/classes. Manages ACID properties for database operations.
+		@JoinColumn(name=${column_name})
+			Tells this column contains a foreign key. Hibernate will look at the declared class entity id to join this column with its pair
+		@JoinTable(name=${table_name}, joinColumns=${column_name}, inverseJoinColumns=${column_name})
+			Tells this property refers to a column in a join table (a many to many relation). 
+			Name refers to the join table name in the database
+			joinColumns refers to the join column in the database that matches this entity id	
+			inverseJoinColumns refers to the join column in the database that matches the declared property entity id	
+		@JoinColumn(name)
+			Refers to a column inside a join table
+		@OneToOne(cascade=CascadeType, mappedBy=${property}, fetch=FetchType)
+			Tells Hibernate this property has a one to one relation with the declared entity, which means one of this class can be related to one of the declared property
+			Cascade means that any operation applied to this entity will also happen to the related entities. By default in OneToOne, no operations are cascaded
+			The mappedBy property tells Hibernate this object is reffered in the declared property class as the declared property
+			The fetch property tells Hibernate to retrieve the property entity at the same time that this entity. The default fetch in OnToOne is FetchType.EAGER
+		@OneToMany(cascade=CascadeType, mappedBy=${property}, fetch=FetchType)
+			Tells Hibernate this property has a one to many relation with the declared entity, which means one of this class can be related to many of the declared property
+			Cascade means that any operation applied to this entity will also happen to the related entities. By default in OneToMany, no operations are cascaded
+			The mappedBy property tells Hibernate this entity is reffered in the declared property class as the declared property
+			The fetch property tells Hibernate to retrieve the property entity at the same time that this entity. The default fetch in OneToMany is FetchType.LAZY
+		@ManyToOne(cascade=CascadeType, fetch=FetchType)
+			Tells Hibernate this property has a many to one relation with the declared entity, which means many of this class can be related to one of the declared property
+			Cascade means that any operation applied to this entity will also happen to the related entities. By default in ManyToMany, no operations are cascaded
+			The fetch property tells Hibernate to retrieve the property entity at the same time that this entity. The default fetch in OneToMany is FetchType.EAGER
+		@ManyToMany(cascade=CascadeType, fetch=FetchType)
+			Tells Hibernate this property has a many to many relation with the declared entity, which means many of this class can be related to many of the declared property
+			Cascade means that any operation applied to this entity will also happen to the related entities. By default in ManyToMany, no operations are cascaded
+			The fetch property tells Hibernate to retrieve the property entity at the same time that this entity. The default fetch in ManyToMany is FetchType.LAZY
 	Validation Annotations
 		@Future
 			Validates that a date is in the future.
@@ -104,7 +131,6 @@ Classes
 		ConstraintValidator<Annotation, Value>
 			Is an interface provided by the Bean Validation API (javax.validation) that defines the contract for implementing custom validation logic. 
 			It is used in conjunction with the @Constraint annotation to create custom validation constraints in Spring applications.
-
 	Spring Data JPA Classes
 		EntityManager
 			Interface for JPA operations (e.g., persisting, querying entities). Manages entity lifecycle and database interactions.
