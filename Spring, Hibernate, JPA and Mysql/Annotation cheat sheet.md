@@ -115,6 +115,16 @@ Annotations
 			Marks a method to execute before bean destruction. Used for cleanup tasks (e.g., closing resources).
 		@Scope(ConfigurableBeanFactory)
 			Configures bean scope (e.g., singleton, prototype). Controls bean lifecycle and instance creation.
+	Aspect Oriented Programming (AOP)
+		@Aspect
+			Marks this class as an Aspect, making its methods available to be marked with an advice type annotation 
+		@Before(pointcutExpression)
+			Execute this method before the one that matches the pointcutExpression
+			Pointcut expression pattern (* is a wildcard, .. is wildcard for parameters): execution(modifiers? return-type declaringType? method-name throws?)
+				Examples:
+					"execution(public void addAccount())"
+					"execution(public void com.aja.aop.repositories.AccountDAO.add*())"
+					"execution(* com.aja.aop.repositories.*.*(..))"
 
 Classes
 	Spring MVC & Web Classes
@@ -160,5 +170,36 @@ Classes
 Configurations
 	application.properties
     	spring.jpa.hibernate.ddl-auto=update
+				Writes the database based in the declared JPA entities
+			spring.main.banner-mode=off
+				Turns off the spring banner
+			logging.level.root=warn
+				Sets the root logging level to only show warnings or errors
 	messages.properties
 		typeMismatch.${model}.${property}
+
+
+Aspect Oriented Programming (AOP)
+	Terminology
+		Aspect
+			Module of code for cross-cutting concern
+		Advice
+			Action taken and when it should be applied
+		Join Point 
+			When to apply code during program execution
+		Pointcut
+			Expression for where advice should be applied 
+		Weaving+
+			Connecting aspects to target objects to create an adviced object. 
+			There are compile-time, load-time and runtime weaving, in which runtime has the lowest performance
+	Advice types
+		Before 
+			Runs before the method
+		After finally
+			Runs after the method
+		After returning
+			Runs after the method is finalized successfully 
+		After throwing
+			Runs after the method if an exception is thrown
+		Around advice
+			Runs before and after the method
