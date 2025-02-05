@@ -117,14 +117,35 @@ Annotations
 			Configures bean scope (e.g., singleton, prototype). Controls bean lifecycle and instance creation.
 	Aspect Oriented Programming (AOP)
 		@Aspect
-			Marks this class as an Aspect, making its methods available to be marked with an advice type annotation 
+			Marks this class as an Aspect, making its methods available to be marked with an advice type annotation. It has to be used along with the @Component annotation
+		@Order(orderNumber)
+			It is used to specify the execution order of the aspects, higher orderNumber will execute first
+			orderNumber accepts values in range Integer.MIN_VALUE to Integer.MAX_VALUE, which means it can take negative values
+		@Pointcut(pointcutExpression)
+			It is used to mark a method as a reusable pointcut expression. 
+			After doing this, other aspect types annotation can use the method name invocation as a pointcut expression
 		@Before(pointcutExpression)
-			Execute this method before the one that matches the pointcutExpression
-			Pointcut expression pattern (* is a wildcard, .. is wildcard for parameters): execution(modifiers? return-type declaringType? method-name throws?)
-				Examples:
-					"execution(public void addAccount())"
-					"execution(public void com.aja.aop.repositories.AccountDAO.add*())"
-					"execution(* com.aja.aop.repositories.*.*(..))"
+			Execute this method before the ones that match the pointcutExpression
+			It makes available JoinPoint as first argument of the annotated method, which contains data of the matched method call
+		@AfterReturning(value=${pointcutExpression}, returning="${result}")
+			If no exceptions where thrown, execute this method after the ones that match the pointcutExpression
+			It makes available JoinPoint as first argument of the annotated method, which contains data of the matched method call
+			The returning argument creates a variable containing the return result, which can be used as a second argument in the annotated method
+		@AfterThrowing(value=${pointcutExpression}, throwing="${result}")
+			If an exception was thrown, execute this method after the ones that match the pointcutExpression
+			It makes available JoinPoint as first argument of the annotated method, which contains data of the matched method call
+			The throwing argument creates a variable containing the exception thrown, which can be used as a second argument in the annotated method
+		@After(pointcutExpression)
+			Execute this method after the ones that match the pointcutExpression, no matter its return
+			It makes available JoinPoint as first argument of the annotated method, which contains data of the matched method call
+			It is executed after @AfterThrowing or @AfterReturning methods, in case they exist
+			@After doesn't have access to the method result or exception
+		@Around(pointcutExpression)
+			Execute this method before and after the ones that match the pointcut expression
+			It makes available ProceedingJoinPoint as first argument of the annotated method, which contains data of the matched method 
+			ProceedingJoinPoint.proceed() is an asynchronous call that saves the result of the method after it ends
+			ProceedingJoinPoint.proceed() can be wrapped in a try { } catch() {} block to handle the exception inside annotated method, or re-throw it
+			The method will change the returned object of the matched method with its own returned object
 
 Classes
 	Spring MVC & Web Classes
@@ -169,12 +190,14 @@ Classes
 
 Configurations
 	application.properties
-    	spring.jpa.hibernate.ddl-auto=update
-				Writes the database based in the declared JPA entities
-			spring.main.banner-mode=off
-				Turns off the spring banner
-			logging.level.root=warn
-				Sets the root logging level to only show warnings or errors
+    spring.jpa.hibernate.ddl-auto=update
+			Writes the database based in the declared JPA entities
+		spring.main.banner-mode=off
+			Turns off the spring banner
+		logging.level.root=OFF << FATAL << ERROR << WARN << INFO << DEBUG << TRACE << ALL
+			Sets the root logging level
+		logging.level.org.springframework.aop=DEBUG
+			Sets the root logging level to only show debug information from spring aop
 	messages.properties
 		typeMismatch.${model}.${property}
 
@@ -188,18 +211,24 @@ Aspect Oriented Programming (AOP)
 		Join Point 
 			When to apply code during program execution
 		Pointcut
-			Expression for where advice should be applied 
-		Weaving+
+			Expression for where advice should be applied.
+			Pointcut expression pattern (* is a wildcard, .. is wildcard for parameters): "execution(modifiers? return-type declaringType? method-name throws?)"
+				Examples:
+					"execution(public void addAccount())"
+					"execution(public void com.aja.aop.repositories.AccountDAO.add*())"
+					"execution(* com.aja.aop.repositories.*.*(..))"
+			Pointcut expressions can be combined with the operators &&, || and !
+		Weaving
 			Connecting aspects to target objects to create an adviced object. 
 			There are compile-time, load-time and runtime weaving, in which runtime has the lowest performance
 	Advice types
 		Before 
 			Runs before the method
-		After finally
-			Runs after the method
 		After returning
 			Runs after the method is finalized successfully 
 		After throwing
 			Runs after the method if an exception is thrown
+		After
+			Runs after the method no matter the result
 		Around advice
 			Runs before and after the method
