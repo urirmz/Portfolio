@@ -317,7 +317,7 @@ Collection framework
     Collections can work just with reference types, while arrays can work with both primitive and reference types
     Arrays have better performance
   Collection interface 
-    Contains the following methods:
+    Contains the following methods
       size(), isEmpty(), contains(), toArray(), add(), remove(), containsAll(), addAll(), removeAll(), retainAll(), clear(), equals() and hashCode()
       It implements the Iterable interface, which contains the iterator() method
     The main interfaces that inherit the collection interface are
@@ -334,6 +334,8 @@ Collection framework
             It is used to implement a LIFO (Last In, First Out)
             It is deprecated, but kept to maintain backwards compatibility
           LinkedList
+            Consist on multiple objects of Node type. Always contains the reference to first and last nodes
+            It is also one of the most popular implementations of the Queue interface
         Contains the following methods
           get(), set(), add(), indexOf(), lastIndexOf(), listIterator(), sublist(), replaceAll(), sort()
       Set interface
