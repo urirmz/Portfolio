@@ -1,0 +1,15 @@
+.key {
+  border: 1px solid black;
+  color: white;
+  background-color: var(--dark-gray);
+  font-size: 1.8em;
+  display: flex;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.key:hover {
+  border: 1px solid white;
+  color: black;
+}

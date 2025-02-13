@@ -1,0 +1,22 @@
+#display {
+  display: flex;
+  flex-direction: column;
+}
+
+.subscreen {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.subscreen.top {
+  color: orange;
+  font-size: 1.5em;
+  height: 1em;
+}
+
+.subscreen.bottom {
+  color: white;
+  font-size: 2em;
+  height: 2em;
+}

@@ -1,0 +1,8 @@
+.calculator {
+  height: 50%;
+  width: 35%;
+  background-color: black;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+}
