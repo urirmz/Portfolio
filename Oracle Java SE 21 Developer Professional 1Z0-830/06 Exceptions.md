@@ -21,6 +21,14 @@ Catch
       // Optional code to run after the try and catch block, wether an exception happens or not
     }
 
+Autoclosable resources
+  Try can also be used to autoclose an object that extends the interface Closeable
+    try (Closable autoClosableElement = new Closable()) {
+      // Code that may cause an exception
+    } catch (ExceptionType exception) {
+      // Code to run in case of exception
+    }
+
 "throws" keyword in methods declaration
   The "throws Throwable" keyword can be added to a method signature to indicate that the method may cause an exception
   Methods with the "throws" keyword must be sorrounded in try-catch block when invoked, or their invoker method have the "throws" keyword also 
