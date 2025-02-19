@@ -21,6 +21,7 @@ Strings
   \u escape can be used to represent unicode characters, for example \u2665 represents a ♥
   String.format() allows to created strings with special format, substituting character sequences like %s for another string, or %d for integers
   Formatter class can be used for advance control over string format, like locale-based formatting
+  Strings can be converted into their bytes representation using the getBytes() method
 
 4 types of references in Java
   Strong/Hard

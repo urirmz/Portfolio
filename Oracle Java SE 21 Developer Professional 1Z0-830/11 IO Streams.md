@@ -74,6 +74,23 @@ java.nio.Files
       Copy the file in the source path to the target path
     exists()
       Tests whether a file exists in the provided path
+    read()
+      Reads all the bytes from an input stream and returns a byte[]
+    readAllBytes()
+      Reads all the bytes from a file and returns a byte[]
+    readAllLines()
+      Read all lines from a file and returns a List<String>
+    lines()
+      Read all lines from a file as a Stream
+      Populates lazily as the stream is consumed
+    write()
+      Writes bytes to a file
+    writeString()
+      Write a CharSequence to a file
+
+FileFilter interface
+  Is used to check if a File object matches a certain condition
+  Contains a single boolean accept(File pathName) method, which must be overridden and implemented
 
 IO Streams
   Streams are the sequence of data that are read from the source and written to the destination
@@ -100,7 +117,14 @@ IO Streams
         close()
           Closes this input stream and releases any system resources associated
       Its main subclasses are
-        ByteArrayInputStream, StringBufferInputStream, FileInputStream
+        FileInputStream
+          Obtains input bytes from a file in a file system
+        ByteArrayInputStream
+          Converts a byte[] into a stream of bytes
+        ObjectInputStream
+          Obtains Java objects contained in a byte array (used to deserialize)
+        DataInputStream
+          Obtains primitive data types from an input bytestream
     OutputStream
       Abstract class that represents an output stream of bytes
       Its main methods are
@@ -114,9 +138,81 @@ IO Streams
           Closes this output stream and releases any system resources associated
           Some implementations call the flush() method when the close() method is called
       Its main subclasses are
-        BufferedOutputStream, ByteArrayOutputStream, DataOutputStream
+        ByteArrayOutputStream          
+          Converts a stream of bytes into a byte[] 
+        FileOutputStream
+          Writes a stream of bytes into a file
+        ObjectOutputStream
+          Converts java objects into a stream of bytes (used to serialize)
+        DataOutputStream
+          Converts primitive data types into a bytestream
   Character streams
     Read character by character, so is useful to process text files
     Character size is typically 16 bits
     Reader
+      Abstract class for reading character streams 
+      Its main methods are
+        read()
+          Reads characters from the stream, writes them to the argument char[]
+            and returns the number of characters read, or -1 if the end of the stream has been reached
+        skip()
+          Skips the number of characters provided
+        ready()
+          Tells whether this stream is ready to be read
+        markSupported()
+          Tells whether this stream supports the mark()
+        mark()
+          Marks the present position in the stream
+        reset()
+          If the stream has been marked, then attempt to reposition it at the mark. 
+          If the stream has not been marked, then attempt to reset it in some way appropriate to the particular stream, 
+            for example by repositioning it to its starting point
+        close()    
+          Closes the stream and releases any system resources associated with it
+        transferTo()
+          Reads all characters from this reader and writes the characters to the given writer in the order that they are read
+      Its main subclasses are 
+        FileReader, StringReader
     Writer
+      Abstract class for writing to character streams
+      Its main methods are
+        write()
+          Write characters or strings to the stream
+        append()
+          Appends the specified character sequence to this writer
+        flush()
+          If the stream has saved any characters from the various write() methods in a buffer, 
+            write them immediately to their intended destination
+          Characters or strings are not written if this method is not called
+        close()
+          Closes the stream, flushing it first
+      Its main subclasses are 
+        FileWriter, StringWriter, PrintWriter
+  BufferedInputStream, BufferedOutputStream, BufferedReader and BufferedWriter
+    Are I/O wrapper classes, which means they wrap an existing I/O stream
+    Create a buffer (default size 8192 bytes) for input, output, reading or writing
+    It performs most of operations within the buffer, and without a call to the underlying system
+    Without a buffer, the stream has to make a system call for every single byte, which affects performance
+
+Charset
+  A Charset is a named mapping between sequences of sixteen-bit Unicode code units and sequences of bytes
+  Charset abstract class
+  StandardCharsets
+    Contains static constants definitions for the standard charsets, which are:
+      US_ASCII
+      ISO_8859_1
+      UTF_8
+      UTF_16BE
+      UTF_16LE
+      UTF_16
+
+RandomAccessFile
+  Is a class that inherits directly from Object and not from any IO classes
+  It is designed to work with files, supporting random access to their contents
+  It implements DataInput and DataOutput interfaces, 
+    so working with this class is similar to using the DataInputStream and DataOutputStream streams combined
+  Read / write modes 
+    Read ("r") 
+    Read/write ("rw") mode. 
+    "rws" mode 
+      The file is opened for read/write operations and every change to the file's data is immediately written to the physical device
