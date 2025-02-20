@@ -19,7 +19,7 @@ Sequantial vs parallel streams
 Terminal short-circuit operation
   When this operation has already obtained a result, it terminates the rest of the iteration  
 
-Stream Interface
+Stream interface
   Most of the methods in stream interface methods require Functional interfaces as input
   Stream methods are chained one after the other, like a conveyor belt, 
     and perform operations on the elements

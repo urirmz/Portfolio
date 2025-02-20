@@ -133,7 +133,7 @@ Map interface
       Implements the Map interface and is based on using a WeakReference to store keys
         Thus, the key/value pair will be removed from the WeakHashMap if the key object is no longer strongly referenced
 
-Comparator and Comparable
+Comparator and Comparable interfaces
   Comparation methods are used when sorting a collection of objects. They return negative, positive or 0 values based on the result of the comparation
   Comparable interface
     Declares the compareTo(object) method
@@ -145,7 +145,7 @@ Comparator and Comparable
     Creating a class implementing comparator interface
     Adding the comparable interface and compareTo() method to the comparing class
   
-Iterator, iterable and ListIterator
+Iterator, iterable and ListIterator interfaces
   Iterable interface contains the methods iterator(), foreach() adn spliterator()
   Iterator
     Is a type able to go through each member of a collection

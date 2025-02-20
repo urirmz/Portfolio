@@ -41,7 +41,7 @@ java.io.File class
     getAbsolutePath()
       Returns the absolute pathname string of this abstract pathname
 
-java.nio.Path 
+java.nio.Path class
   An interface used to locate a file in a file system. It will typically represent a system dependent file path
   The main methods of Path interface are
     of()
@@ -53,7 +53,7 @@ java.nio.Path
     toAbsolutePath()
       Returns a Path object representing the absolute path of this path
 
-java.nio.Files
+java.nio.Files class
   Consists exclusively of static methods that operate on files, directories, or other types of files
   The main methods of Files class are
     createFile()
@@ -98,7 +98,7 @@ IO Streams
   Byte streams
     Read byte by byte
     A byte stream is suitable for processing raw data like binary files, images or audio
-    InputStream
+    InputStream interface
       Abstract class that represents an input stream of bytes
       Its main methods are
         read()
@@ -125,7 +125,7 @@ IO Streams
           Obtains Java objects contained in a byte array (used to deserialize)
         DataInputStream
           Obtains primitive data types from an input bytestream
-    OutputStream
+    OutputStream interface
       Abstract class that represents an output stream of bytes
       Its main methods are
         write()
@@ -149,7 +149,7 @@ IO Streams
   Character streams
     Read character by character, so is useful to process text files
     Character size is typically 16 bits
-    Reader
+    Reader abstract class
       Abstract class for reading character streams 
       Its main methods are
         read()
@@ -173,7 +173,7 @@ IO Streams
           Reads all characters from this reader and writes the characters to the given writer in the order that they are read
       Its main subclasses are 
         FileReader, StringReader
-    Writer
+    Writer abstract class
       Abstract class for writing to character streams
       Its main methods are
         write()
@@ -197,7 +197,7 @@ IO Streams
 Charset
   A Charset is a named mapping between sequences of sixteen-bit Unicode code units and sequences of bytes
   Charset abstract class
-  StandardCharsets
+  StandardCharsets class
     Contains static constants definitions for the standard charsets, which are:
       US_ASCII
       ISO_8859_1
@@ -206,7 +206,7 @@ Charset
       UTF_16LE
       UTF_16
 
-RandomAccessFile
+RandomAccessFile class
   Is a class that inherits directly from Object and not from any IO classes
   It is designed to work with files, supporting random access to their contents
   It implements DataInput and DataOutput interfaces, 
