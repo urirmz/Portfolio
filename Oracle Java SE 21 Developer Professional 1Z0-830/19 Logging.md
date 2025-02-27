@@ -85,11 +85,71 @@ java.util.logging (Java Logging Framework)
 Log4J
   Supports logging to files, output streams, and other targets
   Allows the configuration via config files
-
-Logback
-  Intended to be the successor of Log4j2. Developed by the original Log4j2 developer
-  Features a lightweight architecture
+  Can be added to a project with the group org.apache.logging.log4j and artifact Id log4j-core
+  Key elements
+    Loggers
+      Log message destinations. Each logger is independently configurable as to what level of logging it currently logs
+      A logger can send log messages to multiple appenders
+    Appenders
+      Makes the actual output
+      Log4J provide appenders that write to Apache flume, the Java Persistence API , Apache Kafka, 
+        NoSQL databases, memory mapped files, random access files and endpoints
+      Properties
+        Triggering policy
+          Determines when the log file is rolled, meaning a new file is created
+          CompositeTriggeringPolicy 
+            Combines multiple triggering policies and returns true if any of the configured policies return true
+          CronTriggeringPolicy
+            The Cron TriggeringPolicy triggers rollover based on a cron expression
+          OnStartupTriggeringPolicy
+            A new log file is created every time the JVM starts
+          SizeBasedTriggeringPolicy 
+            The file is rolled when it reaches a certain size
+          TimeBasedTriggeringPolicy 
+            The log file is rolled based on a date/time pattern
+        Rollover strategies
+          Determines how the file is rolled
+          Default 
+            Accepts both a date time pattern and an integer
+              if the date time pattern is present, it will be replaced with the current date and time values
+              if the pattern contains an integer, it will be incremented on each rollover
+          DirectWrite
+            Causes log events to be written directly to files represented by the file pattern
+            maxFiles
+              The maximum number of files to allow in the time period
+              If the number of files is exceeded the oldest file will be deleted
+              If the value is less than zero or omitted then the number of files will not be limited
+            compressionLevel
+              Sets the compression level, 0-9, where 0 = none, 1 = best speed, through 9 = best compression
+              Only implemented for ZIP files.
+    Layouts
+      Are used to format log entries
+      Log4J provide layouts for HTML, XML, CSV, JSON, YAML
+  Configuration files
+    Can be written in XML, JSON, YAML or .properties format
+      log4j.xml
+    Are used to declare Loggers, Appenders and Layouts for Appenders
 
 SLF4
   Acts as a simple interface for various other logging libraries, 
     allowing developers to plug in the desired implementation at deployment time
+    This is come in handy to achieve flexibility, being independent of some specific library
+  Can be integrated with
+    java.util.logging, Log4J, Reload4J, Logback, Tinylog
+
+Logback
+  Intended to be the successor of Log4j2, developed by the original Log4j2 developer
+  Implements SLF4
+  Features a lightweight architecture
+  Supports the creation of custom classes for formatting messages, as well as a robust configuration options for the existing ones
+  Key elements
+    Logger
+      Context for log messages
+      The class that applications interact with to create log messages
+    Appender
+      Place log messages in their final destinations
+      Loggers can have more than one Appender
+    Layout
+      Prepare messages for output and format it
+  Configuration file
+    logback.xml
