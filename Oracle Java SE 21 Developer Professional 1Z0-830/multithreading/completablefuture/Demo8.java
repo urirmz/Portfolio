@@ -2,14 +2,17 @@ package com.itbulls.learnit.javacore.multithreading.completablefuture;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Demo8 {
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		System.out.println("Retrieving weight.");
 		CompletableFuture<Double> weightInKgFuture = getWeight();
-
 		System.out.println("Retrieving height.");
 		CompletableFuture<Double> heightInCmFuture = getHeight();
 		

@@ -29,31 +29,31 @@ public class ReentrantLockDemo2 {
 	public double add(double value1, double value2) {
 		try {
 			lock.lock();
-			System.out.println("lock is acquired");
+			System.out.println("lock is acquired by " + Thread.currentThread().getName());
 			
 			return value1 + value2;
 		} finally {
 			lock.unlock();
-			System.out.println("lock is released");
+			System.out.println("lock is released by " + Thread.currentThread().getName());
 		}
 	}
 
 	public double subtract(double value1, double value2) {
 		try {
 			lock.lock();
-			System.out.println("lock is acquired");
+			System.out.println("lock is acquired by " + Thread.currentThread().getName());
 			
 			return value1 - value2;
 		} finally {
 			lock.unlock();
-			System.out.println("lock is released");
+			System.out.println("lock is released by " + Thread.currentThread().getName());
 		}
 	}
 
 	public double calculate(String operation, double operand1, double operand2) {
 		try {
 			lock.lock();
-			System.out.println("lock is acquired");
+			System.out.println("lock is acquired by " + Thread.currentThread().getName());
 
 			switch (operation) {
 			case "+":
@@ -67,7 +67,7 @@ public class ReentrantLockDemo2 {
 
 		} finally {
 			lock.unlock();
-			System.out.println("lock is released");
+			System.out.println("lock is released by " + Thread.currentThread().getName());
 		}
 	}
 	

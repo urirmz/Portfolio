@@ -177,6 +177,12 @@ Predicate and BiPredicate interface
       Allows to add logic and combine different predicates
       Both BiPredicates must to have the same generic types
 
-
-
-  
+Summary of functional operations
+  Function
+    Takes an argument and returns a value/object
+  Supplier
+    Takes no arguments and returns a value/object
+  Predicate
+    Takes an arguments and returns a boolean
+  Consumer
+    Takes an objects and change its state

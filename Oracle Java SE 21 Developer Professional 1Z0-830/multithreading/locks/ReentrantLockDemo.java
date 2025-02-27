@@ -9,8 +9,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.IntStream;
 
-import com.itbulls.learnit.javacore.multithreading.synchronizedblock.SynchronizedIncrement;
-
 public class ReentrantLockDemo {
 
 	private static int counter;
@@ -20,7 +18,7 @@ public class ReentrantLockDemo {
 	public static void main(String[] args) throws InterruptedException {
 		var thisInstance = new ReentrantLockDemo();
 		var es = Executors.newFixedThreadPool(4);
-		IntStream.range(0, 10000).forEach((i) -> es.execute(thisInstance::incrementWithLock));
+		IntStream.range(0, 100000).forEach(i -> es.execute(thisInstance::incrementWithLock));
 		terminateExecutorService(es);
 
 		System.out.println(counter);

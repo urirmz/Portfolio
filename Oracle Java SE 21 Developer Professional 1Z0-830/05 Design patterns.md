@@ -15,7 +15,7 @@ Creational patterns
     Prototype 
       Used when creating complex objects. Based on the prototype, objects are stored and recreated, for example, by copying
 
-Behavior patterns 
+Behavior patterns
   Characterize the ways in which classes or objects interact with each other. 
   Behavioral patterns include
     Chain of Responsibility 

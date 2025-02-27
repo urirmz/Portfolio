@@ -19,6 +19,8 @@ public class FlowApiExample {
             System.out.println("Publisher: Emitting item " + i);
             publisher.submit(i);
         }
+
+        TimeUnit.SECONDS.sleep(5);
         
         // Close the publisher to signal completion
         publisher.close();

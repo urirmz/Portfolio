@@ -385,4 +385,296 @@ Fork/Join framework
           split work into two pieces
           invoke two pieces and wait for results
         }
- 
+
+CompletionStage
+  Defines the contracts for behavior of an asynchronous computation step that we combine with other steps
+CompletableFuture
+  Implements CompletionStage and Future
+  Main methods
+    get()
+      Waits if necessary for this future to complete, and then returns its result
+        while waiting, the caller Thread is blocked
+      If any callback method is applied to the CompletableFuture, 
+        it returns the result of the last applied callback method
+    getNow()
+      Returns the result value (or throws any encountered exception) if completed, 
+        else returns the given valueIfAbsent
+    Callback methods 
+      Are called after the previous result is available
+      By default, are run in the same Thread and Executor, 
+        async ones are run in an independent Thread and Executor
+      thenRun(), thenRunAsync()
+        Runs a Runnable
+      thenCombine(), thenCombineAsync()
+        Takes another CompletableFuture and after both results are available, 
+          performs a BiFunction with both results as inputs, and returns a value
+      thenAccept(), thenAcceptAsync()
+        Takes another CompletableFuture and after both results are available, 
+          performs a Consumer operation with both results as inputs, and returns void
+      handle(), handleAsync()
+        Takes a BiFunction with result and exception as arguments, 
+          if any exception occur, it will be passed to the bifunction as the second argument
+      exceptionally()
+        Takes a Function with an exception as argument,
+          if any exception occur, it will be passed to the function as argument
+          Allows to return a default value
+  Main static methods
+    runAsync()
+      Takes a Runnable and returns a new CompletableFuture that is asynchronously completed 
+      Accepts an Executor to run the task in. In case no Executor is specified,
+        the task will run in the ForkJoinPool.commonPool()
+    supplyAsync()
+      Takes a Supplier and returns a new CompletableFuture that is asynchronously completed 
+      Accepts an Executor to run the task in. In case no Executor is specified,
+        the task will run in the ForkJoinPool.commonPool()
+    allOf()
+      Returns a new CompletableFuture that is completed when all of the given CompletableFutures complete
+    anyOf()
+      Returns a new CompletableFuture that is completed when any of the given CompletableFutures complete, 
+        with the same result
+
+java.util.concurrent.locks package (Lock API)
+  Lock interface
+    Provide more extensive locking operations than can be obtained using synchronized methods and statements
+    Allow more flexible structuring, may have quite different properties, and may support multiple associated Condition objects
+    A Lock is a tool for controlling access to a shared resource by multiple threads
+    Declares the methods
+      lock()
+        Acquires the lock. If the lock is not available then the current thread becomes disabled for thread scheduling
+      unlock()
+        Releases the lock
+      tryLock()
+        Acquires the lock only if it is free at the time of invocation, returns boolean
+        Can be used with a wait for specific time
+      lockInterruptibly()
+        Acquires the lock unless the current thread is interrupted. Acquires the lock if it is available and returns immediately
+      newCondition()
+        Returns a new Condition instance that is bound to this Lock instance
+    Main implementations
+      ReentrantLock
+        A lock is called re-entrant if the thread that holds the lock can lock it again
+        Main methods  
+          getHoldCount()
+            Returns the number of holds on this lock by the current thread
+          isHeldByCurrentThread()
+            Returns true if current thread holds this lock and false otherwises
+          isLocked()
+            Queries if this lock is held by any thread
+          isFair()
+            Return boolean value of this lock fairness
+          hasQueuedThreads() 
+            Queries whether any threads are waiting to acquire this lock
+          hasQueuedThread()
+            Queries whether the given thread is waiting to acquire this lock
+          getQueuedThreads()
+            Returns a collection containing threads that may be waiting to acquire this lock
+          hasWaiters()
+            Queries whether any threads are waiting on the given condition associated with this lock
+  ReadWriteLock interface
+    Maintains a pair of associated locks, one for read-only operations and one for writing
+    The read lock may be held simultaneously by multiple reader threads, so long as there are no writers
+    The write lock is exclusive
+      Contains methods  
+        readLock()
+          Returns the lock used for reading
+        writeLock()
+          Returns the lock used for writing
+    Main implementations
+      ReentrantReadWriteLock
+        An implementation of ReadWriteLock supporting similar semantics to ReentrantLock
+        Main methods
+          isFair()
+            Return boolean value of this lock fairness
+          getReadLockCount()
+            Queries the number of read locks held for this lock
+          isWriteLocked()
+            Queries if the write lock is held by any thread
+          isWriteLockedByCurrentThread()
+            Queries if the write lock is held by the current thread
+          getWriteHoldCount()
+            Queries the number of reentrant write holds on this lock by the current thread
+          getReadHoldCount()
+            Queries the number of reentrant read holds on this lock by the current thread
+          getQueuedWriterThreads()
+            Returns a collection containing threads that may be waiting to acquire the write lock
+          getQueuedReaderThreads()
+            Returns a collection containing threads that may be waiting to acquire the read lock
+          hasQueuedThread()
+            Queries whether any threads are waiting to acquire the read or write lock
+          hasQueuedThread()
+            Queries whether the given thread is waiting to acquire either the read or write lock
+          getQueuedThreads()
+            Returns a collection containing threads that may be waiting to acquire either the read or write lock
+          hasWaiters()
+            Queries whether any threads are waiting on the given condition associated with the write lock
+          getWaitingThreads()
+            Returns a collection containing those threads that may be waiting on the given condition associated with the write lock
+  Condition interface
+    Provide means for one thread to suspend execution (to "wait") 
+      until notified by another thread that some state condition may now be true
+    Where a Lock replaces the use of synchronized methods and statements, a Condition replaces the use of the Object monitor methods
+    When a Thread tries to acquire a Lock, it first checks all the Condition attached to it
+    Main methods      
+      await()
+        Causes the current thread to wait until it is signalled or interrupted
+        The lock associated with this Condition is atomically released
+      signal()
+        Wakes up one waiting thread
+      signalAll()
+        Wakes up all waiting threads
+  StampedLock
+    A capability-based lock with three modes for controlling read/ write access
+      Writing
+      Reading
+      Optimistic reading
+    Lock acquisition methods return a stamp that represents and controls access with respect to a lock state
+    Lock release and conversion methods require stamps as arguments, and fail if they do not match the state of the lock
+    Main methods
+      writeLock()
+        Exclusively acquires the lock, blocking if necessary until available.
+        Returns a write stamp, in the form of a long value, that can be used to unlock or convert mode
+      tryWriteLock()
+        Exclusively acquires the lock if it is immediately available
+        Returns a write stamp that can be used to unlock or convert mode, or zero if the lock is not available
+        Can be used with a timeout
+      readLock()
+        Non-exclusively acquires the lock, blocking if necessary until available
+        Returns a read stamp that can be used to unlock or convert mode
+      tryReadLock()
+        Non-exclusively acquires the lock if it is immediately available
+        Returns a read stamp that can be used to unlock or convert mode, or zero if the lock is not available
+      tryOptimisticRead()
+        Returns a stamp that can later be validated, or zero if exclusively locked
+      validate()
+        Returns true if the lock has not been exclusively acquired since issuance of the given stamp
+        Always returns false if the stamp is zero
+      unlockWrite()
+        If the lock state matches the given stamp, releases the exclusive lock
+      unlockRead()
+        If the lock state matches the given stamp, releases the non-exclusive lock
+      unlock()
+        If the lock state matches the given stamp, releases the corresponding mode of the lock
+      tryConvertToWriteLock()
+        If the lock state matches the given stamp, atomically performs one of the following actions
+          If the stamp represents holding a write lock, returns it
+          If a read lock, if the write lock is available, releases the read lock and returns a write stamp
+          If an optimistic read, returns a write stamp only if immediately available
+          Returns zero in all other cases
+      tryConvertToReadLock()
+        If the lock state matches the given stamp, atomically performs one of the following actions
+          If the stamp represents holding a write lock, releases it and obtains a read lock
+          If a read lock, returns it
+          If an optimistic read, acquires a read lock and returns a read stamp only if immediately available
+          Returns zero in all other cases
+      tryConvertToOptimisticRead()
+        If the lock state matches the given stamp then, atomically 
+          If the stamp represents holding a lock, releases it and returns an observation stamp
+          If an optimistic read, returns it if validated
+          Returns zero in all other cases, and so may be useful as a form of "tryUnlock"
+      asReadWriteLock()
+        Returns a ReadWriteLock view of this StampedLock 
+        In which the ReadWriteLock. readLock() method is mapped to asReadLock(), 
+          and ReadWriteLock. writeLock() to asWriteLock()
+
+Synchronizers
+  CyclicBarrier class
+    Implements barrier pattern
+    Describes a case in which all threads must stop at one point (barrier), 
+      and can precede when all the threads are at this point
+    Its constructor takes a parties argument that indicates the number of threads waiting upon,
+      also takes an optional Runnable that is run when the barrier is tripped, performed by the last thread entering the barrier
+    Main methods
+      getParties()
+        Returns the number of parties required to trip this barrier.
+      await()
+        Waits until all parties have invoked await on this barrier.
+        If the current thread is not the last to arrive then it is disabled for thread scheduling purposes 
+          and lies dormant until one of the following things happens
+        Returns the arrival index of the current thread, where index getParties() - 1 
+          indicates the first to arrive and zero indicates the last to arrive
+      getNumberWaiting()
+        Returns the number of parties currently waiting at the barrier
+      reset()
+        Resets the barrier to its initial state
+        If any parties are currently waiting at the barrier, they will return with a BrokenBarrierException
+      breakBarrier()
+        Sets current barrier generation as broken and wakes up everyone. Called only while holding lock
+  CountdownLatch class
+    A CountDownLatch is initialized with a given count
+    The await methods block until the current count reaches zero due to invocations of the countDown method
+    Count cannot be reset
+    Unlike CyclicBarrier, it works with tasks, no matter which thread performs them
+    Main methods
+      await()
+        Causes the current thread to wait until the latch has counted down to zero, unless the thread is interrupted
+        If the current count is zero then this method returns immediately
+      countDown() 
+        Decrements the count of the latch, releasing all waiting threads if the count reaches zero
+        If the current count is greater than zero then it is decremented
+        If the new count is zero then all waiting threads are re-enabled for thread scheduling purposes
+        If the current count equals zero then nothing happens
+      getCount()
+        Returns the current count
+  Semaphore class
+    Maintains a set of permits. Each acquire blocks if necessary until a permit is available, and then takes it. 
+      Each release adds a permit, potentially releasing a blocking acquirer
+      Permits value may be negative, in which case releases must occur before any acquires will be granted.
+    Are often used to restrict the number of threads than can access some (physical or logical) resource
+    Main methods
+      acquire()
+        Acquires a permit from this semaphore, blocking until one is available, or the thread is interrupted.
+          If one is available and returns immediately, reducing the number of available permits by one
+        Accepts a permits argument, which is used to acquire a custom number of permits
+      tryAcquire()
+        Acquires a permit from this semaphore, only if one is available at the time of invocation
+          If one is available and returns immediately, with the value true, reducing the number of available permits by one
+          If no permit is available then this method will return immediately with the value false
+        Allows a maximum timeout argument
+      release()
+        Releases a permit, returning it to the semaphore
+      availablePermits()
+        Returns the current number of permits available in this semaphore
+      getQueuedThreads()
+        Returns a collection containing threads that may be waiting to acquire
+  Exchanger class
+    A synchronization point at which threads can pair and swap elements within pairs. 
+      Each thread presents some object on entry to the exchange method, matches with a partner thread, 
+      and receives its partner's object on return
+    It is a parametrized class, with the type of object that exchanges
+    Contains just one method
+      exchange()
+        Waits for another thread to arrive at this exchange point (unless the current thread is interrupted), 
+          and then transfers the given object to it, receiving its object in return
+        Accepts an optional timeout argument, that indicates a maximum time to wait
+  Phaser class
+    Implements barrier pattern
+    Unlike CyclicBarrier, it supports multiple phases. Each phase has a number
+    Its constructor accepts an argument for a number of parties required to advance to the next phase, or a parent Phaser
+    Main methods
+      register()
+        Adds a new unarrived party to this phaser
+        If an ongoing invocation of onAdvance is in progress, this method may await its completion before returning
+        If this phaser has a parent, and this phaser previously had no registered parties, 
+          this child phaser is also registered with its parent
+        If this phaser is terminated, the attempt to register has no effect, and a negative value is returned
+        Returns the arrival phase number to which this registration applied
+      arrive()
+        Arrives at this phaser, without waiting for others to arrive
+        Once the number of arrived parties is equal to the number of registered parties, 
+          the execution of the program will continue
+      awaitAdvance()
+        Awaits the phase of this phaser to advance from the given phase value, 
+          returning immediately if the current phase is not equal to the given phase value or this phaser is terminated
+      arriveAndAwaitAdvance()
+        Arrives at this phaser and awaits others
+        It is equivalent to awaitAdvance(arrive())
+      arriveAndDeregister()
+        Arrives at this phaser and deregisters from it without waiting for others to arrive
+        Deregistration reduces the number of parties required to advance in future phases
+        If some thread will not participate in the next phase, this method must be called
+      getPhase()
+        Returns the current phase number
+      getRegisteredParties()
+        Returns the number of parties registered at this phaser
+      getArrivedParties()
+        Returns the number of registered parties that have arrived at the current phase of this phaser
