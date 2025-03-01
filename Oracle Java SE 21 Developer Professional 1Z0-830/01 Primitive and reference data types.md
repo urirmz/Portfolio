@@ -48,3 +48,18 @@ Strings
       This helps to know when an object is effectively removed from memory
     Can be created with the class PhantomReference
       PhantomReference<List<String>> listReference = new PhantomReference<List<String>>(new ArrayList<String>());
+
+Garbage Collector
+  Automatically finds and removes objects that are no longer needed, freeing up memory in the heap
+  Runs in the background as a daemon thread, helping to manage memory efficiently without requiring the programmer’s constant attention
+  An object is said to be unreachable if it doesn’t contain any reference to it, making it eligible for Garbage Collection
+  How to Make an Object Eligible for Garbage Collection?
+    Nullifying the reference variable
+    Re-assigning the reference variable
+    Objects created within a method are eligible for garbage collection once the method completes
+    Objects that are isolated and not referenced by any reachable objects
+  System.gc()
+    Suggests that the Java Virtual Machine expend effort toward recycling unused objects
+      however does not guarantee the execution of cleaning the eligible object
+  finalize() Object method
+    Called by the garbage collector before destroying an object

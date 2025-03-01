@@ -108,6 +108,13 @@ TimeUnit enum
   Main methods
     sleep(), convert(), to{Unit}()
 
+Context switch
+  Situation when a thread doesn't execute completely in a quantum of time and its state is saved by thread scheduler
+  In Java, when using sleep() or wait() or waiting for a synchronized block to be available, 
+    the operating system will switch the CPU core that was executing Java code to a different thread or process as it would be otherwise just uselessly waiting there and it could calculate possibly something else
+  Switching between processes involves some saving and restoring the state and cleanup 
+    of CPU registers and so on, so it is preferable to avoid to do it too often
+
 Race condition
   State of the system where substantive behavior of an application is dependent on the sequence or timing of other events
   Can be avoided by building proper thread synchronization in critical sections of execution

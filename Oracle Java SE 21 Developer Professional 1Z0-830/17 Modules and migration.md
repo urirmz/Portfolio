@@ -115,3 +115,12 @@ jdeps
 
 webgraphviz.com
   Helps to visualize dependencies in a graphic way
+
+jlink
+  Allows to assemble and optimize a set of modules and their dependencies into a custom runtime image
+
+jmod 
+  Allows to create JMOD files and list the content of existing JMOD files
+
+jdeprscan 
+  Allows to scan a jar file (or some other aggregation of class files) for uses of deprecated API elements

@@ -65,7 +65,9 @@ TimeZone class
       Converts this TimeZone object to a ZoneId
 
 java.time package
-  Use nanosecond precision
+  All of the classes it contains are inmutable and thread safe,
+    operation methods like plus() and minus(), with(), etc. return a copy of the instance with modified value
+  Uses nanosecond precision
   Machine scale time classes
     Instant class
       Represent an instant on the time line

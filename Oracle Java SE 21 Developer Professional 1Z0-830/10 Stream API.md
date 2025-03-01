@@ -26,7 +26,7 @@ Stream interface
   Operations
     Intermediate operations
       Return a stream after performing the operation, so that another operation can be chained after
-      Some of the most important methods it declares are
+      Main methods
         parallel()
           Converts a serial stream into a parallel stream
         filter()
@@ -52,6 +52,7 @@ Stream interface
           Returns a sorted stream based on the passed comparator
     Terminal operations
       Return void, an object, value, collection or array
+      After calling terminal operation, stream can't be used again
         findFirst()
           Returns an Optional with the first element of this stream
           It is a short-circuit operation

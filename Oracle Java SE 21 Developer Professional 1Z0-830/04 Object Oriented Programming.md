@@ -19,7 +19,12 @@ Initialization blocks
 
 Abstract classes
   Cannot be instatiated, but instead define properties and methods that a group of classes inheriting from them must contain
-  Abstract class methods can be abstract methods or define a default implementation (that can be later overriden in inherited classes with the @Override annotation)
+  Abstract class methods can be abstract methods or define a default implementation,
+    that can be later overriden in inherited classes with the @Override annotation
+  Abstract class can be empty
+  Child of abstract class must implement the parent's abstract method
+  Abstract method must not be implemented in parent class
+  Abstract class can be sealed
 
 Anonymous classes
       Can be created inside a method declaration to initialize an object, extending an existing class or implementing an interface, for example:
@@ -54,11 +59,20 @@ instanceOf
   Can be used to reference methods or properties of any parent clas
 
 Polymorphism
-  Means that the same method signature from an interface or a class can have different implementations thanks to inheritance and @Override annotation
+  Means that the same method signature from an interface or a class 
+    can have different implementations thanks to inheritance and @Override annotation
 
 Method override
-  It happens when a method supersede another method with the same name, from an interface that is implementing or a parent class that is inheriting
-  Calling an overriding method in an object of this class will execute the class implementation, not its parent nor interface implementation
+  It happens when a method supersede another method with the same name, 
+    from an interface that is implementing or a parent class that is inheriting
+  Calling an overriding method in an object of this class will execute the class implementation, 
+    not its parent nor interface implementation
+
+Inheritance rules
+  When we create instance of a child class, its parent class is firstly created
+  Fields of the parent class are not overriden by the child class, only methods are overriden
+  When a variable with reference type of Parent and Child object type is created, 
+    parent instance fields and child methods are accessed
 
 Method overload
   Allows you to create methods with the same signature, but that take different parameters and have different implementation

@@ -1,12 +1,25 @@
 Checked vs Unchecked Exceptions
   Checked exceptions are reviewed during compilation time
   Unchecked exceptions happen during runtime
+    Unchecked exceptions do not need to be declared in a method or constructor's throws clause 
+      if they can be thrown by the execution of the method or constructor and propagate outside the method or constructor boundary
 
 Hierarchy 
   Both exceptions and errors inherit from the Throwable interface
   Unlike exceptions, errors cannot be handled. Some examples are: OutOfMemoryError, StackOverflowError and ThreadDeath
-  The principal exception types are IOException (related with input and output), SQLException and 
-    Runtime exception (from which inherits NullPointerException, IllegalArgumentException, ArithmethicException, ArrayIndexOutOfBoundsException, ClassCastException)
+  Main exception types
+    IOException
+      Related with input and output
+    SQLException
+    RuntimeException
+      Can be thrown during the normal operation of the Java Virtual Machine
+      RuntimeException and its subclasses are unchecked exceptions
+      From which inherits 
+        NullPointerException
+        IllegalArgumentException
+        ArithmethicException
+        ArrayIndexOutOfBoundsException
+        ClassCastException
   Custom exceptions can be created by extending the Exception class, or implementing the Throwable interface
 
 Catch
