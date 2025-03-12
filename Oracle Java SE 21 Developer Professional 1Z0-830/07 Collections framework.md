@@ -24,7 +24,6 @@ Collection interface
           It's main advantage is that allows to return objects in O(1) when using an index
         Vector
           Similar to an ArrayList, the only difference is that all vector methods are synchronized, meaning it is multithread safe
-          Synchronized methods can only by access by one thread at a time, preventing thread interference and memory consistency errors
         Stack
           Extends vector, but contains all the methods from the Queue
           It is used to implement a LIFO (Last In, First Out)
@@ -53,6 +52,7 @@ Collection interface
           The elements of the list are ordered according to their insertion order,
             unlike LinkedHashMap, LinkedHashSet doesn't support access order
         TreeSet
+          When an object is inserted, it's automatically sorted in descending order, following a tree structure
     Queue interface      
       Helps to implement LIFO (Last In, First Out) and FIFO (First In, First Out)
         LIFO is commonly used for queues
@@ -93,8 +93,10 @@ Map interface
   Map doesn't belong to Collection interface because some methods of the Collection interface cannot be used in Map
   Allows key-value pairs, called entries, where all keys must be unique
   Includes the inner class Map.Entry
-  Assigns an index using the keys hashCode() method, this is the reason why members appear to be unordered when added to a Map,
-    then checks for uniqueness based on the equals() method
+  Assigns an index using the keys hashCode() method, 
+    this is the reason why members appear to be unordered when added to a Map
+  Uniqueness check is based on the equals() method,
+    so key must be Object type, not primitive
   Contains the methods
     size(), isEmpty(), containsKey(), containsValue(), get(), put(), putAll(),
     remove(), putAll(), clear(), keySet(), values(), entrySet(), getOrDefault(),
@@ -133,6 +135,12 @@ Map interface
       Implements the Map interface and is based on using a WeakReference to store keys
         Thus, the key/value pair will be removed from the WeakHashMap if the key object is no longer strongly referenced
 
+Unmodifiable Collection
+  Collection to which items can't be added, removed or replaced
+  Can not be modified except it stores items that can mutate
+  Collections that are created using unmodifiable factory methods are space efficient
+  Static factory methods like List.of(), Map.of(), Set.of() return an unmodifiable collection
+
 Comparator and Comparable interfaces
   Comparation methods are used when sorting a collection of objects. They return negative, positive or 0 values based on the result of the comparation
   Comparable interface
@@ -163,10 +171,10 @@ Iterator, iterable and ListIterator interfaces
     Types of iterators
       Fail-Fast
         Is the default Iterator implementation, which means the iterator is not multithread safe and 
-        accesing more than once to the same iterator element will throw a ConcurrentModificationException.
+          accesing more than once to the same iterator element will throw a ConcurrentModificationException
       Fail-Safe iterators 
-        Create a clone of the actual Collection and iterate over it. 
-        If any modification happens after the iterator is created, the copy still remains untouched. 
+        Create a clone of the actual Collection and iterate over it
+        If any modification happens after the iterator is created, the copy still remains untouched
         These Iterators continue looping over the Collection even if it’s modified
         Iterators on Collections from java.util.concurrent package are Fail-Safe
       Weakly consistent iterators

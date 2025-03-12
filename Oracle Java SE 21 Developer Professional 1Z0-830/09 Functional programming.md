@@ -16,6 +16,7 @@ Functional interface
   Interface that has a single abstract method declared in it,
     though it can contain any number of default and static methods
   Can be declared with the annotation @FunctionalInterface
+  Must have exactly one abstract method and it should not be java.lang.Object methods
   Example
     @FunctionalInterface
     public interface DistanceCalculator() {

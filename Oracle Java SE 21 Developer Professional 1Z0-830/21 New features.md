@@ -1,10 +1,18 @@
 Virtual threads
   Lightweight threads managed by the JDK rather than the operating system
-  Many virtual threads share the same operating-system thread
   Are ideal for I/O-bound applications with many blocking operations
-  Virtual threads are tied to a carrier thread only during execution and are terminated after their task is completed
-  Virtual threads are backward compatible with platform thread APIs
+  Many virtual threads share the same operating-system thread,
+    called carrier thread
+  Are tied to a carrier thread only during execution and are terminated after their task is completed
+  Virtual threads delink carrier threads during blocking operations, freeing the carrier thread to execute other tasks
+  Are backward compatible with platform thread APIs
+  Are mutable during their lifecycle, just like platform threads
+  Are unbounded by default and their number is limited only by available memory, unlike traditional thread pools
+  Native code that relies on thread-local storage may not work properly with virtual threads
+    because they frequently switch carrier threads
   Ways to create virtual threads
+    Thread class factory method
+      Thread virtualThread = Thread.newVirtualThread();
     VirtualThreadFactory
       ThreadFactory virtualThreadFactory = Thread.ofVirtual().factory();
       Thread virtualThread = virtualThreadFactory.newThread(runnable);
@@ -19,6 +27,7 @@ Virtual threads
 
 Scoped values
   Allows to store and share immutable data within and across threads
+  Prevent context leakage by explicitly associating values with specific scopes, unlike traditional thread-local storage
   Child threads can inherit scoped values
   ScopedValue class
     Main methods
@@ -68,7 +77,10 @@ Record
   Can't have the non-static instance fields
   Can have the nested classes
   Can have a Constructor with or without parameters
-    When Constructor has parameters then the developer must implicitly declare the assignment of all record
+    When Constructor has parameters then the developer must explicitly declare the assignment of all record fields
+    Example
+      public  record RecordClass(String title) {
+        public RecordClass { System.out.println(title); }}
   A new instance of a record can be created by using keyword new
   Example
     public record Person (String name, String address) {}
@@ -85,6 +97,7 @@ Sealed classes
   Parent sealed class and its children can locate in different packages in named module
   Constraints
     All permitted subclasses must belong to the same module as the sealed class
+    Parent class and its child classes must locate in same package
     Every permitted subclass must explicitly extend the sealed class
     Every permitted subclass must define a modifier: final, sealed, or non-sealed
   Example
@@ -96,41 +109,53 @@ Sealed classes
 
 New switch statements
   Must cover all possible input values, or contain a default case
-  With Selaed Class selector
-    Must cover all the permitted subclasses of the Sealed class, or contain a default case
-    Example
-      public void checkSealed(SealedParent main) {
-        switch (main) {
-            case A o -> System.out.println("A");
-            case B t -> System.out.println("B");
-            case C th -> System.out.println("C");
+  "yield" keyword
+    Allows to exit a switch expression by returning a value that becomes the value of the switch expression
+  Switch statement selectors
+    Selaed Class selector
+      Must cover all the permitted subclasses of the Sealed class, or contain a default case
+      Example
+        public void checkSealed(SealedParent main) {
+          switch (main) {
+              case A o -> System.out.println("A");
+              case B t -> System.out.println("B");
+              case C th -> System.out.println("C");
+          }
         }
-      }
-  With Object selector
-    Must always contain a default case
-    Example
-      public void checkObject(Object n) {
-        switch (n) {
-            case Integer i -> System.out.println("integer");
-            case Long i -> System.out.println("long");
-            case String s -> System.out.println("string");
-            case Double d -> System.out.println("double");
-            default -> System.out.println(n.getClass().getName());
+    Object selector
+      Must always contain a default case
+      Example
+        public void checkObject(Object n) {
+          switch (n) {
+              case Integer i -> System.out.println("integer");
+              case Long i -> System.out.println("long");
+              case String s -> System.out.println("string");
+              case Double d -> System.out.println("double");
+              default -> System.out.println(n.getClass().getName());
+          }
         }
-      }
-  With Enum selector
-    Must contain all possible variants of the argument Enum, or contain a default case
-    Example 
-      public void checkEnum(Color c) {
-        switch (c) {
-            case WHITE -> System.out.println("WHITE");
-            case BLACK -> System.out.println("BLACK");
-            case GREEN -> System.out.println("GREEN");
+    Enum selector
+      Must contain all possible variants of the argument Enum, or contain a default case
+      Example 
+        public void checkEnum(Color c) {
+          switch (c) {
+              case WHITE -> System.out.println("WHITE");
+              case BLACK -> System.out.println("BLACK");
+              case GREEN -> System.out.println("GREEN");
+          }
         }
-      }
 
 Text blocks
   Are used to declared multiline strings
   Start with a “”” (three double-quote marks) followed by optional whitespaces and a newline
     String example = """
       Example text""";
+
+Local Variable Type Inference (var reserved type name)
+  Detects automatically the datatype of a variable based on the surrounding context
+  A variable can be named var
+  Constraints
+    Cannot be used in method arguments, class field declarations, as a Generic type, or to declare lambda expressions
+    Requires explicit non-null initialization
+    Is not allowed in a compound declaration  
+      var sb1 = new StringBuffer(), sb2 = new StringBuffer(); // Incorrect

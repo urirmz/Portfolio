@@ -27,30 +27,34 @@ Abstract classes
   Abstract class can be sealed
 
 Anonymous classes
-      Can be created inside a method declaration to initialize an object, extending an existing class or implementing an interface, for example:
-        public void sayHello() {        
-          class EnglishGreeting implements HelloWorld {
-              String name = "world";
-              public void greet() {
-                  greetSomeone("world");
-              }
-              public void greetSomeone(String someone) {
-                  name = someone;
-                  System.out.println("Hello " + name);
-              }
+  Can be created inside a method declaration to initialize an object, 
+    extending an existing class or implementing an interface
+  Example
+    public void sayHello() {        
+      class EnglishGreeting implements HelloWorld {
+          String name = "world";
+          public void greet() {
+              greetSomeone("world");
           }
-
-          HelloWorld englishGreeting = new EnglishGreeting();
-          englishGreeting.greet();
-        }
+          public void greetSomeone(String someone) {
+              name = someone;
+              System.out.println("Hello " + name);
+          }
+      }
+      HelloWorld englishGreeting = new EnglishGreeting();
+      englishGreeting.greet();
+    }
 
 Interfaces
   Define a behavioral contract that tells methods and properties that any class implementing from it must have
-  Interface methods are by default public and abstract, but can also contain a default implementation, defined with the keyword "default"
+  Interface methods are by default public and abstract, but can also contain a default implementation, 
+    defined with the keyword "default"
   Classes are able to implement many interfaces, but may just inherit from one clas
+  Interfaces cannot be declared "final"
 
 instanceOf
-  The instanceOf operator allows you to tell if an object is an instance, subclass, or implements the given class, for example:
+  The instanceOf operator allows you to tell if an object is an instance, subclass, or implements the given class
+  Example
     if (product instanceOf Phone) {
       ((Phone) product).ring();
     }
@@ -76,6 +80,15 @@ Inheritance rules
 
 Method overload
   Allows you to create methods with the same signature, but that take different parameters and have different implementation
+  Priority order
+    1. The compiler looks for the most specific match for the arguments
+      Arguments that match the exact call
+    2. Implicit widening 
+      Example: converting byte to long
+    3. Implicit autoboxing
+      Example: converting int to Integer
+    4. Variable arguments
+      Example: convertStrings(String ... abc) taking (String a, String b, String c)
 
 "final" modifier
   In a class, means that it cannot be extended by another class
@@ -92,12 +105,18 @@ Static binding vs dynamic binding
   Static binding is resolved at compile time, while dynamic binding is resolved at runtime, for this reason static binded members will have better performance
 
 Encapsulation
-  "default" modifier allows access to any other classes inside the same package. If no access modifier is specified, this is the default modifier
-  "protected" modifier allows access only to child classes
-  "private" modifier allos access only to methods in the same class
-  "public" modifier allows acces to all packages in the program
+  "default" modifier 
+    Allows access to any other classes inside the same package
+    If no access modifier is specified, the default modifier is applied
+  "protected" modifier 
+    Allows access only to child classes, or to classes in same package
+  "private" modifier 
+    Allows access only to methods in the same class
+  "public" modifier 
+    Allows access to all packages in the program
   Access level can be extended by inherited classes (for example, overriding a private or protected method with a public one)
-  Access level cannot be narrowed by inherited classes (for example, it's not possible to override a public method with a private or protected one)
+  Access level cannot be narrowed by inherited classes 
+    (for example, it's not possible to override a public method with a private or protected one)
 
 Object class
   All classes inherit from Object class, which has a constructor and the methods: 
@@ -111,10 +130,10 @@ Object class
     Symmetry 
       For any non-null x and y references, the x.equals(y) method must return true if and only if y.equals(x) returns true
     Reflexivity
-      Gor any non-null references x, the x.equals(x) method must return true
+      For any non-null references x, the x.equals(x) method must return true
     Transitivity 
-      Gor any non-null references x, y, and z, if x.equals(y) returns true and y.equals(z) returns true, 
-      then x.equals(z) must also return true
+      For any non-null references x, y, and z, if x.equals(y) returns true and y.equals(z) returns true, 
+        then x.equals(z) must also return true
     Persistence
       The result of equals() must change only when the fields involved are changed
     Inequality with null
@@ -130,8 +149,9 @@ Yoda conditions
   to the left of the comparison operator (that is, 5 == a instead of habitual a == 5)
 
 CRC cards
-  Class-responsibility-collaboration card (Class-Responsibility-Cooperation) is a brainstorming method for designing object-oriented software. 
-  As a rule, CRC-maps are used in those cases when classes and ways of their interactions are first defined in the software design process.
+  Class-responsibility-collaboration card (Class-Responsibility-Cooperation) 
+    is a brainstorming method for designing object-oriented software
+  As a rule, CRC-maps are used in those cases when classes and ways of their interactions are first defined in the software design process
 
 SOLID principles
   Single responsability
@@ -141,7 +161,8 @@ SOLID principles
   Liskov substitution
     Objects in a program should be replaceable with instances of their subtypes without altering the correctness of the program
   Interface segregation
-    No client should depend on methods that it does not use. This means, interfaces should also solve specific problems and contain operations that are logically connected
+    No client should depend on methods that it does not use
+    Interfaces should also solve specific problems and contain operations that are logically connected
   Dependency inversion
     High level modules should not depend on low level modules, both should depend on abstractions
     Abstracts should not depend on details. Details should depend on abstractions

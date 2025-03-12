@@ -9,19 +9,22 @@ Heap memory
 Integer Pool
   Caches integer values between -128 and 127 (inclusive). 
   When an integer within this range is created using autoboxing or the valueOf() method, 
-  the JVM checks if an equivalent integer object already exists in the pool. 
+    the JVM checks if an equivalent integer object already exists in the pool
   If it does, the existing object is reused; otherwise, a new object is created and added to the pool for future use
 
 String pool
-  When we create a String variable and assign a value to it, the JVM searches the pool for a String of equal value.
-  If found, the Java compiler will simply return a reference to its memory address, without allocating additional memory.
-  If not found, it will be added to the pool (interned) and its reference will be returned.
+  When we create a String variable and assign a value to it, the JVM searches the pool for a String of equal value
+    If found, the Java compiler will simply return a reference to its memory address, without allocating additional memory
+    If not found, it will be added to the pool (interned) and its reference will be returned
 
 Strings
   \u escape can be used to represent unicode characters, for example \u2665 represents a ♥
-  String.format() allows to created strings with special format, substituting character sequences like %s for another string, or %d for integers
+  String.format() allows to created strings with special format, 
+    substituting character sequences like %s for another string, or %d for integers
   Formatter class can be used for advance control over string format, like locale-based formatting
   Strings can be converted into their bytes representation using the getBytes() method
+
+Uninitialized local variables cannot be used in Java
 
 4 types of references in Java
   Strong/Hard
@@ -39,7 +42,7 @@ Strings
     Objects referenced only by weak references are automatically collected
     Can be created with the class WeakReference
       WeakReference<List<String>> listReference = new WeakReference<List<String>>(new ArrayList<String>());
-    Are most often used to implement canonicalizing mappings.
+    Are most often used to implement canonicalizing mappings
       A "canonicalized" mapping is where you keep one instance of the object in question in memory and all others look up that particular instance via pointers or somesuch mechanism
   Phantom 
     Objects referenced by phantom references are eligible for garbage collection

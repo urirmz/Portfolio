@@ -115,6 +115,9 @@ Context switch
   Switching between processes involves some saving and restoring the state and cleanup 
     of CPU registers and so on, so it is preferable to avoid to do it too often
 
+Thread starvation 
+  Happens when one thread can be executed for a long time while others are waiting
+
 Race condition
   State of the system where substantive behavior of an application is dependent on the sequence or timing of other events
   Can be avoided by building proper thread synchronization in critical sections of execution
@@ -162,8 +165,9 @@ Synchronization
      Condition variable is a container of threads that are waiting for a certain condition
   "synchronized" keyword
     Doesn't allow more than one thread to access certain method simultaneously
-    In a synchronized method, the monitor of the object used to invoke the method is captured, 
+    In a synchronized method, the monitor of the object used to invoke the method is captured
     In a static synchronized method, the monitor of the class is capture instead
+    Constructors can't be synchronized
   "synchronized" blocks
     Allows to have synchronized access only for an specific part of a method
     To create synchronized block, pass the reference to an object where you want to capture monitor
@@ -187,6 +191,8 @@ Synchronization
       Wakes up a single thread that is waiting on this object's monitor
     notifyAll()
       Wakes up all threads that are waiting on this object's monitor
+
+All inmutable objects are considered thread safe
 
 For non-dependent operations like initialization of class fields, 
   compiler may apply some optimizations, like reordering

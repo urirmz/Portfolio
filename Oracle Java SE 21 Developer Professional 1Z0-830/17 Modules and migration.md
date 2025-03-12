@@ -13,6 +13,7 @@ Java Platform Module System
     now only the modules used by the application are packaged
   Multimodule projects can be created from a main application and several library modules.
     however, there can exist just one module per jar file
+  Modules are not mandatory
 
 Module types
   System modules
@@ -32,6 +33,7 @@ Module types
 
 Module descriptor 
   Compiled version of a module declaration that's defined in a file named module-info.java
+  The name of module in the descriptor must be the same as name of its root folder
 
 Module directives
   requires
@@ -74,15 +76,27 @@ Example module
     opens com.my.package to moduleOne, moduleTwo, etc .;
   }
 
+Common Java modules
+  java.base
+    The default module for all JDK and user-defined
+    It is required implicitly, if required it explicitly there will be compile error
+  java.xml
+  java.logging
+  java.prefs
+  java.sql
+  java.httpserver
+  java.se
+  java.desktop
+
 Command line options
   module-path 
     Specify the module path, this is a list of one or more directories that contain our modules
   add-reads
     Command line equivalent of the requires directive
   add-exports
-    Command line replacement for the exports directive.
+    Command line replacement for the exports directive
   add-opens
-    Replace the open clause in the module declaration file.
+    Replace the open clause in the module declaration file
   add-modules
     Adds the list of modules into the default set of modules
   list-modules
@@ -91,7 +105,7 @@ Command line options
     Add or override classes in modules
   illegal-access=permit| warn/deny 
     Either relax strong encapsulation by showing a single global warning, shows every warning, or
-      fails with errors. The default is permit.
+      fails with errors. The default is permit
 
 Migration algorithm
   1. Create reliable suite of tests
