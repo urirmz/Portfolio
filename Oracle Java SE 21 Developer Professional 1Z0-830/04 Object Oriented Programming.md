@@ -27,22 +27,21 @@ Abstract classes
   Abstract class can be sealed
 
 Anonymous classes
-      Can be created inside a method declaration to initialize an object, extending an existing class or implementing an interface, for example:
-        public void sayHello() {        
-          class EnglishGreeting implements HelloWorld {
-              String name = "world";
-              public void greet() {
-                  greetSomeone("world");
-              }
-              public void greetSomeone(String someone) {
-                  name = someone;
-                  System.out.println("Hello " + name);
-              }
+  Can be created inside a method declaration to initialize an object, extending an existing class or implementing an interface, for example:
+    public void sayHello() {        
+      class EnglishGreeting implements HelloWorld {
+          String name = "world";
+          public void greet() {
+              greetSomeone("world");
           }
-
-          HelloWorld englishGreeting = new EnglishGreeting();
-          englishGreeting.greet();
-        }
+          public void greetSomeone(String someone) {
+              name = someone;
+              System.out.println("Hello " + name);
+          }
+      }
+      HelloWorld englishGreeting = new EnglishGreeting();
+      englishGreeting.greet();
+    }
 
 Interfaces
   Define a behavioral contract that tells methods and properties that any class implementing from it must have

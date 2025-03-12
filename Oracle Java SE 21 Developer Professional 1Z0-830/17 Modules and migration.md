@@ -21,6 +21,7 @@ Module types
   Application modules
     Are named and defined in the compiled module info class file included in the assembled jar
   Automatic modules
+    Appears on the module path but does not contain a module-info.java file. It is simply a regular JAR
     Unofficial modules added to the module path in the form of existing Jar files
     The name of the module will be derived from the name of the jar
     Have full read access to every other module loaded
