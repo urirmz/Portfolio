@@ -54,6 +54,7 @@ Uninitialized local variables cannot be used in Java
 
 Garbage Collector
   Automatically finds and removes objects that are no longer needed, freeing up memory in the heap
+  Primitives are not cleaned by gc
   Runs in the background as a daemon thread, helping to manage memory efficiently without requiring the programmer’s constant attention
   An object is said to be unreachable if it doesn’t contain any reference to it, making it eligible for Garbage Collection
   How to Make an Object Eligible for Garbage Collection?
