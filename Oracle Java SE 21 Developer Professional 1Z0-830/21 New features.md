@@ -70,12 +70,12 @@ Scoped values
       
 Record
   Record class is simple data carrier
-  Is immutable
-  Is final by default, so it can't be extended
   Has public access methods and private final fields
+  Is final by default, so it can't be extended
+  Can be created inside a method
   Can implement the sealed interface
   Can't have the non-static instance fields
-  Can have the nested classes
+  Can have nested classes
   Can have a Constructor with or without parameters
     When Constructor has parameters then the developer must explicitly declare the assignment of all record fields
     Example

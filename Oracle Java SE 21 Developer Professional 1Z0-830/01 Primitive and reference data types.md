@@ -16,6 +16,7 @@ String pool
   When we create a String variable and assign a value to it, the JVM searches the pool for a String of equal value
     If found, the Java compiler will simply return a reference to its memory address, without allocating additional memory
     If not found, it will be added to the pool (interned) and its reference will be returned
+  String.intern() method will create a new copy of the String content and store it in the String pool
 
 Strings
   \u escape can be used to represent unicode characters, for example \u2665 represents a ♥

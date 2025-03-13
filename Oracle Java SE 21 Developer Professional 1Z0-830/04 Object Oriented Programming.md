@@ -80,6 +80,11 @@ Inheritance rules
 
 Method overload
   Allows you to create methods with the same signature, but that take different parameters and have different implementation
+  Rules
+    The method parameters must change: either the number or the type of parameters must be different in the two methods
+    The return type can be freely modified
+    The access modifier (public, private, and so on) can be freely modified
+    Thrown exceptions, if any, can be freely modified
   Priority order
     1. The compiler looks for the most specific match for the arguments
       Arguments that match the exact call
@@ -98,6 +103,12 @@ Method overload
 "static" modifier
   A method or property with the "static" modifier belongs to the class, not to any object instance
   A static member can be accesed in the way "${ClassName}.${member}", without creating an object of that class
+
+static import
+  Allows unqualified access to static members without inheriting from the type containing the static members
+    import static java.lang.Math.*;
+    // Once the static members have been imported, they may be used without qualification:
+    double r = cos(PI * theta); // instead of calling Math.cos(Math.PI * theta);
 
 Static binding vs dynamic binding
   private, final and static properties and methods use static binding, which means their implementation will always be the same
