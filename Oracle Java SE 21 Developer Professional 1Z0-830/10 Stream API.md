@@ -21,6 +21,8 @@ Terminal short-circuit operation
 
 Stream interface
   Most of the methods in stream interface methods require Functional interfaces as input
+  Intermediate operations do not modify the underlying data source,
+    however, the stream itself might produce a modified view of the data (like with map())
   Stream methods are chained one after the other, like a conveyor belt, 
     and perform operations on the elements
   Operations
@@ -72,7 +74,7 @@ Stream interface
             // 0 is the initial value of the accumulator
             Integer sum = integers.reduce(0, (previousElement, currentElement) -> previousElement + currentElement); 
         count()
-          Returns the count of elements in this stream
+          Returns the count of elements in this stream as a long value
           It is an special case of reduce
         min() 
           Returns the minimum element of this stream according to the provided Comparator

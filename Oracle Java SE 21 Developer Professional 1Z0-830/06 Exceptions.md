@@ -33,6 +33,10 @@ Catch
     } finally {
       // Optional code to run after the try and catch block, wether an exception happens or not
       // It is always executed, unless JVM exits
+      // If an exception occurs in the try block and no catch block is defined, 
+            the finally block's return statement will execute and override any return value or exception from the try block
+            This is a common pitfall - the finally block can actually prevent exceptions from being propagated
+      // If an exception occurs in this block, it will take precedence
     }
 
 Autoclosable resources
@@ -40,6 +44,9 @@ Autoclosable resources
   Try with resource release resources when they are not needed implicitly
   Try-with-resources resource must either be a variable declaration 
     or an expression denoting a reference to a final or effectively final variable
+  When an exception is thrown inside the try block, 
+    the resources are closed in inversed creation order, thus their close() methods invoked.
+    If exceptions occur inside the close() methods, they are added to the suppresed exceptions array in the main exception
   Example
     try (Closable autoClosableElement = new Closable()) {
       // Code that may cause an exception

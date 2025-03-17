@@ -23,7 +23,14 @@ java.util.Optional
     isPresent(), isEmpty(), get(), 
     ifPresent(), ifPresentOrElse(), 
     or(), orElse(), orElseGet(), orElseThrow()
-    stream(), filter(), map(), flatMap()
+    stream(), filter(), 
+    map()
+      If a value is present, returns an Optional describing (as if by ofNullable) the result 
+        of applying the given mapping function to the value, otherwise returns an empty Optional
+    flatMap()
+      Similar to map(Function), but the mapping function is one whose result is already an Optional, 
+        and if invoked, flatMap does not wrap it within an additional Optional
+      Throws NullPointerException if the mapping function is null or returns a null result
   Main static methods
     Contains factory methods that return Optional type
       empty(), of(), ofNullable()

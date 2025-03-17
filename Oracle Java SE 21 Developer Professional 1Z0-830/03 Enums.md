@@ -1,11 +1,14 @@
 Enums are used to specify a list of non-infinite keywords that match a given type
+Enums are final and always extend java.lang.Enum<T>, which gives additional functionality, 
+  like implementing Comparable and Serializable, or auxiliary methods like String name() or int ordinal()
 
 Enums can be declared in the way: "${accesModifier} Enum ${enumName} { ${components} }", for example:
   public enum Priority {
     HIGH, MEDIUM, LOW
   }
 
-Each member of the Enum has an ordinal value associated, that can be retrieved like Priority.HIGH.ordinal();
+Each member of the Enum has an ordinal zero-based index value associated, that can be retrieved like 
+  Priority.HIGH.ordinal();
 
 Enum members can also contain each own properties and methods, like:
   public enum Month {

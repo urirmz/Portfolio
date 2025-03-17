@@ -38,15 +38,18 @@ Generic types can be used in classes, in the following way
   }
 
 Wildcards
- The "?" character is a wildcard that means any type
- Example
-  public static void processElements(<? extends Parent> elements) {
-    // do something...
-  }
+  The "?" character is a wildcard that means any type
+  Example
+    public static void processElements(<? extends Parent> elements) {
+      // do something...
+    }
 
-  public static void processElements2(<? super Child> elements) {
-    // do something...
-  }
+    public static void processElements2(<? super Child> elements) {
+      // do something...
+    }
+  Wild cards cannot occur on the right side of the assignment
+    List<? extends Exception> list = new ArrayList<? extends Exception>(); // Incorrect
+
 
 Difference between E type and ? type
   E type means the type will always be of E type
@@ -55,3 +58,18 @@ Difference between E type and ? type
 Some classes can be instantiated without specifying a type, for example the line
   List list = new ArrayList<>();
   will generate a List<E> object, however it will throw a warning
+
+In classes, generic type parameters are different from class level and method level, though they may have the same name
+  Example
+    public class MyClass<T> {
+      private T value;
+
+      public MyClass(T value) { 
+        this.value = value; 
+      }
+
+      // Defines a method with a different generic type parameter T, which is separate from the class-level type parameter
+      private <T> void display(T message) {
+        System.out.println(value + " " + message);
+      }
+    }

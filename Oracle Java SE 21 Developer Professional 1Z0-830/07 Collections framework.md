@@ -53,6 +53,9 @@ Collection interface
             unlike LinkedHashMap, LinkedHashSet doesn't support access order
         TreeSet
           When an object is inserted, it's automatically sorted in descending order, following a tree structure
+          Does not allow duplicates according to the comparator’s logic, for example
+            if comparing two Person by age then name, and the comparator finds that the age is the same as the existing in the set 
+            and also the name is the same, this element is considered a duplicate and is not added to the set
     Queue interface      
       Helps to implement LIFO (Last In, First Out) and FIFO (First In, First Out)
         LIFO is commonly used for queues
@@ -140,6 +143,20 @@ Unmodifiable Collection
   Can not be modified except it stores items that can mutate
   Collections that are created using unmodifiable factory methods are space efficient
   Static factory methods like List.of(), Map.of(), Set.of() return an unmodifiable collection
+
+List.of() vs Arrays.asList() vs Collections.unmodifiableList()
+  Immutability
+    List.of() and Collections.unmodifiableList()
+      Any attempt to structurally change will result in an UnsupportedOperationException, 
+        this includes operations such as add(), set() and remove()
+      You can, however, change the contents of the objects in the list (if the objects are not immutable)
+    Arrays.asList()
+      Is not completely immutable, it does not have a restriction on set()
+      However, it is fixed length, so add() and remove() will throw an UnsupportedOperationException
+  Null hostility
+    listOf.contains(null);  // NullPointerException
+    unmodif.contains(null); // allowed
+    asList.contains(null);  // allowed
 
 Comparator and Comparable interfaces
   Comparation methods are used when sorting a collection of objects. They return negative, positive or 0 values based on the result of the comparation

@@ -63,6 +63,11 @@ Module directives
   opens ... to ...
     Same that opens, but specifying to which modules are accesible
 
+What happens if a module descriptor contains both "opens" and "opens ... to ..."?
+  This behavior is not a compilation error, nor is the more restrictive directive applied
+  The general directive "opens" takes precedence, and the package becomes open to all modules, 
+    not just modules described by "opens ... to ..." directive
+
 Example module
   module com.itbulls.learnit.javacore {
     requires somemodule.name;
@@ -133,6 +138,11 @@ webgraphviz.com
 
 jlink
   Allows to assemble and optimize a set of modules and their dependencies into a custom runtime image
+  Generates a custom Java runtime image that contains only the platform-specific modules that are required for a given application
+  Runtime images
+    Contain only the modules picked and the dependencies they need to function
+    Include the necessary Java Runtime Environment (JRE) components required to run the application, 
+      so a separate JVM installation is not necessary
 
 jmod 
   Allows to create JMOD files and list the content of existing JMOD files

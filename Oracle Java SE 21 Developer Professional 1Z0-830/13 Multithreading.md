@@ -305,6 +305,8 @@ Executors
     It is the most popular implementation of Executor
     Provides methods to manage termination of tasks, and methods that can produce a Future for tracking progress of them
     Implements the AutoCloseable interface
+    When using an ExecutorService, shutdown() or shutdownNow() must always be invoked,
+      else the application never terminate as there are still threads active
     Main methods
       submit()
         Submits a Runnable or Callable task for execution
@@ -373,6 +375,13 @@ Fork/Join framework
   The goal is to use all the available processing power to enhance the performance of your application
   The framework forks recursively, breaking the task into smaller independent subtasks until they are
     simple enough to be executed asynchronously and after that, all subtasks are recursively joined into a single result
+  ForkJoinTask class
+    Abstract base class for tasks that run within a ForkJoinPool
+    A ForkJoinTask is a thread-like entity that is much lighter weight than a normal thread
+    Main methods
+      fork(), join(), invoke(), invokeAll(), cancel(), isDone(), isCancelled(), 
+      isCompletedAbnormally(), isCompletedNormally(), state(), resultNow(), 
+      exceptionNow(), getException(), completeExceptionally(), complete(), tryUnfork()
   ForkJoinPool class
     Extends AbstractExecutorService class
     Differs from other kinds of ExecutorService mainly by virtue of employing work-stealing: 

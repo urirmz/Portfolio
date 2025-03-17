@@ -17,6 +17,7 @@ String pool
     If found, the Java compiler will simply return a reference to its memory address, without allocating additional memory
     If not found, it will be added to the pool (interned) and its reference will be returned
   String.intern() method will create a new copy of the String content and store it in the String pool
+  Strings created with "new" will never be stored in the thread pool
 
 Strings
   \u escape can be used to represent unicode characters, for example \u2665 represents a ♥
@@ -25,7 +26,37 @@ Strings
   Formatter class can be used for advance control over string format, like locale-based formatting
   Strings can be converted into their bytes representation using the getBytes() method
 
-Uninitialized local variables cannot be used in Java
+How arguments are passed to methods?
+  Pass-by-value
+    When a primitive type (like int, double, etc.) is passed to a method, 
+      its value is copied, and the method receives that copy.
+      Any changes to this copy do not affect the original variable's value
+  Pass-by-reference
+    When an object is passed to a method, the reference to that object is passed by value
+      This means the method receives a copy of the reference, which points to the same object in memory as the original reference.
+      Any changes made to the object through this copied reference will affect the original object 
+      because both references point to the same object in memory
+    However, if you reassign the copied reference inside the method to a new object, 
+      this reassignment does not affect the original reference. 
+      The original reference outside the method still points to the original object
+
+Default values
+  When declared locally, primitives doesn't have a default value: they must be explicitly initialized before used
+  However in instance or static fields, if no initialization value is provided, primitives will be initialized with default values
+    char
+      '\u0000'
+    boolean
+      false
+    int
+      0
+    double
+      0.0
+    float
+      0.0f
+    long 
+      0L
+    
+  null is the default value of all reference data types (Object, String, Boolean, Integer, etc)
 
 4 types of references in Java
   Strong/Hard

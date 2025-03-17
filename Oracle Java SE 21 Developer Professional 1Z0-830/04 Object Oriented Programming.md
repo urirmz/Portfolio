@@ -5,12 +5,13 @@ POJO
   Abstraction, encapsulation, inheritance and polymorphism
     
 Initialization blocks
-  The code inside the initialization block of a class will be executed everytime a new instance of this class is created
+  The code inside the initialization block of a class will be executed everytime a new instance of this class is created,
+    just before the constructor
   The code inside the static initialization block of a class will be executed just once in the program life time, when the class is created
     Example
       public Class MyClass {
           {
-            System.out.println("This is executed everytime a new instance of this class is created")
+            System.out.println("This is executed everytime a new instance of this class is created, just before the constructor")
           }
           static {
             System.out.println("This is executed just once in the program life time, when the class is created")
@@ -44,6 +45,28 @@ Anonymous classes
       HelloWorld englishGreeting = new EnglishGreeting();
       englishGreeting.greet();
     }
+
+Nested classes
+  Java allows a class to be defined within another class. These are called Nested Classes
+    class OuterClass {
+      ...
+      class InnerClass {
+          ...
+      }
+      static class StaticNestedClass {
+          ...
+      }
+    }
+  Static nested classes
+    May be instantiated without instantiating its outer class
+      OuterClass.StaticNestedClass staticNested = new OuterClass.StaticNestedClass();
+    Can access only the static members of its outer class and the static members in other nested classes in the same outer class,
+      including variables with private modifier
+  Non-static nested classes 
+    Require an instance of its outer class to be instantiated
+      OuterClass.InnerClass inner = new OuterClass().new InnerClass();
+    Can access all variables of its outer class and other nested classes in the same outer class, 
+      including variables with private, static and non static modifiers
 
 Interfaces
   Define a behavioral contract that tells methods and properties that any class implementing from it must have
@@ -122,7 +145,7 @@ Encapsulation
   "protected" modifier 
     Allows access only to child classes, or to classes in same package
   "private" modifier 
-    Allows access only to methods in the same class
+    Allows access only to methods in the same class, or inner classes
   "public" modifier 
     Allows access to all packages in the program
   Access level can be extended by inherited classes (for example, overriding a private or protected method with a public one)

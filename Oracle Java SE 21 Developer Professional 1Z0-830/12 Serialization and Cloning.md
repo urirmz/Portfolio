@@ -26,7 +26,15 @@ Deserialization is the process of converting a stream of bytes into objects
 Serializable interface
   It is a marker interface, does not provide any method
   Classes that do not implement this interface will not have any of their state serialized or deserialized 
-  All subtypes of a serializable class are themselves serializable
+  All subclasses of a serializable class are themselves serializable,
+    unless it contains a non-serializable member object not marked as transient
+    Example
+      class A {} // Not serializable
+      class B {} // Not serializable
+      class C extends A implements Serializable {} // Serializable
+      class D extends C {} // Serializable
+      class E extends C { B b = new B(); } // Not serializable
+      class E extends C { transient B b = new B(); } // Serializable
 
 serialVersionUID property
   The serialization runtime associates with each serializable class a version number, called a serialVersionUID, 
@@ -40,6 +48,8 @@ transient keyword
   Typically, such fields store the intermediate state of the object, 
     which, for example, is easier to calculate than to serialize and then deserialize
   Another example of such a field is a reference to an instance of an object that does not require or cannot be serialized
+  Deserializing an object with transient fields will create them with the default type value of the field,
+    for example, a transient String field will be null when deserialized
 
 Externalizable interface
   Can be implement by a class, to add a custom logic when an object of the class is serialized or deserialized,
@@ -63,13 +73,12 @@ Externalizable interface
               this.price = (double) in.readObject();
               this.category = (String) in.readObject();
           }
-
-readResolve()
-  Serialization makes possible to create a new Singleton object, 
-    which violates the purpose of a Singleton
-  The purpose of this method is to return a replacement object instead of the object on which it is called
-  To use it in a class, it is needed to define a method with the following signature
-    <ANY_ACCESS_MODIFIER> readResolve() throws ObjectStreamException;
+    readResolve()
+      Serialization makes possible to create a new Singleton object, 
+        which violates the purpose of a Singleton
+      The purpose of this method is to return a replacement object instead of the object on which it is called
+      To use it in a class, it is needed to define a method with the following signature
+        <ANY_ACCESS_MODIFIER> readResolve() throws ObjectStreamException;
 
 Cloning
   Object.clone()

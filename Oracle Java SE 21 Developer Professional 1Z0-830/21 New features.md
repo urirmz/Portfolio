@@ -5,6 +5,8 @@ Virtual threads
     called carrier thread
   Are tied to a carrier thread only during execution and are terminated after their task is completed
   Virtual threads delink carrier threads during blocking operations, freeing the carrier thread to execute other tasks
+     They unmount during blocking operations like Thread.sleep()
+     However, other tasks like holding a synchronized lock, prevents them from unmounting
   Are backward compatible with platform thread APIs
   Are mutable during their lifecycle, just like platform threads
   Are unbounded by default and their number is limited only by available memory, unlike traditional thread pools
@@ -70,23 +72,29 @@ Scoped values
       
 Record
   Record class is simple data carrier
-  Has public access methods and private final fields
-  Is final by default, so it can't be extended
-  Can be created inside a method
+  Record classes are final by default, so they can't be extended
   Can implement the sealed interface
-  Can't have the non-static instance fields
+  Has private final fields and public access methods named after their fields, for example "name()"
+  Their default implementation of equals() and hashCode() guarantees that 
+    two record objects are equal if they are of the same type and contain equal field values
+  Can be created inside a method
+  Can't have non-static instance fields
   Can have nested classes
-  Can have a Constructor with or without parameters
-    When Constructor has parameters then the developer must explicitly declare the assignment of all record fields
+  Can have methods or mutable fields (like lists) if desired
+  Can have a Constructor with or without parameters, but every created Constructor must explicitly declare the assignment of all record fields
     Example
       public  record RecordClass(String title) {
-        public RecordClass { System.out.println(title); }}
+        public RecordClass() { 
+          this("A title");
+          System.out.println(title); 
+        }
+      }
   A new instance of a record can be created by using keyword new
   Example
     public record Person (String name, String address) {}
     public static void createPersonRecord() {
       Person person = new Person("John", "Dubai");
-      person.getName(); // Getters are created automatically
+      person.name(); // Getters are created automatically based on the name of the fields
     }
 
 Sealed classes
@@ -94,12 +102,13 @@ Sealed classes
   If Parent and child class located in same file, we can omit keyword 'permits' in Parent class declaration
   Children of sealed class can have its own children classes
   Children of sealed class can impement interfaces
-  Parent sealed class and its children can locate in different packages in named module
+  Parent sealed class and its children can locate in different packages only in named module
   Constraints
     All permitted subclasses must belong to the same module as the sealed class
     Parent class and its child classes must locate in same package
     Every permitted subclass must explicitly extend the sealed class
     Every permitted subclass must define a modifier: final, sealed, or non-sealed
+      except for those which are inherently final like Enum or Record
   Example
     public sealed interface Service permits Car, Truck { }
   A permitted subclass must define a modifier. It may be declared final to prevent any further extensions
@@ -111,6 +120,12 @@ New switch statements
   Must cover all possible input values, or contain a default case
   "yield" keyword
     Allows to exit a switch expression by returning a value that becomes the value of the switch expression
+  Allowed data types
+    int, byte, short, char, 
+    Integer, Byte, Short, Char,  
+    String, Enum, Sealed Class, Object
+  Unallowed data types
+    long, boolean, double, float, Long, Boolean, Double, Float, 
   Switch statement selectors
     Selaed Class selector
       Must cover all the permitted subclasses of the Sealed class, or contain a default case
@@ -134,6 +149,15 @@ New switch statements
               default -> System.out.println(n.getClass().getName());
           }
         }
+      Example with "when" keyword
+        String result = switch(obj) {
+          case Integer i when i > 100 -> "Large";
+          case Integer i when i > 50 -> "Medium";
+          case Integer i -> "Small";
+          case String s when s.length() > 5 -> "Long";
+          case String s -> "Short";
+          default -> "Unknown";
+        };
     Enum selector
       Must contain all possible variants of the argument Enum, or contain a default case
       Example 
@@ -147,11 +171,12 @@ New switch statements
 
 Text blocks
   Are used to declared multiline strings
+  Quotation marks inside text blocks don't need to be escaped unless they're part of a triple quote sequence
   Start with a “”” (three double-quote marks) followed by optional whitespaces and a newline
     String example = """
       Example text""";
 
-Local Variable Type Inference (var reserved type name)
+Local Variable Type Inference ("var" reserved type name)
   Detects automatically the datatype of a variable based on the surrounding context
   A variable can be named var
   Constraints

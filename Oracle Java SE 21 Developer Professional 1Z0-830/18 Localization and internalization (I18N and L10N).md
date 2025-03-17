@@ -44,6 +44,10 @@ java.util.Locale
   Main static methods
     of(), getDefault(), setDefault(), getInstance(), getAvailableLocales(), getISOCountries(), getISOLanguages(),
     filter(), filterTags(), lookup(), lookupTag()
+  Examples
+    Locale locale1 = new Locale("en"); // Creates local of english language
+    Locale locale2 = new Locale("en", "US"); // Creates local of english language and US country
+    Locale locale3 = new Locale("en", "US", "SiliconValley"); // Creates local of english language, US country and variant SiliconValley
 
 Methods that return an array of available Locale
   DateFormat.getAvailableLocales()
@@ -98,6 +102,7 @@ Resource bundles
           welcome.message=\u041F\u0440\u0438\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E!
   java.util.ListResourceBundle abstract class
     Subclass of ResourceBundle that manages resources for a locale in a convenient and easy to use list
+    ListResourceBundle can store any serializable object, while PropertyResourceBundle is limited to strings only
     Main methods
       getContents(), handleKeySet(), getKeys(), handleGetObject()
     Example
@@ -122,4 +127,5 @@ Resource bundles
       1. MyLabels_ru_RU
       2. MyLables_ru
       3. MyLabels
+      4. MyLabels_{default language set with Locale.setDefault()}
     Each name represents both .java and .properties files, but the priority will go with java bundles

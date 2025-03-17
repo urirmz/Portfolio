@@ -40,6 +40,18 @@ java.io.File class
       Tests whether the application can execute the file denoted by this abstract pathname
     getAbsolutePath()
       Returns the absolute pathname string of this abstract pathname
+    walk()
+      Return a Stream that is lazily populated with Path by walking the file tree rooted at a given starting fil
+      The file tree is traversed depth-first, 
+        the elements in the stream are Path objects that are obtained as if by resolving the relative path against start
+    walkFileTree()
+      Walks a file tree rooted at a given starting file
+      The file tree traversal is depth-first with the given FileVisitor invoked for each file encountered. 
+      File tree traversal completes when all accessible files in the tree have been visited, 
+        or a visit method returns a result of TERMINATE
+      Can handle symbolic links that create cycles
+        If a symbolic link causes a loop in the file hierarchy, the method detects it and skips that part of the traversal
+        
 
 java.nio.Path class
   An interface used to locate a file in a file system. It will typically represent a system dependent file path
@@ -60,11 +72,11 @@ java.nio.Files class
   Consists exclusively of static methods that operate on files, directories, or other types of files
   The main methods of Files class are
     createFile()
-      Creates a new and empty file in the provided Path, failing if the file already exists
+      Creates a new and empty file in the provided Path, failing if the file already exists, and returns Path
     createDirectory()
-      Creates a new directory
+      Creates a new directory and returns Path
     createDirectories()
-      Creates a directory in the provided Path, by creating all nonexistent parent directories first
+      Creates a directory in the provided Path, by creating all nonexistent parent directories first, returns Path
     isDirectory()
       Tests whether a file in the provided Path is a directory
     isRegularFile()
@@ -72,9 +84,9 @@ java.nio.Files class
     delete()
       Deletes the file in the provided path
     copy()
-      Copy the file in the source path to the target path
+      Copy the file in the source path to the target path and returns Path
     move()
-      Copy the file in the source path to the target path
+      Copy the file in the source path to the target path and returns Path
     exists()
       Tests whether a file exists in the provided path
     read()
@@ -83,6 +95,8 @@ java.nio.Files class
       Reads all the bytes from a file and returns a byte[]
     readAllLines()
       Read all lines from a file and returns a List<String>
+    readAttributes()
+      Reads a file's attributes as a bulk operation and returns a type extending BasicFileAttributes
     lines()
       Read all lines from a file as a Stream
       Populates lazily as the stream is consumed
@@ -90,6 +104,25 @@ java.nio.Files class
       Writes bytes to a file
     writeString()
       Write a CharSequence to a file
+
+java.nio.file.attribute.BasicFileAttributes
+  Methods
+    creationTime()
+      This method is used to get the creation time of the file
+    lastAccessTime()
+      This method is used to get the last access time of the file
+    lastModifiedTime()
+      This method is used to get the last modified time of the file
+    size()
+      This method is used to get the size of the file
+    isDirectory()
+      This method is used to check whether the file is a directory or not
+    isSymbolicLink()
+      This method is used to check whether the file is a symbolic link or not
+    isRegularFile()
+      This method is used to check whether the file is regular or not
+    isOther()
+      This method is used to check whether the file is something other than a regular file, or directory, or symbolic link
 
 FileFilter interface
   Is used to check if a File object matches a certain condition
