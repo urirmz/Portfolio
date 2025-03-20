@@ -26,3 +26,26 @@ Enum members can also contain each own properties and methods, like:
     }
     
   }
+
+Certain Enum members may override methods
+  public enum Vehicle {  
+
+    CAR(List.of(4)),  
+    TRUCK(List.of(6, 8)),  
+    MOTORCYCLE(null) {  
+      public int wheelCount() {  
+          return wheels.get(0) + 2;  
+      }  
+    };  
+    
+    List<Integer> wheels;  
+    
+    Vehicle(List<Integer> wheels) {  
+      this.wheels = wheels;  
+    }  
+
+    public int wheelCount() {  
+      return wheels.get(0);  
+    }
+
+  }

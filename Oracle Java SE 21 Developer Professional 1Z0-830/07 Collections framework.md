@@ -159,17 +159,30 @@ List.of() vs Arrays.asList() vs Collections.unmodifiableList()
     asList.contains(null);  // allowed
 
 Comparator and Comparable interfaces
-  Comparation methods are used when sorting a collection of objects. They return negative, positive or 0 values based on the result of the comparation
+  Comparation methods are used when sorting a collection of objects
+  They return negative, positive or 0 values based on the result of the comparation
+    Example
+      Supposing ascending order: Objects.compare(comparable1, comparable2, Comparator.naturalOrder()) returns ->
+        -1 // comparable1 goes before comparable2
+         0 // comparable1 and comparable2 go at the same level
+         1 // comparable1 goes after comparable2
   Comparable interface
     Declares the compareTo(object) method
   Comparator interface  
-    Ccontains the compare(object1, object2) method, which uses the Object.equals() method for comparation
+    Contains the compare(object1, object2) method, which uses the Object.equals() method for comparation
   Comparation can be performed in one of the following ways
     Creating a lambda expression
     Creating an anonymous class implementing comparator interface
     Creating a class implementing comparator interface
     Adding the comparable interface and compareTo() method to the comparing class
-  
+  String natural lexicographical order (follows ASCII table)
+    1. Space, symbols ! " # $ % ' ( ) * + , - . /
+    2. Numbers 0 1 2 3 4 5 6 7 8 9
+    3. Symbols : ; < = > ? @
+    4. Uppercase letters
+    5. Symols [ \ ] ^ _ `
+    6. Lowercase letters
+
 Iterator, iterable and ListIterator interfaces
   Iterable interface contains the methods iterator(), foreach() adn spliterator()
   Iterator

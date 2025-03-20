@@ -104,12 +104,13 @@ Sealed classes
   Children of sealed class can impement interfaces
   Parent sealed class and its children can locate in different packages only in named module
   Constraints
-    All permitted subclasses must belong to the same module as the sealed class
-    Parent class and its child classes must locate in same package
+    Children must be in the same module as the parent sealed class (if the sealed class is in a named module) 
+      or in the same package (if the sealed class is in the unnamed module)
     Every permitted subclass must explicitly extend the sealed class
     Every permitted subclass must define a modifier: final, sealed, or non-sealed
       except for those which are inherently final like Enum or Record
   Example
+  Sealed classes and interfaces must always define they permitted classes
     public sealed interface Service permits Car, Truck { }
   A permitted subclass must define a modifier. It may be declared final to prevent any further extensions
     public final class Truck extends Vehicle implements Service {}

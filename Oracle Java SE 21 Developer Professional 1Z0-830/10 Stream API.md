@@ -9,12 +9,36 @@ Example
 Sequantial vs parallel streams
   Sequential Streams
     By default, all streams created are sequantial streams
-    Sequential streams run each operation one after one
+    Sequential streams run each operation one after one, item by item, and then one after one in the next item
+    Example
+      List<String> names = Arrays.asList("Anna", "Bob", "Cathy", "Adam", "Eve");
+      names.stream()
+            .filter(name -> {
+                System.out.println("Filtering: " + name + ", ");
+                return name.startsWith("A"); })
+            .map(name -> {
+                System.out.println("Mapping: " + name + ", ");
+                return name.toUpperCase(); })
+            .forEach(name -> System.out.println("Consuming: " + name + ", "));
+      // Will always print Filtering: Anna, Mapping: Anna, Consuming: ANNA, Filtering: Bob, 
+          Filtering: Cathy, Filtering: Adam, Mapping: Adam, Consuming: ADAM, Filtering: Eve
   Parallel streams
-    Creates many Threads to run the stream operations, 
-      so the next operations are performed in parallel
+    Creates many Threads to run the stream operations, so the next operations are performed in parallel
     Only works in multithread machines
     Makes use of java.util.concurrent.ForkJoinPool
+    Example
+      List<String> names = Arrays.asList("Anna", "Bob", "Cathy", "Adam", "Eve");
+      names.stream()
+            .parallel()
+            .filter(name -> {
+                System.out.println("Filtering: " + name + ", ");
+                return name.startsWith("A"); })
+            .map(name -> {
+                System.out.println("Mapping: " + name + ", ");
+                return name.toUpperCase(); })
+            .forEach(name -> System.out.println("Consuming: " + name + ", "));
+      // May print, though the order is never guaranteed: Filtering: Anna, Filtering: Eve, Filtering: Cathy, 
+        Filtering: Adam, Filtering: Bob, Mapping: Anna, Mapping: Adam, Consuming: ANNA, Consuming: ADAM, 
 
 Terminal short-circuit operation
   When this operation has already obtained a result, it terminates the rest of the iteration  
@@ -70,6 +94,7 @@ Stream interface
         reduce()
           Performs a reduction on the elements of this stream, using an associative accumulation function
           Declares an acumulator and then performs operations on the accumulator based on values from the stream
+          Returns an Optional
           Example 
             // 0 is the initial value of the accumulator
             Integer sum = integers.reduce(0, (previousElement, currentElement) -> previousElement + currentElement); 
@@ -112,3 +137,19 @@ How to create a Stream?
     Stream<Integer> streamFromlterate = Stream.iterate(1, n -> n + 1)
   With Stream generate
     Stream<String> streamFromGenerate = Stream.generate(() -> "a1")
+
+SummaryStatistics
+  A state object for collecting statistics such as count, min, max, sum, and average
+  This class is designed to work with (though does not require) streams
+  There are DoubleSummaryStatistics, LongSummaryStatistics and IntSummaryStatistics, which work essentially the same,
+    but require DoubleStream, LongStream and IntStream respectively
+  java.util.IntSummaryStatistics
+    Main methods
+      accept()
+        Records a new value into the summary information
+      combine()
+        Combines the state of another IntSummaryStatistics into this one
+      getCount(), getSum(), getMin(), getMax(), getAverage()
+    Example
+      IntSummaryStatistics statistics = IntStream.range(1, 6).summaryStatistics();
+      double average = statistics.getAverage();
