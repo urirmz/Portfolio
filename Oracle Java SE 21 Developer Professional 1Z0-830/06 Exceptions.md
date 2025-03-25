@@ -47,6 +47,7 @@ Autoclosable resources
   When an exception is thrown inside the try block, 
     the resources are closed in inversed creation order, thus their close() methods invoked.
     If exceptions occur inside the close() methods, they are added to the suppresed exceptions array in the main exception
+    After this, the catch block is executed
   Example
     try (Closable autoClosableElement = new Closable()) {
       // Code that may cause an exception

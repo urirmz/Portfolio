@@ -237,6 +237,8 @@ Memory management
   Is used to indicate that a variable's value will be modified by different threads
   It ensures that changes to a variable are always visible to other threads, preventing thread caching issues
   Operations won't be atomic even if you would work with volatile variable
+  Without the volatile keyword, the JVM and CPU could reorder the instructions during object creation, 
+    leading to a partially constructed object being visible to other threads. The volatile keyword prevents this reordering.
 
 java.util.concurrent.atomic package
   Provides classes that support lock-free thread-safe programming on single variables,
