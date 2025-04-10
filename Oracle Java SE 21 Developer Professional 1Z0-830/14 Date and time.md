@@ -73,6 +73,7 @@ java.time package
       Represent an instant on the time line
     Duration class
       Represent a duration of time
+      Deals with days, hours, seconds, millis, nanos
   Human scale time classes
     Classes represent a time without a time zone in the ISO-8601 calendar system
       LocalDate
@@ -108,7 +109,7 @@ java.time package
       Returns a new object consisting of this date-time at the specified argument, acting as the builder pattern
     of 
       Factory methods that don't involve data conversion
-    from 
+    from
       Factory methods that do involve data conversion
   TemporalUnit interface
     A unit of date-time, such as Days or Hours
@@ -140,5 +141,4 @@ java.time package
       fixed()
         Obtains a clock that always returns the same instant
   Period interface
-    Similar to duration, but this class models a quantity or amount of time in terms of years, months and days,
-      unlike hours, seconds and milliseconds
+    Similar to duration, but this class models a quantity or amount of time in terms of years, months and days

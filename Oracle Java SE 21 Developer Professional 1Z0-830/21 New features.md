@@ -1,6 +1,7 @@
 Virtual threads
   Lightweight threads managed by the JDK rather than the operating system
   Are ideal for I/O-bound applications with many blocking operations
+  Leverage a JVM feature called fibers or, more specifically, a carrier thread based scheduler
   Many virtual threads share the same operating-system thread,
     called carrier thread
   Are tied to a carrier thread only during execution and are terminated after their task is completed
@@ -78,24 +79,32 @@ Record
   Their default implementation of equals() and hashCode() guarantees that 
     two record objects are equal if they are of the same type and contain equal field values
   Can be created inside a method
-  Can't have non-static instance fields
+  Can have static fields, but not instance fields
   Can have nested classes
   Can have methods or mutable fields (like lists) if desired
-  Can have a Constructor with or without parameters, but every created Constructor must explicitly declare the assignment of all record fields
+  Can have a Constructor with or without parameters, but every created Constructor must explicitly declare the assignment of all record fields via
+    the main constructor
+      Example
+        public  record RecordClass(String title) {
+          public RecordClass() { 
+            this("A title");
+            System.out.println(title); 
+          }
+        }
+  A new instance of a record can be created by using keyword new
+    Example
+      public record Person (String name, String address) {}
+      public static void createPersonRecord() {
+        Person person = new Person("John", "Dubai");
+        person.name(); // Getters are created automatically based on the name of the fields
+      }
+  Can have initialization blocks declared with the name of the record class
     Example
       public  record RecordClass(String title) {
-        public RecordClass() { 
-          this("A title");
-          System.out.println(title); 
+        public RecordClass {
+            System.out.println(title);
         }
       }
-  A new instance of a record can be created by using keyword new
-  Example
-    public record Person (String name, String address) {}
-    public static void createPersonRecord() {
-      Person person = new Person("John", "Dubai");
-      person.name(); // Getters are created automatically based on the name of the fields
-    }
 
 Sealed classes
   Allows classes and interfaces to define their permitted subtypes

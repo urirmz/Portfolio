@@ -39,6 +39,7 @@ Module descriptor
 Module directives
   requires
     Allows us to declare model dependencies
+    Requiring a module multiple times will NOT cause a compile error
   requires static
     Compile time only dependency
   requires transitive
@@ -46,7 +47,8 @@ Module directives
   exports
     Expose all public members of the named package
     Only the listed package itself is exported. No sub packages of the exported package are exported.
-    The same Java package can only be exported by a single Java module at runtime
+    The same Java package can only be exported by a single Java module at runtime,
+      it is compile-time error if there are two exports of package with same name
   exports ... to ...
     Similar to the exports directive, declares a package as exported, 
       but also list which modules allowed to import this package as a class
@@ -85,14 +87,34 @@ Example module
 Common Java modules
   java.base
     The default module for all JDK and user-defined
-    It is required implicitly, if required it explicitly there will be compile error
+    It is the only module required implicitly, so there is no need to require it manually
   java.xml
+    Provides support for processing XML documents
+    Includes the XML processing APIs like JAXP (Java API for XML Processing), DOM (Document Object Model), and SAX (Simple API for XML), 
+      as well as APIs for handling XML Schema and XPath
   java.logging
+    Povides the Java Logging API, which allows for logging application events
+    Includes classes like Logger, Handler, and Formatter to facilitate logging messages, errors, warnings, 
+      and other information to various outputs (like the console, files, etc.)
   java.prefs
+    Provides a mechanism for storing and retrieving user and system preferences in a hierarchical structure. 
+    The Preferences API allows applications to store settings, preferences, and configuration data in a platform-independent way,
+      typically for user preferences or application configurations
   java.sql
+    The java.sql module provides the JDBC (Java Database Connectivity) API, which is used for connecting and interacting with relational databases
+    Includes classes like Connection, Statement, ResultSet, and DriverManager for executing SQL queries, handling result sets, and managing database connections.
   java.httpserver
+    The java.httpserver module provides the HTTP server API for creating simple HTTP-based servers
+    It's typically used for lightweight HTTP servers in applications.
+    Includes the HttpServer class, which allows for setting up an embedded HTTP server to handle HTTP requests
   java.se
+    This is a meta-module that groups together the core modules of the Java SE (Standard Edition) platform
+    Is used to ensure that all necessary modules for Java SE applications are included when using the java.se module
+    Includes modules like java.base, java.desktop, java.sql, java.xml, and others
   java.desktop
+    Provides the Java AWT (Abstract Window Toolkit) and Swing libraries for creating graphical user interfaces (GUIs)
+    Includes classes for managing windows, buttons, text fields, event handling, and other GUI components
+      It also includes Java's java.awt and javax.swing packages for building desktop applications
 
 Command line options
   module-path 
