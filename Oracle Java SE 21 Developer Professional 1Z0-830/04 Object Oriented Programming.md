@@ -72,8 +72,16 @@ Interfaces
   Define a behavioral contract that tells methods and properties that any class implementing from it must have
   Interface methods are by default public and abstract, but can also contain a default implementation, 
     defined with the keyword "default"
-  Classes are able to implement many interfaces, but may just inherit from one clas
+  May contain static and private methods only if the method body is also defined.
+    This methods cannot be overriden
+  May contain static members, that are implicitly public and final
+  Cannot contain instance members
+  Static and instance initiliazer blocks and constructors are not allowed in interfaces
+  Classes are able to implement many interfaces, but may inherit only from one class
   Interfaces cannot be declared "final"
+  Interfaces cannot have methods that clash with Object class methods,
+    for example "int toString()", "String hashCode()", 
+    but they can overload them, as in "String toString(int value)"
 
 instanceOf
   The instanceOf operator allows you to tell if an object is an instance, subclass, or implements the given class
@@ -104,7 +112,8 @@ Inheritance rules
 Method overload
   Allows you to create methods with the same signature, but that take different parameters and have different implementation
   Rules
-    The method parameters must change: either the number or the type of parameters must be different in the two methods
+    The method parameters must change: either the number, order or type of the parameters must be different in the two methods
+      This is the most important rule. If not accomplished method overloading won't compile
     The return type can be freely modified
     The access modifier (public, private, and so on) can be freely modified
     Thrown exceptions, if any, can be freely modified

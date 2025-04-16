@@ -66,7 +66,7 @@ java.nio.Path class
       Returns a Path object representing the absolute path of this path
     resolve()
       Resolve the given path against this path, for example
-        if path represents “c/drive/files”, then invoking this method with the path string “file1” will result in the Path “c/drive/files/file1”
+        if this path represents “c/drive/files”, then invoking this method with the string “file1” will result in the Path “c/drive/files/file1”
 
 java.nio.Files class
   Consists exclusively of static methods that operate on files, directories, or other types of files

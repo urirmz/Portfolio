@@ -77,7 +77,8 @@ Record
   Can implement the sealed interface
   Has private final fields and public access methods named after their fields, for example "name()"
   Their default implementation of equals() and hashCode() guarantees that 
-    two record objects are equal if they are of the same type and contain equal field values
+    two record objects are equal if they are of the same type and contain equal field values.
+    However, equals and hashCode methods can be overriden with custom logic
   Can be created inside a method
   Can have static fields, but not instance fields
   Can have nested classes
@@ -115,16 +116,23 @@ Sealed classes
   Constraints
     Children must be in the same module as the parent sealed class (if the sealed class is in a named module) 
       or in the same package (if the sealed class is in the unnamed module)
+    Sealed classes can be located in different modules than their permitted subclasses, only if
+      Parent module exports the package containing the sealed class
+      Child module requires the parent module
+      Subclasses are explicitly listed in the sealed class’s permits clause by fully qualified name
+        public sealed class Shape permits com.othermodule.Circle, com.othermodule.Square { ... }
+      Subclasses must be in the same runtime image
     Every permitted subclass must explicitly extend the sealed class
     Every permitted subclass must define a modifier: final, sealed, or non-sealed
       except for those which are inherently final like Enum or Record
   Example
-  Sealed classes and interfaces must always define they permitted classes
-    public sealed interface Service permits Car, Truck { }
-  A permitted subclass must define a modifier. It may be declared final to prevent any further extensions
-    public final class Truck extends Vehicle implements Service {}
-  A permitted subclass may also be declared sealed. However, if we declare it non-sealed, then it’s open for extension
-    public non-sealed class Car extends Vehicle implements Service {}
+    Sealed classes and interfaces must always define they permitted classes
+      public sealed interface Service permits Car, Truck { }
+    A permitted subclass must define a modifier. It may be declared final to prevent any further extensions
+      public final class Truck extends Vehicle implements Service {}
+    A permitted subclass may also be declared sealed. However, if we declare it non-sealed, then it’s open for extension
+      public non-sealed class Car extends Vehicle implements Service {}
+    
 
 New switch statements
   Must cover all possible input values, or contain a default case

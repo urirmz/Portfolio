@@ -103,7 +103,12 @@ Map interface
   Contains the methods
     size(), isEmpty(), containsKey(), containsValue(), get(), put(), putAll(),
     remove(), putAll(), clear(), keySet(), values(), entrySet(), getOrDefault(),
-    putIfAbsent(), replace(), computeIfAbsent(), compute(), merge()
+    putIfAbsent(), replace(), computeIfAbsent(), compute(), 
+    merge()
+      Replaces the current value with the results of the given remapping function, or removes if the result is null
+      If there is no current value, or current value is null, it appends the new value directly without executing the remapping function
+      Example, to either create or append a String msg to a value mapping:
+        map.merge(key, msg, String::concat);
   Its main implementations are
     HashMap
       One null key is allowed and null values are also allowed
