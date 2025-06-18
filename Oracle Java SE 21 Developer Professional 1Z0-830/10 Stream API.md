@@ -62,8 +62,12 @@ Stream interface
         flatMap()
           Returns a stream consisting of the results of replacing each element of this stream 
             with the contents of a mapped stream produced by applying the provided mapping function to each element
-          Example
+          Or returns an Optional. If a value is present, returns the result of applying the given Optional-bearing mapping 
+            function to the value, otherwise returns an empty Optional. 
+            If invoked in an optional, flatMap does not wrap it within an additional Optional
+          Examples
             orders.flatMap(order -> order.getLineItems().stream()); // Returns a stream of the lineItems inside all the orders
+            optional.flatMap(optional -> optional.map(j -> i + j)); // Returns an Optional of a value calculated with the mapping function
         skip()
           Returns a stream consisting of the remaining elements of this stream after discarding the first n elements of the stream
           If this stream contains fewer than n elements then an empty stream will be returned

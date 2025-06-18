@@ -16,9 +16,9 @@ StringBuilder and StringBuffer
     It is thread safe, and works essentially the same as StringBuilder
     Its performance is lower compared to StringBuilder
 
-
 java.util.Optional
   A container of a generic type object, which may or may not contain a non-null value
+  Comparing two empty Optional instances using equals() will return true
   Main methods
     isPresent(), isEmpty(), get(), 
     ifPresent(), ifPresentOrElse(), 

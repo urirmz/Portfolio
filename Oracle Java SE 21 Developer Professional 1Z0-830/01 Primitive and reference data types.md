@@ -6,6 +6,39 @@ Stack memory
 Heap memory
   Part of the memory that holds reference values (like objects and arrays)
 
+Number abstract class
+  Is the superclass of platform classes representing numeric values that are convertible to the primitive types 
+    byte, double, float, int, long, and short
+  It's extended by Byte, Double, Float, Integer, Long and Short
+  Methods
+    int intValue()
+    long longValue()
+    float floatValue()
+    double doubleValue()
+    byte byteValue()
+    short shortValue()
+
+Primitive casting
+  Widening conversion
+    Happens when the value of a variable is passed to another variable which can hold a bigger value than the original variable
+    Are performed automatically by the Java compiler and don't require explicit cast
+    Examples
+      byte to short, int, long, float, or double
+      short to int, long, float, or double
+      char to int, long, float, or double
+      int to long, float, or double
+      long to float or double
+      float to double
+  Narrowing conversion
+    Happens when the value of a variable is passed to another variable which can hold a smaller value than the original variable
+    Can lead to results as MAX_VALUE, MIN_VALUE, data loss, precision loss, truncation or even sign changes
+    Always requires an explicit cast
+    Examples
+      double to float, long, int, char, short, or byte
+      long to int, char, short, or byte
+      int to char, short, or byte
+
+
 Integer Pool
   Caches integer values between -128 and 127 (inclusive). 
   When an integer within this range is created using autoboxing or the valueOf() method, 
@@ -55,7 +88,6 @@ Default values
       0.0f
     long 
       0L
-    
   null is the default value of all reference data types (Object, String, Boolean, Integer, etc)
 
 4 types of references in Java

@@ -148,6 +148,9 @@ IO Streams
           Returns an estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking
         mark()
           Marks the current position in this input stream
+          It may take an integer parameter that will work as a read-ahead limit,
+            meaning thed reset method will reset the stream to this position
+            as long as you don't read more than the read-ahead limit bytes after marking
         reset()
           Repositions this stream to the position at the time the mark method was last called on this input stream
         close()

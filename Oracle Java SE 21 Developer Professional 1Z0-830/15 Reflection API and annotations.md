@@ -130,4 +130,3 @@ Annotation
       Only applies to annotations that will be used in class declarations
       Indicates that an annotation interface is automatically inherited
       Allows a super class annotation to be inherited in a subclass
-
