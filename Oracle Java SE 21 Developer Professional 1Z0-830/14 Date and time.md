@@ -16,28 +16,28 @@ Calendar class abstract class
     for manipulating the calendar fields, such as getting the date of the next week
   Is not thread safe
   Main methods
-    getInstance()
+    Calendar getInstance(TimeZone?, Locale?)
       Gets a calendar using the default time zone and locale
       The Calendar returned is based on the current time in the default time zone with the default FORMAT locale,
         unless a custom Locale or TimeZone is specified
-    getTime()
+    Date getTime()
       Returns a Date object representing this Calendar's time value
-    get()
+    int get(int)
       Returns the value of the given calendar field
-    set()
+    void set(int, int?, int?, int?, int?, int?)
       Sets the given calendar field to the given value
-    isSet()
+    boolean isSet(int)
       Determines if the given calendar field has a value set, 
         including cases that the value has been set by internal fields calculations triggered by a get method call
-    clear()
-      Sets all the calendar field values and the time value (millisecond offset from the Epoch) of this Calendar undefined
+    void clear(int?)
+      Sets the given calendar field value (or all the values if no field is defined) to undefined
       isSet() will return false for all the calendar fields
-    getDisplayName()
+    String getDisplayName(int, int Locale)
       Returns the string representation of the calendar field value in the given style and locale
       If no string representation is applicable
-    add()
+    void add(int, int)
       Adds or subtracts the specified amount of time to the given calendar field
-    roll()
+    void roll(int, int)
       Adds or subtracts (up/ down) a single unit of time on the given time field without changing larger fields
   Main static fields
     YEAR, MONTH, WEEK_OF_YEAR, WEEK_OF_MONTH, DATE, DAY_OF_MONTH, DAY_OF_WEEK, DAY_OF_MONTH, AM_PM, HOUR_OF_YEAR, 
@@ -51,17 +51,17 @@ SimpleDateFormat
   Allows for formatting (date → text), parsing (text → date), and normalization
   Takes a pattern and a Locale as optional arguments, if these are not specified, it will use system default values
   Main methods
-    format()
+    StringBuffer format(Date, StringBuffer, FieldPosition)
       Formats the given Date into a date/ time string and appends the result to the given StringBuffer
-    parse()
+    Date parse(String, ParsePosition)
       Parses text from a string to produce a Date
 
 TimeZone class
   Represents a time zone offset, and also figures out daylight savings
   Main methods
-    getTimeZone()
+    TimeZone getTimeZone(String) | TimeZone getTimeZone(ZoneId)
       Gets the TimeZone for the given ID
-    toZoneId()
+    ZoneId toZoneId()
       Converts this TimeZone object to a ZoneId
 
 java.time package
@@ -74,6 +74,8 @@ java.time package
     Duration class
       Represent a duration of time
       Deals with days, hours, seconds, millis, nanos
+    Period interface
+      Similar to duration, but this class models a quantity or amount of time in terms of years, months and days
   Human scale time classes
     Classes represent a time without a time zone in the ISO-8601 calendar system
       LocalDate
@@ -89,9 +91,9 @@ java.time package
       A time-zone ID, such as Europe/ Paris
       Is used to identify the rules used to convert between an Instant and a LocalDateTime
       Main methods
-        getAvailableZoneIds()
+        Set<String> getAvailableZoneIds()
           Gets the set of available zone IDs
-        of()
+        of(String)
           Obtains an instance of {@code ZoneId} from an ID ensuring that the ID is valid and available for use
   Common method naming for java.time package classes (API naming convention)
     get
@@ -130,15 +132,13 @@ java.time package
     Can be interpreted using the stored time-zone to find the current date and time
       Clock can be used instead of System.currentTimeMillis() and TimeZone.getDefault()
     Main static methods
-      systemUTC()
+      Clock systemUTC()
         Obtains a clock that returns the current instant using the best available system clock, 
           converting to date and time using the UTC time-zone
-      systemDefaultZone()
+      Clock systemDefaultZone()
         Obtains a clock that returns the current instant using the best available system clock, 
           converting to date and time using the default time-zone
-      offset()
+      Clock offset(Clock, Duration)
         Obtains a clock that returns instants from the specified clock with the specified duration added
-      fixed()
+      Clock fixed(Instant, ZoneId)
         Obtains a clock that always returns the same instant
-  Period interface
-    Similar to duration, but this class models a quantity or amount of time in terms of years, months and days

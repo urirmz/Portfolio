@@ -64,7 +64,8 @@ Function<InputType, ResultType> and BiFunction<Input1Type, Input2Type, ResultTyp
     Example
       BiFunction<Double, Double, Double> multiply = (number1, number2) -> number1 * number2;
       Double result = multiply.apply(2.0, 5.0); // Returns 10
-  Function<InputType, ResultType> andThen(), BiFunction<Input1Type, Input2Type, ResultType> andThen()
+  Function<InputType, ResultType> andThen(Function<? super ResultType, ? extends InputType>)
+  BiFunction<Input1Type, Input2Type, ResultType> andThen(Function<? super ResultType, ? extends InputType>)
     Offers the posibility to chain different Function and BiFunction interfaces, 
       applying the next function to the result of the previous function
     When chaining through this method, 
@@ -74,7 +75,7 @@ Function<InputType, ResultType> and BiFunction<Input1Type, Input2Type, ResultTyp
       Double result = multiplyByTwo
                 .andThen(addTen)
                 .apply(1.0); // Returns 12
-  Function<InputType, ResultType> compose()
+  Function<InputType, ResultType> compose(Function<? super ResultType, ? extends InputType>)
     It's not present in BiFunction interface
     Allows to create a new lambda expression chaining existing lambda expression
     The input lambda expression will be executed first
@@ -100,7 +101,7 @@ Supplier<OutputType> functional interface
 Predicate<InputType> and BiPredicate<Input1Type, Input2Type> functional interfaces
   Are designed to verify if an object matches certain specification
   Predicate<InputType>
-    boolean test() 
+    boolean test(InputType) 
       Is the abstract method that Predicate interface defines
       Performs an verification and returns boolean
       Example 
@@ -113,14 +114,14 @@ Predicate<InputType> and BiPredicate<Input1Type, Input2Type> functional interfac
         soap.setPrice(15.0);
         Predicate<Product> isCheaperOrEqualToTen = isMoreExpensiveThanTen.negate();
         isCheaperOrEqualToTen.test(soap); // Returns false
-    Predicate<InputType> and()
+    Predicate<InputType> and(Predicate<? super InputType>)
       Allows to add logic and combine different predicates
       Example
         soap.setCategory("Cleaners");
         Predicate<Product> isCategoryEqualToCleaners = product -> product.getCategory() === "Cleaners";
         Predicate<Product> isCategoryEqualToCleanersAndMoreExpensiveThanTen = isMoreExpensiveThanTen.and(isCategoryEqualToCleaners);
         isCategoryEqualToCleanersAndMoreExpensiveThanTen.test(soap); // Returns true
-    Predicate<InputType> or()
+    Predicate<InputType> or(Predicate<? super InputType>)
       Allows to add logic and combine different predicates
       Example
         Predicate<Product> isCategoryEqualToHomeCare = product -> product.getCategory() === "HomeCare";
@@ -128,11 +129,11 @@ Predicate<InputType> and BiPredicate<Input1Type, Input2Type> functional interfac
         isCategoryEqualToCleanersAndMoreExpensiveThanTen.test(soap); // Returns true
     Static methods
       Predicate contains the following static methods, that helps to create new predicates based on existing ones
-      Predicate<InputType> isEqual()
+      Predicate<InputType> isEqual(Object)
         Returns a predicate that tests if two arguments are equal according to Objects.equals(Object, Object)
         Example
           Predicate<Product> isEqual = Predicate.isEqual(soap);
-      Predicate<InputType> not()
+      Predicate<InputType> not(Predicate<? super InputType>)
         Returns a predicate that negates the input predicate
         Example
           Predicate<Product> isCheaperOrEqualToTen = Predicate.not(isMoreExpensiveThanTen);
@@ -151,17 +152,17 @@ Predicate<InputType> and BiPredicate<Input1Type, Input2Type> functional interfac
         soap.setPrice(15.0);
         BiPredicate<Product, Double> isCheaperOrEqualTo = isMoreExpensiveThan.negate();
         isCheaperOrEqual.test(soap, 10.0); // Returns false
-    BiPredicate<Input1Type, Input2Type> and()
+    BiPredicate<Input1Type, Input2Type> and(BiPredicate<? super Input1Type, ? super Input2Type>)
       Allows to add logic and combine different predicates
       Both BiPredicates must to have the same generic types
-    BiPredicate<Input1Type, Input2Type> or()
+    BiPredicate<Input1Type, Input2Type> or(BiPredicate<? super Input1Type, ? super Input2Type>)
       Allows to add logic and combine different predicates
       Both BiPredicates must to have the same generic types
 
 Consumer<Input1Type> and BiConsumer<Input1Type, Input2Type> functional interfaces
   Are is designed to modify state and return void
   Consumer<InputType>
-    void accept() 
+    void accept(InputType) 
       Is the abstract method that defines
       Performs an action and returns void
       Example
@@ -170,6 +171,9 @@ Consumer<Input1Type> and BiConsumer<Input1Type, Input2Type> functional interface
         double increment = 10.0;
         Consumer<Product> increasePrice = product -> product.setPrice(product.getPrice() + increment);
         increasePrice.accept(soap); // soap.price will be set to 20
+    Consumer<InputType> andThen(Consumer<? super InputType>)
+      Returns a composed Consumer that performs, in sequence, 
+        this operation followed by the provided one
   BiConsumer<Input1Type, Input2Type>
     void accept() 
       Is the abstract method that defines
@@ -178,6 +182,8 @@ Consumer<Input1Type> and BiConsumer<Input1Type, Input2Type> functional interface
         soap.setPrice(10.0);
         Consumer<Product, Double> increasePrice = (product, increment) -> product.setPrice(product.getPrice() + increment);
         increasePrice.accept(soap, 10.0); // soap.price will be set to 20
+    BiConsumer<Input1Type, Input2Type> andThen(BiConsumer<Input1Type, Input2Type>)
+      Returns a composed BiConsumer that performs, in sequence, this operation followed by the provided one
 
 Summary of functional operations
   Function

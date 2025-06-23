@@ -43,7 +43,7 @@ Sequantial vs parallel streams
 Terminal short-circuit operation
   When this operation has already obtained a result, it terminates the rest of the iteration  
 
-Stream interface
+Stream<T> interface
   Most of the methods in stream interface methods require Functional interfaces as input
   Intermediate operations do not modify the underlying data source,
     however, the stream itself might produce a modified view of the data (like with map())
@@ -53,13 +53,13 @@ Stream interface
     Intermediate operations
       Return a stream after performing the operation, so that another operation can be chained after
       Main methods
-        parallel()
+        Stream<T> parallel()
           Converts a serial stream into a parallel stream
-        filter()
+        Stream<T> filter(Predicate<? super T>)
           It creates a new stream, which, when completed, contains the elements of the original stream that match the given predicate
-        map()
+        Stream<R> map(Function<? super T, ? extends R>)
           Converts elements of type T into elements of type R and returns a stream with elements of R
-        flatMap()
+        Stream<R> flatMap(Function<? super T, ? extends Stream<? extends R>>)
           Returns a stream consisting of the results of replacing each element of this stream 
             with the contents of a mapped stream produced by applying the provided mapping function to each element
           Or returns an Optional. If a value is present, returns the result of applying the given Optional-bearing mapping 
@@ -68,59 +68,59 @@ Stream interface
           Examples
             orders.flatMap(order -> order.getLineItems().stream()); // Returns a stream of the lineItems inside all the orders
             optional.flatMap(optional -> optional.map(j -> i + j)); // Returns an Optional of a value calculated with the mapping function
-        skip()
+        Stream<T> skip(long)
           Returns a stream consisting of the remaining elements of this stream after discarding the first n elements of the stream
           If this stream contains fewer than n elements then an empty stream will be returned
-        distinct()
+        Stream<T> distinct()
           Returns a stream consisting only in unique elements 
           Checks for uniqueness using Object.equals()
-        peek()
+        Stream<T> peek(Consumer<? super T>)
           Takes a Consumer functional interface, and performs that action to each element of the stream
-        limit()
+        Stream<T> limit(long)
           Leaves only maxSize elements in the stream
-        sorted()
+        Stream<T> sorted(Comparator<? super T>?)
           Returns a sorted stream based on the passed comparator
     Terminal operations
       Return void, an object, value, collection or array
       After calling terminal operation, stream can't be used again
-        findFirst()
-          Returns an Optional with the first element of this stream
-          It is a short-circuit operation
-        findAny()
-          Returns an Optional with any element of this stream
-          It is a short-circuit operation
-        anyMatch()
+        R collect(Collector<? super T, A, R>)
+          Transform the stream into a collection following the provided Collector
+        Object[] toArray()
+          Returns an array containing the elements of this stream
+        boolean anyMatch()
           Returns whether any elements of this stream match the provided predicate
-        noneMath()
+        boolean noneMatch()
           Returns whether none elements of this stream match the provided predicate
-        allMatch()
+        boolean allMatch()
           Returns whether all the elements of this stream match the provided predicate
-        reduce()
+        T reduce(T, BinaryOperator<T>)
           Performs a reduction on the elements of this stream, using an associative accumulation function
           Declares an acumulator and then performs operations on the accumulator based on values from the stream
           Returns an Optional
           Example 
             // 0 is the initial value of the accumulator
             Integer sum = integers.reduce(0, (previousElement, currentElement) -> previousElement + currentElement); 
-        count()
-          Returns the count of elements in this stream as a long value
+        long count()
+          Returns the count of elements in this stream
           It is an special case of reduce
-        min() 
-          Returns the minimum element of this stream according to the provided Comparator
+        Optional<T> findFirst()
+          Returns an Optional with the first element of this stream
+          It is a short-circuit operation
+        Optional<T> findAny()
+          Returns an Optional with any element of this stream
+          It is a short-circuit operation
+        Optional<T> min() 
+          Returns an Optional describing the minimum element of this stream, or an empty Optional if the stream is empty
           This is a special case of a reduction
-        max()
+        Optional<T> max()
           Returns the maximum element of this stream according to the provided Comparator
           This is a special case of a reduction
-        foreach()
+        void foreach(Consumer<? super T>)
           Takes a Consumer functional interface, and performs that action to each element of the stream
           Does not guarantee the sequence of elements in a parallel stream
-        forEachOrdered()
+        void forEachOrdered(Consumer<? super T>)
           Takes a Consumer functional interface, and performs that action to each element of the stream
           Guarantee the sequence of elements in a parallel stream
-        collect()
-          Transform the stream into a collection following the provided Collector
-        toArray()
-          Returns an array containing the elements of this stream
 
 How to create a Stream?
   From Collections interface 
@@ -149,11 +149,15 @@ SummaryStatistics
     but require DoubleStream, LongStream and IntStream respectively
   java.util.IntSummaryStatistics
     Main methods
-      accept()
+      void accept(int)
         Records a new value into the summary information
-      combine()
+      void combine(IntSummaryStatistics)
         Combines the state of another IntSummaryStatistics into this one
-      getCount(), getSum(), getMin(), getMax(), getAverage()
+      long getCount()
+      long getSum()
+      int getMin()
+      int getMax()
+      double getAverage()
     Example
       IntSummaryStatistics statistics = IntStream.range(1, 6).summaryStatistics();
       double average = statistics.getAverage();

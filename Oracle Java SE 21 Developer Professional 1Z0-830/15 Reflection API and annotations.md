@@ -7,52 +7,77 @@ java.lang.reflect package
   Provides classes and interfaces for obtaining reflective information about classes and objects
   Class class
     Instances of the class Class represent classes and interfaces in a running Java application
-    Can be instantiated with the Object inherited method getClass()
+    Can be instantiated with the Object inherited method Class<T> getClass()
     Main methods
-      getName()
+      String getName()
         Returns the name of the entity (class, interface, array class, primitive type, or void) represented by this Class object
-      getFields()
+      Field[] getFields()
         Returns an array containing Field objects reflecting all the accessible public fields
-      getDeclaredFileds()
+      Field[] getDeclaredFileds()
         Same as getFields(), but doesn't include inherited fields
-      getGenericType()
+      Type getGenericType()
         Returns a Type object that represents the declared type for the field represented by this Field object
-      getPackageName()
+      String getPackageName()
         Returns the fully qualified package name as String
-      getSuperclass()
+      Class<? super T> getSuperclass()
         Returns the Class representing the direct superclass of the entity (class, interface, primitive type or void) 
           represented by this Class
-      getInterfaces()
+      Class<?>[] getInterfaces()
         Returns the interfaces directly implemented by the class or interface represented by this Class object
-      forName()
+      Class<?> forName(String)
         Returns the Class object associated with the class or interface with the given string name
-      getDeclaredConstructors()
+      Constructor<?>[] getDeclaredConstructors()
         Returns an array of Constructor objects reflecting all the constructors 
           implicitly or explicitly declared by the class represented by this Class object
-      getMethods()
+      Method[] getMethods()
         Returns an array containing Method objects reflecting all the public methods of the class or interface 
           represented by this Class object, including those declared by the class or interface 
           and those inherited from superclasses and superinterfaces
-      getDeclaredMethods()
+      Method[] getDeclaredMethods()
         Same as getMethods(), but excluding inherited methods
   Field class
     Provides information about, and dynamic access to, a single field of a class or an interface
     May be a class (static) field or an instance field
     Main methods
-      getModifier()
+      int getModifier()
         Returns the Java language modifiers for the field represented by this Field object, as an integer
         The Modifier class should be used to decode the modifiers
-      setAccesible(), checkCanSetAccessible(), getDeclaringClass(), getName(), getModifiers(), accessFlags(),
-      isSynthetic(), getType(), getGenericType(), get(), set(), getAnnotation(), getAnnotationsByType(), getDeclaredAnnotations()
+      void setAccesible(boolean)
+      void checkCanSetAccessible(Class<?>)
+      Class<?> getDeclaringClass()
+      String getName()
+      int getModifiers()
+      Set<AccessFlag> accessFlags()
+      boolean isSynthetic()
+      Class<?> getType()
+      Type getGenericType()
+      Object get()
+      void set(Object, Object)
+      T getAnnotation(Class<T>)
+      T[] getAnnotationsByType(Class<T>)
+      Annotation[] getDeclaredAnnotations()
   Type interface
     Common superinterface for all types in the Java programming language
       Include raw types, parameterized types, array types, type variables and primitive types
-    Defines the method getTypeName()
+    Defines the method String getTypeName()
   Modifier class
     The Modifier class provides static methods and constants to decode class and member access modifiers
     Contains the static methods
-      isPublic(), isPrivate(), isProtected(), isStatic(), isFinal(), isSynchronized(), isVolatile(), isTransient()
-      isNative(), isInterface(), isAbstract(), isStrict(), toString(), isSynthetic(), isMandated()  
+      boolean isPublic(int)
+      boolean isPrivate(int)
+      boolean isProtected(int)
+      boolean isStatic(int)
+      boolean isFinal(int)
+      boolean isSynchronized(int)
+      boolean isVolatile(int)
+      boolean isTransient(int)
+      boolean isNative(int)
+      boolean isInterface(int)
+      boolean isAbstract(int)
+      boolean isStrict(int)
+      boolean isSynthetic(int)
+      boolean isMandated(int)  
+      String toString(int)
   Constructor class
     Provides information about, and access to, a single constructor for a class
     Extends executable
@@ -65,10 +90,27 @@ java.lang.reflect package
     Provides information about, and access to, a single method on a class or interface
     The reflected method may be a class method or an instance method (including an abstract method)
     Extends executable
-      setAccessible(), getDeclaringClass(), getName(), getModifiers(), getTypeParameters(), getReturnType(),
-      getGenericReturnType(), getParameterTypes(), getParameterCount(), getGenericParameterTypes(), 
-      getExceptionTypes(), getGenericExceptionTypes(), isInvoke(), isVarArgs(), isSynthetic(), isDefault(),
-      getDefaultValue(), getAnnotation(), getDeclaredAnnotations(), getParameterAnnotations(), getAnnotatedReturnType()
+      void setAccessible(boolean)
+      Class<?> getDeclaringClass()
+      String getName()
+      int getModifiers()
+      TypeVariable<Method>[] getTypeParameters()
+      Class<?> getReturnType()
+      Type getGenericReturnType()
+      Class<?>[] getParameterTypes()
+      int getParameterCount()
+      Type[] getGenericParameterTypes()
+      Class<?>[] getExceptionTypes()
+      Type[] getGenericExceptionTypes()
+      Object invoke(Object, Object...)
+      boolean isVarArgs()
+      boolean isSynthetic()
+      boolean isDefault()
+      Object getDefaultValue()
+      T getAnnotation(Class<T>)
+      Annotation[] getDeclaredAnnotations()
+      Annotation[][] getParameterAnnotations()
+      AnnotatedType getAnnotatedReturnType()
   AccesFlag enum
     Represents a JVM access or module-related flag on a runtime member, such as a class, field, or method
     Contains members

@@ -39,22 +39,41 @@ java.util.Locale
     ROOT
       The root locale is the locale whose language, country, and variant are empty ("") strings
   Main methods
-    getLanguage(), getScript(), getCountry(), getVariant(), hasExtensions(), getExtension(), toLanguageTag(),
-    getDisplayLanguage(), getDisplayScript(), getDisplayCountry(), getDisplayString(), getDisplayVariant(), getDisplayName()
+    boolean hasExtensions()
+    String getLanguage()
+    String getScript()
+    String getCountry()
+    String getVariant()
+    String getExtension(char)
+    String toLanguageTag()
+    String getDisplayLanguage(Locale?)
+    String getDisplayScript(Locale?)
+    String getDisplayCountry(Locale?)
+    String getDisplayVariant(Locale?)
+    String getDisplayName(Locale?)
   Main static methods
-    of(), getDefault(), setDefault(), getInstance(), getAvailableLocales(), getISOCountries(), getISOLanguages(),
-    filter(), filterTags(), lookup(), lookupTag()
+    Locale of(String, String?, Locale?)
+    Locale getDefault(Category?)
+    void setDefault(Category? Locale)
+    Locale getInstance(String, String, String)
+    Locale[] getAvailableLocales()
+    String[] getISOCountries()
+    String[] getISOLanguages()
+    List<Locale> filter(List<LanguageRange>, Collection<Locale>, FilteringMode?)
+    List<String> filterTags(List<LanguageRange>, Collection<String>)
+    Locale lookup(List<LanguageRange>, Collection<Locale>)
+    String lookupTag(List<LanguageRange>, Collection<String>)
   Examples
     Locale locale1 = new Locale("en"); // Creates local of english language
     Locale locale2 = new Locale("en", "US"); // Creates local of english language and US country
     Locale locale3 = new Locale("en", "US", "SiliconValley"); // Creates local of english language, US country and variant SiliconValley
 
 Methods that return an array of available Locale
-  DateFormat.getAvailableLocales()
+  Locale[] DateFormat.getAvailableLocales()
     Returns all date format locales
-  NumberFormat.getAvailableLocales()
+  Locale[] NumberFormat.getAvailableLocales()
     Returns all number format locales
-  Locale.getAvailableLocales()
+  Locale[] Locale.getAvailableLocales()
     Returns all locales
 
 Resource bundles
@@ -65,9 +84,16 @@ Resource bundles
   java.util.ResourceBundle abstract class
     Contain locale-specific objects
     Main methods
-      getBaseBundleName, getString(), getStringArray(), getObject(), getLocale(), getKeys(), containsKey(), keySet()
+      String getBaseBundleName()
+      String getString(String)
+      String[] getStringArray(String)
+      Object getObject(String)
+      Locale getLocale()
+      Enumeration<String> getKeys()
+      boolean containsKey(String)
+      Set<String> keySet()
     Main static methods
-      getBundle()
+      ResourceBundle getBundle(String, Locale?, Module?)
         Gets a resource bundle using the specified base name, the default locale, and the caller module
         Takes a bundle based on default Locale, for example supposing specified base name is MyLabels,
           if default Locale is ru_RU, it will load from MyLabels_ru_RU.prop,
@@ -104,7 +130,10 @@ Resource bundles
     Subclass of ResourceBundle that manages resources for a locale in a convenient and easy to use list
     ListResourceBundle can store any serializable object, while PropertyResourceBundle is limited to strings only
     Main methods
-      getContents(), handleKeySet(), getKeys(), handleGetObject()
+      Object[][] getContents()
+      Set<String> handleKeySet()
+      Enumeration<String> getKeys()
+      Object handleGetObject(String)
     Example
       In program
         Locale.setDefault(Locale.of("de", "DE"));

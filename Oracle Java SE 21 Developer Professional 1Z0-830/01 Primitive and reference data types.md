@@ -38,7 +38,6 @@ Primitive casting
       long to int, char, short, or byte
       int to char, short, or byte
 
-
 Integer Pool
   Caches integer values between -128 and 127 (inclusive). 
   When an integer within this range is created using autoboxing or the valueOf() method, 

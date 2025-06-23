@@ -41,39 +41,39 @@ Thread class
   Main properties
     name, priority, daemon, interrupted, ThreadGroup
   Main methods
-    run()
+    void run()
       Contains the method to run in the new Thread
       Can be called directly from the Thread object, 
         but doing so will run it in the current Thread, not a new one
-    start()
+    void start()
       Starts the new Thread and runs the run() method inside it
-    setPriority()
+    void setPriority(int)
       Sets the priority of this Thread
       Must be an int from 1 to 10, where higher means more priority
       New Threads take the same priority as its parents by default
-    setDaemon()
+    void setDaemon()
       Sets the daemon flag of this Thread to true
       A daemon Thread is thread that does not prevent the JVM from exiting when the program finishes but the thread is still running
-    getThreadGroup()
+    ThreadGroup getThreadGroup()
       Returns the current ThreadGroup
-    join()
+    void join(long)
       Joins the current thread to its parent thread, finishing this one
       Can be used with a delay
-    interrupt()
+    void interrupt()
       Sets the interrupted property to true    
-    isInterrupted()
+    boolean isInterrupted()
       Tests whether this thread has been interrupted
-    yield()
+    void yield()
       A hint to the scheduler that the current thread is willing to yield its current use of a processor
       The scheduler is free to ignore this hint   
-    holdsLock() 
+    boolean holdsLock(Object) 
       Returns true if and only if the current thread is holding the monitor on a specific object
-    suspend(), stop(), resume()
+    void suspend(), void stop(), void resume()
       Are deprecated and must not be used
   Main static methods
-    currentThread()
+    Thread currentThread()
       Returns a reference to the thread where the method is running
-    sleep()
+    void sleep(long)
       Pauses the current Thread for the provided amount of milliseconds
 
 ThreadGroup class
@@ -81,17 +81,17 @@ ThreadGroup class
   Can also contain subgroups of ThreadGroup
   Can be used to manage multiple Threads simultaneously
   Main methods
-    getName()
+    String getName()
       Returns the name of this thread group
-    interrupt()
+    void interrupt()
       Interrupts all live threads in this thread group and its subgroups
-    getMaxPriority()
+    int getMaxPriority()
       Returns the maximum priority of this thread group
-    setMaxPriority()
+    void setMaxPriority(int)
       Sets the maximum priority of the group
-    enumerate()
+    int enumerate(Thread[])
       Copies into the specified array every live thread in this thread group and its subgroups
-    activeCount()
+    int activeCount()
       Returns an estimate of the number of live platform threads in this thread group and its subgroups
 
 Exceptions in Threads
@@ -106,7 +106,7 @@ TimeUnit enum
   Members
     NANOSECONDS, MICROSECONDS, MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS
   Main methods
-    sleep(), convert(), to{Unit}()
+    void sleep(long), long convert(Duration), {Unit} to{Unit}()
 
 Context switch
   Situation when a thread doesn't execute completely in a quantum of time and its state is saved by thread scheduler
@@ -183,13 +183,13 @@ Synchronization
   Object synchronization methods
     Are inherited from the Object class and can only be called inside a synchronized block or method, otherwise
       IllegalMonitorStateException will be thrown
-    wait() 
+    void wait(long?) 
       Causes the current thread to wait until it is awakened, typically by being notified or interrupted
       When an object is in wait state, its monitor is released
       Can accept a maximum wait time, after which execution will continue unconditionally
-    notify()
+    void notify()
       Wakes up a single thread that is waiting on this object's monitor
-    notifyAll()
+    void notifyAll()
       Wakes up all threads that are waiting on this object's monitor
 
 All inmutable objects are considered thread safe
@@ -245,7 +245,7 @@ java.util.concurrent.atomic package
     like AtomicBoolean, AtomicInteger, AtomicLong, AtomicReference (for Objects), etc
   Each of these types may be updated atomically abd provides its own API to perform necessary operations
 
-ThreadLocal class
+ThreadLocal<T> class
   This class provides thread-local variables, 
     which means each thread that accesses one (via its get or set method) has its own independently initialized copy of the variable
   ThreadLocal instances are typically private static fields in classes that wish to associate state with a thread
@@ -268,32 +268,33 @@ Recommended number of Threads
   With multiple executors
     Number of threads = Number of available cores * Target CPU utilization * (1 + Waiting time / Service time)
 
-Callable interface
+Callable<T> functional interface
   Functional interface that takes a generic type and declares the call() method
-  call() returns the generic type that this Callable is representing and its signature include a throw for an exepction
+  T call() 
+    Returns the generic type that this Callable is representing and its signature include a throw for an exepction
 
-Future interface
+Future<T> interface
   Represents the result of an asynchronous computation
   Main methods
-    cancel()
+    boolean cancel()
       Attempts to cancel execution of this task
       Has no effect if the task is already completed or cancelled, or could not be cancelled for some other reason
-    isCancelled()
+    boolean isCancelled()
       Returns true if this task was cancelled before it completed normally
-    isDone()
+    boolean isDone()
       Returns true if this task completed. 
       Completion may be due to normal termination, an exception, or cancellation
-    get()
+    T get(long?, TimeUnit?)
       Waits if necessary for the computation to complete, and then retrieves its result
       Blocks the calling thread until it is completed or interrupted
       Can be used with a timeout
-    resultNow()
+    T resultNow()
       Returns the computed result, without waiting
       This method is for cases where the caller knows that the task has already completed successfully
-    exceptionNow()
+    Throwable exceptionNow()
       Returns the exception thrown by the task, without waiting
       This method is for cases where the caller knows that the task has already completed with an exception
-    state()
+    State state()
       Returns the computation state
 
 Executors
@@ -301,7 +302,9 @@ Executors
   All threads of the internal pool will be reused under the hood for relevant tasks, 
     so that we can run as many concurrent tasks as we want throughout the life cycle of our application with a single executor
   Executor interface
-    Contains the method execute(), which takes a Runnable an executes it at some time in the future,
+    Contains the method
+    void execute(Runnable)
+      Takes a Runnable an executes it at some time in the future,
       in the given thread, or in a thread of the pool, depending on the implementation
   ExecutorService interface
     It is the most popular implementation of Executor
@@ -310,63 +313,67 @@ Executors
     When using an ExecutorService, shutdown() or shutdownNow() must always be invoked,
       else the application never terminate as there are still threads active
     Main methods
-      submit()
+      Future<T> submit(Callable<T>) | Future<?> submit(Runnable)
         Submits a Runnable or Callable task for execution
-        Returns a Future representing that task. The Future's get method will return null upon successful completion
-      shutdown()
+        Returns a Future representing that task
+        If submitting a Runnable, the Future's get method will return null upon successful completion
+        If submitting a Callable, the Future's get method will return the result of the operation
+      void shutdown()
         Initiates an orderly shutdown in which previously submitted tasks are executed, but no new tasks will be accepted
-      shutdownNow()
+      List<Runnable> shutdownNow()
         Attempts to stop all actively executing tasks, halts the processing of waiting tasks
         Returns a list of the tasks that were awaiting execution
-      isTerminated()
+      boolean isTerminated()
         Returns true if all tasks have completed following shut down
-      awaitTermination()
+      boolean awaitTermination(long?, TimeUnit?)
         Blocks the calling thread until all tasks have completed execution after a shutdown request, 
           or the timeout occurs, or the current thread is interrupted, whichever happens first
-      invokeAll()
+      List<Future<T>> invokeAll(Collection<? extends Callable<T>>, long?, TimeUnit)
         Executes the given tasks, returning a list of Futures holding their status and results when all complete
-      invokeAny()
+      T invokeAny(Collection<? extends Callable<T>>, long?, TimeUnit)
         Executes the given tasks, returning the result of one that has completed successfully
   ScheduledExecutorService interface
     Extends form ExecutorService with methods for scheduling Runnables and Callables
     New methods
-      schedule()
+      ScheduledFuture<?> schedule(Runnable, long, TimeUnit) | ScheduledFuture<T> schedule(Callable<T>, long, TimeUnit)
         Submits a one-shot task that becomes enabled after the given delay
-      scheduleAtFixedRate()
+      ScheduledFuture<?> scheduleAtFixedRate(Runnable, long, long, TimeUnit)
         Submits a periodic action that becomes enabled first after the given initial delay, and subsequently with the given period; 
           that is, executions will commence after initialDelay, then initialDelay + period, then initialDelay + 2 * period, and so on
-      scheduleWithFixedDelay()
+      ScheduledFuture<?> scheduleWithFixedDelay(Runnable, long, long, TimeUnit)
         Submits a periodic action that becomes enabled first after the given initial delay, 
           and subsequently with the given delay between the termination of one execution and the commencement of the next
   Executors class
     Contains Factory and utility methods for Executor, ExecutorService, ScheduledExecutorService, 
       ThreadFactory, and Callable classes defined in this package
     Most methods return an object implementing theses interfaces, set up with commonly useful configuration settings
-    Methods that return ExecutorService
-      newFixedThreadPool()
+    Methods
+      ExecutorService newFixedThreadPool(int, ThreadFactory?)
         Creates a thread pool that reuses a fixed number of threads
         If additional tasks are submitted when all threads are active, they will wait in the queue until a thread is available
-      newWorkStealingPool()
+      ExecutorService newWorkStealingPool(int)
         Creates a thread pool that maintains enough threads to support the given parallelism level, and may use multiple queues to reduce contention
-      newSingleThreadExecutor()
+      ExecutorService newSingleThreadExecutor(ThreadFactory?)
         Creates an Executor that uses a single worker thread operating off an unbounded queue
         Tasks are guaranteed to execute sequentially, and no more than one task will be active at any given time
-      newCachedThreadPool()
+      ExecutorService newCachedThreadPool(ThreadFactory?)
         Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they are available
         These pools will typically improve the performance of programs that execute many short-lived asynchronous tasks
-      newThreadPerTaskExecutor()
+      ExecutorService newThreadPerTaskExecutor(ThreadFactory?)
         Creates an Executor that starts a new Thread for each task
         The number of threads created by the Executor is unbounded
-      unconfigurableExecutorService()
+      ExecutorService unconfigurableExecutorService(ExecutorService)
         Returns an object that delegates all defined ExecutorService methods to the given executor, 
           but not any other methods that might otherwise be accessible using casts. 
         This provides a way to safely "freeze" configuration and disallow tuning of a given concrete implementation
-    Return ScheduledExecutorService
-      newSingleThreadScheduledExecutor()
+      ExecutorService newVirtualThreadPerTaskExecutor()
+        Creates an Executor that starts a new virtual Thread for each task
+        The number of threads created by the Executor is unbounded
+      ScheduledExecutorService newSingleThreadScheduledExecutor(ThreadFactory?)
         Creates a single-threaded executor that can schedule commands to run after a given delay, or to execute periodically
-      newScheduledThreadPool()
+      ScheduledExecutorService newScheduledThreadPool(int, ThreadFactory?)
         Creates a thread pool that can schedule commands to run after a given delay, or to execute periodically
-      unconfigurableScheduledExecutorService()
+      ScheduledExecutorService unconfigurableScheduledExecutorService(ScheduledExecutorService)
         Returns an object that delegates all defined ScheduledExecutorService methods to the given executor,
           but not any other methods that might otherwise be accessible using casts
         This provides a way to safely "freeze" configuration and disallow tuning of a given concrete implementation
@@ -377,13 +384,53 @@ Fork/Join framework
   The goal is to use all the available processing power to enhance the performance of your application
   The framework forks recursively, breaking the task into smaller independent subtasks until they are
     simple enough to be executed asynchronously and after that, all subtasks are recursively joined into a single result
-  ForkJoinTask class
+  ForkJoinTask<T> class
     Abstract base class for tasks that run within a ForkJoinPool
     A ForkJoinTask is a thread-like entity that is much lighter weight than a normal thread
     Main methods
-      fork(), join(), invoke(), invokeAll(), cancel(), isDone(), isCancelled(), 
-      isCompletedAbnormally(), isCompletedNormally(), state(), resultNow(), 
-      exceptionNow(), getException(), completeExceptionally(), complete(), tryUnfork()
+      ForkJoinTask<T> fork()
+        Arranges to asynchronously execute this task in the pool the current task is running in
+          if applicable, or using the ForkJoinPool.commonPool() if not inForkJoinPool
+      T join()
+        Returns the result of the computation when it is done.
+      T invoke()
+        Commences performing this task, awaits its completion if necessary, and returns its result
+      void invokeAll(ForkJoinTask<T>...) | Colletion<T> invokeAll(Collection<V>)
+        Forks the given tasks, returning when isDone holds for each task or an (unchecked) exception is encountered,
+          in which case the exception is rethrown 
+          If more than one task encounters an exception, then this method throws any one of these exceptions. 
+          If any task encounters an exception the other may be cancelled
+      boolean cancel()
+        Attempts to cancel execution of this task
+        This attempt will fail if the task has already completed or could not be cancelled for some other reason
+        If successful, and this task has not started when cancel is called, execution of this task is suppressed
+        This method is designed to be invoked by other tasks
+      boolean isDone()
+      boolean isCancelled()
+      boolean isCompletedAbnormally()
+        Returns true if this task threw an exception or was cancelled.
+      boolean isCompletedNormally()
+        Returns true if this task completed without throwing an exception and was not cancelled
+      State state()
+      T resultNow()
+      Throwable exceptionNow()
+      Throwable getException()
+        Returns the exception thrown by the base computation, 
+          or a CancellationException if cancelled, 
+          or null if none or if the method has not yet completed
+      void completeExceptionally()
+        Completes this task abnormally, 
+          and if not already aborted or cancelled, causes it to throw the given exception upon join and related operations
+      void complete()
+        Completes this task, and if not already aborted or cancelled, 
+          returning the given value as the result of subsequent invocations of join and related operations. 
+          This method may be used to provide results for asynchronous tasks, 
+          or to provide alternative handling for tasks that would not otherwise complete normally
+      boolean tryUnfork()
+        Tries to unschedule this task for execution
+        This method will typically (but is not guaranteed to) succeed 
+          if this task is the most recently forked task by the current thread,
+          and has not commenced executing in another thread
   ForkJoinPool class
     Extends AbstractExecutorService class
     Differs from other kinds of ExecutorService mainly by virtue of employing work-stealing: 
@@ -412,48 +459,52 @@ Fork/Join framework
 
 CompletionStage
   Defines the contracts for behavior of an asynchronous computation step that we combine with other steps
-CompletableFuture
+CompletableFuture<T>
   Implements CompletionStage and Future
   Main methods
-    get()
+    T get()
       Waits if necessary for this future to complete, and then returns its result
         while waiting, the caller Thread is blocked
       If any callback method is applied to the CompletableFuture, 
         it returns the result of the last applied callback method
-    getNow()
+    T getNow()
       Returns the result value (or throws any encountered exception) if completed, 
         else returns the given valueIfAbsent
-    Callback methods 
-      Are called after the previous result is available
-      By default, are run in the same Thread and Executor, 
-        async ones are run in an independent Thread and Executor
-      thenRun(), thenRunAsync()
-        Runs a Runnable
-      thenCombine(), thenCombineAsync()
-        Takes another CompletableFuture and after both results are available, 
-          performs a BiFunction with both results as inputs, and returns a value
-      thenAccept(), thenAcceptAsync()
-        Takes another CompletableFuture and after both results are available, 
-          performs a Consumer operation with both results as inputs, and returns void
-      handle(), handleAsync()
-        Takes a BiFunction with result and exception as arguments, 
-          if any exception occur, it will be passed to the bifunction as the second argument
-      exceptionally()
-        Takes a Function with an exception as argument,
-          if any exception occur, it will be passed to the function as argument
-          Allows to return a default value
+  Callback methods 
+    Are called after the previous result is available
+    By default, are run in the same Thread and Executor, 
+      async ones are run in an independent Thread and Executor
+    CompletableFuture<Void> thenRun(Runnable), CompletableFuture<Void> thenRunAsync(Runnable)
+      Runs a Runnable
+    CompletableFuture<V> thenCombine(CompletionStage<? extends U>, BiFunction<? super T,? super U,? extends V>)
+    CompletableFuture<V> thenCombineAsync(CompletionStage<? extends U>, BiFunction<? super T,? super U,? extends V>)
+      Takes another CompletableFuture and after both results are available, 
+        performs a BiFunction with both results as inputs, and returns a value
+    CompletableFuture<Void> thenAccept(Consumer<? super T>)
+    CompletableFuture<Void> thenAcceptAsync(Consumer<? super T>)
+      Takes another CompletableFuture and after both results are available, 
+        performs a Consumer operation with both results as inputs, and returns void
+    CompletableFuture<U> handle(BiFunction<? super T, Throwable, ? extends U>)
+    CompletableFuture<U> handleAsync(BiFunction<? super T, Throwable, ? extends U>)
+      Takes a BiFunction with result and exception as arguments, 
+        if any exception occur, it will be passed to the bifunction as the second argument
+    CompletableFuture<T> exceptionally(Function<Throwable, ? extends T>)
+    CompletableFuture<T> exceptionallyAsync(Function<Throwable, ? extends T>)
+      Takes a Function with an exception as argument,
+        if any exception occur, it will be passed to the function as argument
+        Allows to return a default value
   Main static methods
-    runAsync()
+    CompletableFuture<Void> runAsync(Runnable, Executor?)
       Takes a Runnable and returns a new CompletableFuture that is asynchronously completed 
       Accepts an Executor to run the task in. In case no Executor is specified,
         the task will run in the ForkJoinPool.commonPool()
-    supplyAsync()
+    CompletableFuture<U> supplyAsync(Supplier<U>, Executor?)
       Takes a Supplier and returns a new CompletableFuture that is asynchronously completed 
       Accepts an Executor to run the task in. In case no Executor is specified,
         the task will run in the ForkJoinPool.commonPool()
-    allOf()
+    CompletableFuture<Void> allOf(CompletableFuture<?>...)
       Returns a new CompletableFuture that is completed when all of the given CompletableFutures complete
-    anyOf()
+    CompletableFuture<Object> anyOf(CompletableFuture<?>...)
       Returns a new CompletableFuture that is completed when any of the given CompletableFutures complete, 
         with the same result
 
@@ -463,36 +514,36 @@ java.util.concurrent.locks package (Lock API)
     Allow more flexible structuring, may have quite different properties, and may support multiple associated Condition objects
     A Lock is a tool for controlling access to a shared resource by multiple threads
     Declares the methods
-      lock()
+      void lock()
         Acquires the lock. If the lock is not available then the current thread becomes disabled for thread scheduling
-      unlock()
+      void unlock()
         Releases the lock
-      tryLock()
+      boolean tryLock(long?, TimeUnit?)
         Acquires the lock only if it is free at the time of invocation, returns boolean
         Can be used with a wait for specific time
-      lockInterruptibly()
+      void lockInterruptibly()
         Acquires the lock unless the current thread is interrupted. Acquires the lock if it is available and returns immediately
-      newCondition()
+      Condition newCondition()
         Returns a new Condition instance that is bound to this Lock instance
     Main implementations
       ReentrantLock
         A lock is called re-entrant if the thread that holds the lock can lock it again
         Main methods  
-          getHoldCount()
+          int getHoldCount()
             Returns the number of holds on this lock by the current thread
-          isHeldByCurrentThread()
+          boolean isHeldByCurrentThread()
             Returns true if current thread holds this lock and false otherwises
-          isLocked()
+          boolean isLocked()
             Queries if this lock is held by any thread
-          isFair()
-            Return boolean value of this lock fairness
-          hasQueuedThreads() 
+          boolean isFair()
+            Returns true if this lock has fairness set true
+          boolean hasQueuedThreads()
             Queries whether any threads are waiting to acquire this lock
-          hasQueuedThread()
+          boolean hasQueuedThread(Thread)
             Queries whether the given thread is waiting to acquire this lock
-          getQueuedThreads()
+          int getQueuedThreads()
             Returns a collection containing threads that may be waiting to acquire this lock
-          hasWaiters()
+          boolean hasWaiters(Condition)
             Queries whether any threads are waiting on the given condition associated with this lock
   ReadWriteLock interface
     Maintains a pair of associated locks, one for read-only operations and one for writing
@@ -507,31 +558,31 @@ java.util.concurrent.locks package (Lock API)
       ReentrantReadWriteLock
         An implementation of ReadWriteLock supporting similar semantics to ReentrantLock
         Main methods
-          isFair()
+          boolean isFair()
             Return boolean value of this lock fairness
-          getReadLockCount()
+          int getReadLockCount()
             Queries the number of read locks held for this lock
-          isWriteLocked()
+          boolean isWriteLocked()
             Queries if the write lock is held by any thread
-          isWriteLockedByCurrentThread()
+          boolean isWriteLockedByCurrentThread()
             Queries if the write lock is held by the current thread
-          getWriteHoldCount()
+          int getWriteHoldCount()
             Queries the number of reentrant write holds on this lock by the current thread
-          getReadHoldCount()
+          int getReadHoldCount()
             Queries the number of reentrant read holds on this lock by the current thread
-          getQueuedWriterThreads()
+          Collection<Thread> getQueuedWriterThreads()
             Returns a collection containing threads that may be waiting to acquire the write lock
-          getQueuedReaderThreads()
+          Collection<Thread> getQueuedReaderThreads()
             Returns a collection containing threads that may be waiting to acquire the read lock
-          hasQueuedThread()
+          boolean hasQueuedThreads()
             Queries whether any threads are waiting to acquire the read or write lock
-          hasQueuedThread()
+          boolean hasQueuedThread(Thread)
             Queries whether the given thread is waiting to acquire either the read or write lock
-          getQueuedThreads()
+          Collection<Thread> getQueuedThreads()
             Returns a collection containing threads that may be waiting to acquire either the read or write lock
-          hasWaiters()
+          boolean hasWaiters(Condition)
             Queries whether any threads are waiting on the given condition associated with the write lock
-          getWaitingThreads()
+          Collection<Thread> getWaitingThreads()
             Returns a collection containing those threads that may be waiting on the given condition associated with the write lock
   Condition interface
     Provide means for one thread to suspend execution (to "wait") 
@@ -539,12 +590,12 @@ java.util.concurrent.locks package (Lock API)
     Where a Lock replaces the use of synchronized methods and statements, a Condition replaces the use of the Object monitor methods
     When a Thread tries to acquire a Lock, it first checks all the Condition attached to it
     Main methods      
-      await()
+      void await(long?, TimeUnit?)
         Causes the current thread to wait until it is signalled or interrupted
         The lock associated with this Condition is atomically released
-      signal()
+      void signal()
         Wakes up one waiting thread
-      signalAll()
+      void signalAll()
         Wakes up all waiting threads
   StampedLock
     A capability-based lock with three modes for controlling read/ write access
@@ -554,48 +605,48 @@ java.util.concurrent.locks package (Lock API)
     Lock acquisition methods return a stamp that represents and controls access with respect to a lock state
     Lock release and conversion methods require stamps as arguments, and fail if they do not match the state of the lock
     Main methods
-      writeLock()
+      long writeLock()
         Exclusively acquires the lock, blocking if necessary until available.
         Returns a write stamp, in the form of a long value, that can be used to unlock or convert mode
-      tryWriteLock()
+      long tryWriteLock(long?, TimeUnit?)
         Exclusively acquires the lock if it is immediately available
         Returns a write stamp that can be used to unlock or convert mode, or zero if the lock is not available
         Can be used with a timeout
-      readLock()
+      long readLock()
         Non-exclusively acquires the lock, blocking if necessary until available
         Returns a read stamp that can be used to unlock or convert mode
-      tryReadLock()
+      long tryReadLock(long?, TimeUnit?)
         Non-exclusively acquires the lock if it is immediately available
         Returns a read stamp that can be used to unlock or convert mode, or zero if the lock is not available
-      tryOptimisticRead()
+      long tryOptimisticRead()
         Returns a stamp that can later be validated, or zero if exclusively locked
-      validate()
+      boolean validate(long)
         Returns true if the lock has not been exclusively acquired since issuance of the given stamp
         Always returns false if the stamp is zero
-      unlockWrite()
+      void unlockWrite(long)
         If the lock state matches the given stamp, releases the exclusive lock
-      unlockRead()
+      void unlockRead(long)
         If the lock state matches the given stamp, releases the non-exclusive lock
-      unlock()
+      void unlock(long)
         If the lock state matches the given stamp, releases the corresponding mode of the lock
-      tryConvertToWriteLock()
+      long tryConvertToWriteLock(long)
         If the lock state matches the given stamp, atomically performs one of the following actions
           If the stamp represents holding a write lock, returns it
           If a read lock, if the write lock is available, releases the read lock and returns a write stamp
           If an optimistic read, returns a write stamp only if immediately available
           Returns zero in all other cases
-      tryConvertToReadLock()
+      long tryConvertToReadLock(long)
         If the lock state matches the given stamp, atomically performs one of the following actions
           If the stamp represents holding a write lock, releases it and obtains a read lock
           If a read lock, returns it
           If an optimistic read, acquires a read lock and returns a read stamp only if immediately available
           Returns zero in all other cases
-      tryConvertToOptimisticRead()
+      long tryConvertToOptimisticRead(long)
         If the lock state matches the given stamp then, atomically 
           If the stamp represents holding a lock, releases it and returns an observation stamp
           If an optimistic read, returns it if validated
           Returns zero in all other cases, and so may be useful as a form of "tryUnlock"
-      asReadWriteLock()
+      Lock asReadWriteLock()
         Returns a ReadWriteLock view of this StampedLock 
         In which the ReadWriteLock. readLock() method is mapped to asReadLock(), 
           and ReadWriteLock. writeLock() to asWriteLock()
@@ -608,20 +659,20 @@ Synchronizers
     Its constructor takes a parties argument that indicates the number of threads waiting upon,
       also takes an optional Runnable that is run when the barrier is tripped, performed by the last thread entering the barrier
     Main methods
-      getParties()
+      int getParties()
         Returns the number of parties required to trip this barrier.
-      await()
+      int await()
         Waits until all parties have invoked await on this barrier.
         If the current thread is not the last to arrive then it is disabled for thread scheduling purposes 
           and lies dormant until one of the following things happens
         Returns the arrival index of the current thread, where index getParties() - 1 
           indicates the first to arrive and zero indicates the last to arrive
-      getNumberWaiting()
+      int getNumberWaiting()
         Returns the number of parties currently waiting at the barrier
-      reset()
+      void reset()
         Resets the barrier to its initial state
         If any parties are currently waiting at the barrier, they will return with a BrokenBarrierException
-      breakBarrier()
+      void breakBarrier()
         Sets current barrier generation as broken and wakes up everyone. Called only while holding lock
   CountdownLatch class
     A CountDownLatch is initialized with a given count
@@ -629,15 +680,15 @@ Synchronizers
     Count cannot be reset
     Unlike CyclicBarrier, it works with tasks, no matter which thread performs them
     Main methods
-      await()
+      void await(long?, TimeUnit?)
         Causes the current thread to wait until the latch has counted down to zero, unless the thread is interrupted
         If the current count is zero then this method returns immediately
-      countDown() 
+      void countDown() 
         Decrements the count of the latch, releasing all waiting threads if the count reaches zero
         If the current count is greater than zero then it is decremented
         If the new count is zero then all waiting threads are re-enabled for thread scheduling purposes
         If the current count equals zero then nothing happens
-      getCount()
+      long getCount()
         Returns the current count
   Semaphore class
     Maintains a set of permits. Each acquire blocks if necessary until a permit is available, and then takes it. 
@@ -645,28 +696,28 @@ Synchronizers
       Permits value may be negative, in which case releases must occur before any acquires will be granted.
     Are often used to restrict the number of threads than can access some (physical or logical) resource
     Main methods
-      acquire()
+      void acquire()
         Acquires a permit from this semaphore, blocking until one is available, or the thread is interrupted.
           If one is available and returns immediately, reducing the number of available permits by one
         Accepts a permits argument, which is used to acquire a custom number of permits
-      tryAcquire()
+      boolean tryAcquire(int, long?, TimeUnit?)
         Acquires a permit from this semaphore, only if one is available at the time of invocation
           If one is available and returns immediately, with the value true, reducing the number of available permits by one
           If no permit is available then this method will return immediately with the value false
         Allows a maximum timeout argument
-      release()
+      void release(int)
         Releases a permit, returning it to the semaphore
-      availablePermits()
+      int availablePermits()
         Returns the current number of permits available in this semaphore
-      getQueuedThreads()
+      Collection<Threads> getQueuedThreads()
         Returns a collection containing threads that may be waiting to acquire
-  Exchanger class
+  Exchanger<T> class
     A synchronization point at which threads can pair and swap elements within pairs. 
       Each thread presents some object on entry to the exchange method, matches with a partner thread, 
       and receives its partner's object on return
     It is a parametrized class, with the type of object that exchanges
     Contains just one method
-      exchange()
+      T exchange(T, long?, TimeUnit?)
         Waits for another thread to arrive at this exchange point (unless the current thread is interrupted), 
           and then transfers the given object to it, receiving its object in return
         Accepts an optional timeout argument, that indicates a maximum time to wait
@@ -675,30 +726,30 @@ Synchronizers
     Unlike CyclicBarrier, it supports multiple phases. Each phase has a number
     Its constructor accepts an argument for a number of parties required to advance to the next phase, or a parent Phaser
     Main methods
-      register()
+      int register()
         Adds a new unarrived party to this phaser
         If an ongoing invocation of onAdvance is in progress, this method may await its completion before returning
         If this phaser has a parent, and this phaser previously had no registered parties, 
           this child phaser is also registered with its parent
         If this phaser is terminated, the attempt to register has no effect, and a negative value is returned
         Returns the arrival phase number to which this registration applied
-      arrive()
+      int arrive()
         Arrives at this phaser, without waiting for others to arrive
         Once the number of arrived parties is equal to the number of registered parties, 
           the execution of the program will continue
-      awaitAdvance()
+      int awaitAdvance(int)
         Awaits the phase of this phaser to advance from the given phase value, 
           returning immediately if the current phase is not equal to the given phase value or this phaser is terminated
-      arriveAndAwaitAdvance()
+      int arriveAndAwaitAdvance()
         Arrives at this phaser and awaits others
         It is equivalent to awaitAdvance(arrive())
-      arriveAndDeregister()
+      int arriveAndDeregister()
         Arrives at this phaser and deregisters from it without waiting for others to arrive
         Deregistration reduces the number of parties required to advance in future phases
         If some thread will not participate in the next phase, this method must be called
-      getPhase()
+      int getPhase()
         Returns the current phase number
-      getRegisteredParties()
+      int getRegisteredParties()
         Returns the number of parties registered at this phaser
-      getArrivedParties()
+      int getArrivedParties()
         Returns the number of registered parties that have arrived at the current phase of this phaser

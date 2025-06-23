@@ -55,7 +55,7 @@ Externalizable interface
   Can be implement by a class, to add a custom logic when an object of the class is serialized or deserialized,
     it can be used for example to encrypt and decrypt passwords
   Contains the methods
-    writeExternal()
+    void writeExternal()
       Will be called when object is serialized
         Example
           @Override
@@ -64,7 +64,7 @@ Externalizable interface
               out.writeObject(this.price + 10);
               out.writeObject(this.category + " Special");
           }
-    readExternal()
+    void readExternal()
       Will be called when object is deserialized
         Example
           @Override
@@ -73,7 +73,7 @@ Externalizable interface
               this.price = (double) in.readObject();
               this.category = (String) in.readObject();
           }
-    readResolve()
+    void readResolve()
       Serialization makes possible to create a new Singleton object, 
         which violates the purpose of a Singleton
       The purpose of this method is to return a replacement object instead of the object on which it is called
@@ -81,7 +81,7 @@ Externalizable interface
         <ANY_ACCESS_MODIFIER> readResolve() throws ObjectStreamException;
 
 Cloning
-  Object.clone()
+  Object Object.clone()
     Is inherited from Object class, however it has the protected access modifier, 
       so it can only be called inside an class inheriting from Object
     It returns a shallow copy of the object

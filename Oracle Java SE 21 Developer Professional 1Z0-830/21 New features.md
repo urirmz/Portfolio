@@ -32,20 +32,20 @@ Scoped values
   Allows to store and share immutable data within and across threads
   Prevent context leakage by explicitly associating values with specific scopes, unlike traditional thread-local storage
   Child threads can inherit scoped values
-  ScopedValue class
+  ScopedValue<T> class
     Main methods
-      newInstance()
+      ScopedValue<T> newInstance()
         Creates a scoped value that is initially unbound for all threads
-      where()
+      Carrier where(ScopedValue<T>, T)
         Creates a new Carrier with a single mapping of a ScopedValue key to a value
         Associates a value with a context for execution
-      get()
+      T get()
         Returns the value of the scoped value if bound in the current thread
-      orElse()
+      T orElse()
         Returns the value of this scoped value if bound in the current thread, otherwise returns other
-      orElseThrow()
+      T orElseThrow(Supplier<? extends Throwable>)
         Returns the value of this scoped value if bound in the current thread, otherwise throws an exception
-      isBound()
+      bbolean isBound()
         Returns true if this scoped value is bound in the current thread
   Carrier final subclass
     A mapping of scoped values, as keys, to values.
@@ -54,16 +54,16 @@ Scoped values
     During the lifetime of the run or call method, any method, whether called directly or indirectly from the expression, 
       has the ability to read the scoped value. However, when the run method finishes, the binding is destroyed
     Main methods
-      run()
+      void run(Runnable)
         Runs an operation with each scoped value in this mapping bound to its value in the current thread
-      get()
+      T get(ScopedValue<T>)
         Return a new set consisting of a single binding
-      call()
+      R call(Vallable<? extends R>)
         Calls a value-returning operation with each scoped value in this mapping bound to its value in the current thread
-      where()
+      Carrier where(ScopedValue<T>, T)
         Returns a new Carrier with the mappings from this carrier plus a new mapping from key to value
     Main static methods
-      of()
+      Carrier of(ScopedValue<T>, T)
   Example 
     public static ScopedValue<Integer> globalId = ScopedValue.newInstance();
     public static void main(String[] args) {

@@ -28,14 +28,14 @@ java.util.logging (Java Logging Framework)
       Logger object is used for a single class or a single component to provide context bound,
         and log messages for a specific system or application component
       Main methods
-        setLevel()
+        void setLevel(Level)
           Set the log level specifying which message levels will be logged by this logger
           Message levels lower than this value will be discarded
-        addHandler()
+        void addHandler(Handler)
           Add a log Handler to receive logging messages
-        removeHandler()
+        void removeHandler(Handler)
           Remove a log Handler. Throws exeption if provided handler is not found
-        getHandlers()
+        Handler[] getHandlers()
           Returns an array of all registered Handlers
         severe(), warning(), info(), config(), fine(), finer(), finest()
           Logs a message in the associated log level
@@ -50,15 +50,23 @@ java.util.logging (Java Logging Framework)
       Exports log records objects to a variety of destinations, including, memory, output streams, consoles, files, and sockets
       Additional handlers may be developed by third parties and delivered on top of the core platform, by extending this class
       Main methods
-        publish()
+        void publish(LogRecord)
           Publish a LogRecord
           The logging request was made initially to a Logger object, which initialized the LogRecord and forwarded it here
-        flush()
+        void flush()
           Flush any buffered output
-        close()
+        void close()
           Close the Handler and free all associated resources
-        getFormatter(), setFormatter(), getEncoding(), setEncoding(), getLevel(), setLevel(),
-        getFilter(), setFilter(), getErrorManager(), setErrorManager()
+        Formatter getFormatter()
+        void setFormatter(Formatter)
+        String getEncoding()
+        void setEncoding(String)
+        Level getLevel()
+        void setLevel(Level)
+        Filter getFilter()
+        void setFilter(Filter)
+        ErrorManager getErrorManager()
+        void setErrorManager(ErrorManager)
       Main implementations
         ConsoleHandler
           Records all the log messages to System.err. By default, a Logger is associated with this handler
@@ -76,7 +84,10 @@ java.util.logging (Java Logging Framework)
       Typically each logging Handler will have a Formatter associated with it. The Formatter takes a LogRecord and converts it to a string
       As with handlers, additional formatters may be developed by third parties by extending this class
       Methods
-        format(), getHead(), getTail(), formatMessage()
+        String format(LogRecord)
+        String getHead(Handler)
+        String getTail(Handler)
+        String formatMessage(LogRecord)
       Implementations
         SimpleFormatter, XMLFormatter
     Filter

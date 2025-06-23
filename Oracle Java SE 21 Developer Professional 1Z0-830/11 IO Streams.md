@@ -1,7 +1,9 @@
-java.io package provides for system input and output through data streams, serialization and the file system
-java.nio package defines buffers, which are containers for data, and other structures, such as charsets, channels, and selectable channels
+java.io package 
+  Provides for system input and output through data streams, serialization and the file system
+java.nio package 
+  Defines buffers, which are containers for data, and other structures, such as charsets, channels, and selectable channels
 
-System.lineSeparator()
+String System.lineSeparator()
   Returns the default system-dependent line separator 
     Line separator is the character that tells the system to break the line (like \n)
 
@@ -10,118 +12,118 @@ java.io.File class
   Can be created in the way
     File file = new File("testDirectory"); // testDirectory is converted into an abstract pathname
   Contains the static fields
-    separator  
-      The system-dependent default name-separator character, represented as a string
-    pathSeparator
-      The system-dependent path-separator character, represented as a string
-    separatorChar
-      The system-dependent name-separator character
-    pathSeparatorChar
+    String separator  
+      The system-dependent default name-separator character
+    String pathSeparator
       The system-dependent path-separator character
+    char separatorChar
+      The system-dependent name-separator
+    char pathSeparatorChar
+      The system-dependent path-separator
   The main methods of File class are
-    mkdir()
+    boolean mkdir()
       Creates the directory named by this abstract pathname
-    mkdirs()
+    boolean mkdirs()
       Creates the directory named by this abstract pathname, including any necessary but nonexistent parent directories
-    createNewFile()
+    boolean createNewFile()
       Creates a new, empty file named by this abstract pathname if and only if a file with this name does not yet exist
-    exists()
+    boolean exists()
       Tests whether the file or directory denoted by this abstract pathname exists
-    isDirectory()
+    boolean isDirectory()
       Tests whether the file denoted by this abstract pathname exists and is a directory
-    listFiles()
+    File[] listFiles()
       If this is a directory, returns the array of files it contains
       Can take a FileFilter as an argument, so that it just returns the files that match it
-    isFile()
+    boolean isFile()
       Tests whether the file denoted by this abstract pathname exists and is a file
-    isHidden()
+    boolean isHidden()
       Tests whether the file named by this abstract pathname is a hidden file
-    canExecute()
+    boolean canExecute()
       Tests whether the application can execute the file denoted by this abstract pathname
-    getAbsolutePath()
+    String getAbsolutePath()
       Returns the absolute pathname string of this abstract pathname
-    walk()
-      Return a Stream that is lazily populated with Path by walking the file tree rooted at a given starting fil
-      The file tree is traversed depth-first, 
-        the elements in the stream are Path objects that are obtained as if by resolving the relative path against start
-    walkFileTree()
-      Walks a file tree rooted at a given starting file
-      The file tree traversal is depth-first with the given FileVisitor invoked for each file encountered. 
-      File tree traversal completes when all accessible files in the tree have been visited, 
-        or a visit method returns a result of TERMINATE
-      Can handle symbolic links that create cycles
-        If a symbolic link causes a loop in the file hierarchy, the method detects it and skips that part of the traversal
-        
-
-java.nio.Path class
+    
+java.nio.Path interface
   An interface used to locate a file in a file system. It will typically represent a system dependent file path
-  The main methods of Path interface are
-    of()
+  The only static method in Path interface is
+    Path of(String...)
       Returns a Path by converting a path string, or a sequence of strings
-    toFile()
+  The main methods of Path interface are
+    File toFile()
       Returns a File object representing this path
-    isAbsolute()
+    boolean isAbsolute()
       Tells whether or not this path is absolute
-    toAbsolutePath()
+    Path toAbsolutePath()
       Returns a Path object representing the absolute path of this path
-    resolve()
+    Path resolve(Path) | Path resolve(String)
       Resolve the given path against this path, for example
         if this path represents “c/drive/files”, then invoking this method with the string “file1” will result in the Path “c/drive/files/file1”
 
 java.nio.Files class
   Consists exclusively of static methods that operate on files, directories, or other types of files
   The main methods of Files class are
-    createFile()
+    Path createFile(Path, FileAttribute...)
       Creates a new and empty file in the provided Path, failing if the file already exists, and returns Path
-    createDirectory()
+    Path createDirectory(Path, FileAttribute...)
       Creates a new directory and returns Path
-    createDirectories()
+    Path createDirectories(Path, FileAttribute...)
       Creates a directory in the provided Path, by creating all nonexistent parent directories first, returns Path
-    isDirectory()
+    boolean isDirectory(Path, LinkOption...)
       Tests whether a file in the provided Path is a directory
-    isRegularFile()
+    boolean isRegularFile(Path, LinkOption...)
       Tests whether a file in the provided Path is a regular file
-    delete()
+    void delete(Path)
       Deletes the file in the provided path
-    copy()
+    void deleteIfExists(Path)
+      Deletes the file in the provided path, if exists
+    Path copy(Path, Path, CopyOption...)
       Copy the file in the source path to the target path and returns Path
-    move()
+    Path move(Path, Path, CopyOption...)
       Copy the file in the source path to the target path and returns Path
-    exists()
-      Tests whether a file exists in the provided path
-    read()
-      Reads all the bytes from an input stream and returns a byte[]
-    readAllBytes()
+    boolean exists(Path, LinkOption...)
+      Tests whether a file exists in the provided path=
+    byte[] readAllBytes(Path)
       Reads all the bytes from a file and returns a byte[]
-    readAllLines()
+    List<String> readAllLines(Path, Charset?)
       Read all lines from a file and returns a List<String>
-    readAttributes()
+    <T extends BasicFileAttributes> T readAttributes(Path, Class<T>, LinkOption...)
       Reads a file's attributes as a bulk operation and returns a type extending BasicFileAttributes
-    lines()
+    Stream<String> lines(Path, Charset?)
       Read all lines from a file as a Stream
       Populates lazily as the stream is consumed
-    write()
+    Path write(Path, byte[], OpenOption...) | Path write(Path, Iterable<? extends Charsequence>, OpenOption...)
       Writes bytes to a file
-    writeString()
+    Path writeString(Path, CharSequence, OpenOption...)
       Write a CharSequence to a file
+    Stream<Path> walk(Path, FileVisitOption...)
+      Return a Stream that is lazily populated with Path by walking the file tree rooted at a given starting fil
+      The file tree is traversed depth-first, 
+        the elements in the stream are Path objects that are obtained as if by resolving the relative path against start
+    Path walkFileTree(Path, FileVisitor<? super Path>)
+      Walks a file tree rooted at a given starting file
+      The file tree traversal is depth-first with the given FileVisitor invoked for each file encountered. 
+      File tree traversal completes when all accessible files in the tree have been visited, 
+        or a visit method returns a result of TERMINATE
+      Can handle symbolic links that create cycles
+        If a symbolic link causes a loop in the file hierarchy, the method detects it and skips that part of the traversal
 
-java.nio.file.attribute.BasicFileAttributes
+java.nio.file.attribute.BasicFileAttributes interface
   Methods
-    creationTime()
+    FileTime creationTime()
       This method is used to get the creation time of the file
-    lastAccessTime()
+    FileTime lastAccessTime()
       This method is used to get the last access time of the file
-    lastModifiedTime()
+    FileTime lastModifiedTime()
       This method is used to get the last modified time of the file
-    size()
+    boolean long size()
       This method is used to get the size of the file
-    isDirectory()
+    boolean isDirectory()
       This method is used to check whether the file is a directory or not
-    isSymbolicLink()
+    boolean isSymbolicLink()
       This method is used to check whether the file is a symbolic link or not
-    isRegularFile()
+    boolean isRegularFile()
       This method is used to check whether the file is regular or not
-    isOther()
+    boolean isOther()
       This method is used to check whether the file is something other than a regular file, or directory, or symbolic link
 
 FileFilter interface
@@ -137,23 +139,32 @@ IO Streams
     InputStream interface
       Abstract class that represents an input stream of bytes
       Its main methods are
-        read()
-          Read bytes from the input stream
-          Accepts parameters to read just certain bytes
-        readAll()
+        int read()
+          Reads the next byte of data from the input stream. 
+          The value byte is returned as an int in the range 0 to 255. 
+          If no byte is available because the end of the stream has been reached, the value -1 is returned
+          This method blocks until input data is available, the end of the stream is detected, or an exception is thrown
+        int read(byte[], int?, int?)
+          Reads some number of bytes from the input stream and stores them into the input buffer array
+          The number of bytes actually read is returned as an integer
+          This method blocks until input data is available, the end of the stream is detected, or an exception is thrown
+        byte[] readAllBytes()
           Read all the bytes from the input stream
-        skip()
+          This method does not close the input stream,
+            when this stream reaches end of stream, 
+            further invocations of this method will return an empty byte array
+        long skip(long)
           Skips over and discards n bytes of data from this input stream
-        available()
+        int available()
           Returns an estimate of the number of bytes that can be read (or skipped over) from this input stream without blocking
-        mark()
+        void mark(int)
           Marks the current position in this input stream
           It may take an integer parameter that will work as a read-ahead limit,
             meaning thed reset method will reset the stream to this position
             as long as you don't read more than the read-ahead limit bytes after marking
-        reset()
+        void reset()
           Repositions this stream to the position at the time the mark method was last called on this input stream
-        close()
+        void close()
           Closes this input stream and releases any system resources associated
       Its main subclasses are
         FileInputStream
@@ -167,13 +178,14 @@ IO Streams
     OutputStream interface
       Abstract class that represents an output stream of bytes
       Its main methods are
-        write()
-          Writes bytes to the output stream
-          Accepts parameters to write just certain bytes
-        flush()
+        void write(int)
+          Writes the input byte to the output stream
+        void write(byte[], int?, int?)
+          Writes the specified number of bytes from the specified byte array to this output stream
+        void flush()
           Flushes this output stream and forces any buffered output bytes to be written out
           Bytes are not written if this method is not called
-        close()
+        void close()
           Closes this output stream and releases any system resources associated
           Some implementations call the flush() method when the close() method is called
       Its main subclasses are
@@ -191,40 +203,51 @@ IO Streams
     Reader abstract class
       Abstract class for reading character streams 
       Its main methods are
-        read()
+        int read()
+          Reads a single character and returns it as int
+          This method will block until a character is available, an I/O error occurs, or the end of the stream is reached
+        int read(char[], int?, int?)
           Reads characters from the stream, writes them to the argument char[]
             and returns the number of characters read, or -1 if the end of the stream has been reached
-        skip()
+          This method will block until some input is available, an I/O error occurs, or the end of the stream is reached
+        long skip(long)
           Skips the number of characters provided
-        ready()
+        boolean ready()
           Tells whether this stream is ready to be read
-        markSupported()
+        boolean markSupported()
           Tells whether this stream supports the mark()
-        mark()
+        void mark(int)
           Marks the present position in the stream
-        reset()
-          If the stream has been marked, then attempt to reposition it at the mark. 
+          Subsequent calls to reset() will attempt to reposition the stream to this point
+        void reset()
+          If the stream has been marked, then attempt to reposition it at the mark
           If the stream has not been marked, then attempt to reset it in some way appropriate to the particular stream, 
             for example by repositioning it to its starting point
-        close()    
+        void close()    
           Closes the stream and releases any system resources associated with it
-        transferTo()
+          Once the stream has been closed, further read(), ready(), mark(), reset(), or skip() invocations will throw an IOException
+          Closing a previously closed stream has no effect
+        long transferTo(Writer)
           Reads all characters from this reader and writes the characters to the given writer in the order that they are read
       Its main subclasses are 
         FileReader, StringReader
     Writer abstract class
       Abstract class for writing to character streams
       Its main methods are
-        write()
-          Write characters or strings to the stream
-        append()
+        void write(char[]) | void write(String)
+          Writes characters or strings to the stream
+        void write(char[], int, int) | void write(String, int, int)
+          Writes a portion of characters or a String to the stream
+        Writer append(CharSequence, int?, int?)
           Appends the specified character sequence to this writer
-        flush()
+        void flush()
           If the stream has saved any characters from the various write() methods in a buffer, 
             write them immediately to their intended destination
           Characters or strings are not written if this method is not called
-        close()
+        void close()
           Closes the stream, flushing it first
+          Once the stream has been closed, further write() or flush() invocations will cause an IOException to be thrown
+          Closing a previously closed stream has no effect
       Its main subclasses are 
         FileWriter, StringWriter, PrintWriter
   BufferedInputStream, BufferedOutputStream, BufferedReader and BufferedWriter
