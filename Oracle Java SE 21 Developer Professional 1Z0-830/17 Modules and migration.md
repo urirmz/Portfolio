@@ -31,6 +31,9 @@ Module types
     When a class or jar is loaded into the classpath but not the module pass, 
       it's automatically added to the unnamed module
     It's a catch all module to maintain backward compatibility with previously written Java code
+    Unnamed modules have access to all packages and can use any other modules, 
+      but they themselves are not treated as named modules and cannot provide reliable module encapsulation 
+      or export packages to other modules explicitly
 
 Module descriptor 
   Compiled version of a module declaration that's defined in a file named module-info.java

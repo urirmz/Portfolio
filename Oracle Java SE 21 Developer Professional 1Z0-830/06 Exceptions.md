@@ -38,6 +38,7 @@ Catch
             This is a common pitfall - the finally block can actually prevent exceptions from being propagated
       // If an exception occurs in this block, it will take precedence
     }
+  If it is not a try-with-resources, try block must always contain a catch or a finally block
 
 Autoclosable resources
   Try can also be used to autoclose an object that extends the interface Closeable or Autocloseable

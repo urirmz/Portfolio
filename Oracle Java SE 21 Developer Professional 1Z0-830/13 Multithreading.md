@@ -51,7 +51,7 @@ Thread class
       Sets the priority of this Thread
       Must be an int from 1 to 10, where higher means more priority
       New Threads take the same priority as its parents by default
-    void setDaemon()
+    void setDaemon(boolean)
       Sets the daemon flag of this Thread to true
       A daemon Thread is thread that does not prevent the JVM from exiting when the program finishes but the thread is still running
     ThreadGroup getThreadGroup()

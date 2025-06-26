@@ -116,12 +116,21 @@ java.time package
   TemporalUnit interface
     A unit of date-time, such as Days or Hours
     Contains the methods
-      getDuration(), isDurationEstimated(), isDateBased(), isTimeBased(), 
-      isSupportedBy(), addTo(), beetween(), toString()
+      Duration getDuration()
+      boolean isDurationEstimated()
+      boolean isDateBased()
+      boolean isTimeBased()
+      boolean isSupportedBy(Temporal)
+      <R extends Temporal> R addTo(R, long)
+      long beetween(Temporal, Temporal)
+      String toString()
   TemporalAmount interface
     Framework-level interface defining an amount of time, such as "6 hours", "8 days" or "2 years and 3 months"
     Contains the methods
-      get(), getUnits(), addTo(), subtractFrom()
+      long get(TemporalUnit)
+      List<TemporalUnit> getUnits()
+      Temporal addTo(Temporal)
+      Temporal subtractFrom(Temporal)
   ChronoUnit enum
     Implements TemporalUnit
     Contains a standard set of date periods units
