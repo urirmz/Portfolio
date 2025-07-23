@@ -2,21 +2,55 @@ Stack memory
   Part of the memory that holds primitive values
   It is accessed in an FIFO way. 
   Stores the values created by the methods, which are cleared once method execution finalizes
+  In Java 21, the default stack space size is 512KB, but it can be changed at the time of executing the program using command line option-Xss.
 
 Heap memory
   Part of the memory that holds reference values (like objects and arrays)
 
-Number abstract class
-  Is the superclass of platform classes representing numeric values that are convertible to the primitive types 
-    byte, double, float, int, long, and short
-  It's extended by Byte, Double, Float, Integer, Long and Short
-  Methods
-    int intValue()
-    long longValue()
-    float floatValue()
-    double doubleValue()
-    byte byteValue()
-    short shortValue()
+Primitive data types
+  Integral data types
+    byte, char, short, int, long
+  Floating point data types
+    float, double
+  Boolean data types
+    boolean
+Reference data types
+  Classes, records, enums, interfaces
+
+Default values
+  Java initialize instance or static fields to default values if you don't initialize them explicitly
+    char
+      '\u0000' (blank space character)
+    boolean
+      false
+    int
+      0
+    double
+      0.0
+    float
+      0.0f
+    long
+      0L
+    Any reference data type (Object, String, Boolean, Integer, etc)
+      null
+  Java doesn't initialize local variables if you don't initialize them explicitly,
+    and won't compile the code if you try to use such variable
+  Java doesn't have a problem if you have uninitialized variables as long as you don't try to use them
+
+Numeric literals
+  Java allows underscores between to digits in numeric literals
+    for example, 1000000 can also be written as 1_000_000 (but not as 1000000_)
+  A number without a decimal is considered an int
+  A number containing a decimal is considered a double
+  A long literal can be written by appending lowercase of uppercase L (example: 10L)
+  A float literal can be written by appending lowercase of uppercase f (example: 10.0f)
+  A char literal can be written enclosing single character between single quotes (example: 'a')
+  There are only two boolean literals: true and false
+  null is also a literal
+  Java allows numeric values to be written in hexadecimal, octal, as well as binary formats
+    in hexadecimal, value must start with 0x or 0X (example: 0XF)
+    in octal, value must start with 0 (example: 017)
+    in binary, value must start with 0b or 0B (example: 0B0001)
 
 Primitive casting
   Widening conversion
@@ -37,6 +71,45 @@ Primitive casting
       double to float, long, int, char, short, or byte
       long to int, char, short, or byte
       int to char, short, or byte
+    What will happen if the actual value held by the source variable is indeed larget than the size of the target variable?
+      The JVM will simple cut out the extra higher order bits that can fit in the target
+
+"final" references
+  When you make a reference variable final, 
+    it only means that the reference cannot refer to any other object,
+    but the contents of that object can still change
+    Example
+      final Data d = new Data();
+      d = new Data() // Won't compile because 'd' is final
+
+Wrapper classes
+  Are meant for the types that are used to represent numeric data
+    Byte, Short, Integer, Long, Float and Double
+  Extend from the common base class java.lang.Number
+  Ways to create wrapper classes:
+    - Using constructors (example: Integer i1 = new Integer(10);) (deprecated)
+    - Using valueOf static methods (example: Integer i1 = Integer.valueOf(10);)
+    - Through autoboxing (example: Integer i1 = 100;)
+        If you assign a primitive value to a wrapper variable, the compiler will
+        automatically box the primitive value into a wrapper object
+  Ways to convert wrapper objects to primitives:
+    - Using xxxValue() methods (example: int i2 = i1.intValue();)
+    - Using unboxing (example: int i2 = i1;)
+        If you assign a wrapper variable to a primitive variable, the compiler will
+        automatically extract the primitive value and assign it to the target
+    - Using parseXXX() methods (example: int i2 = Integer.parseInt("1");)
+
+java.lang.Number abstract class
+  Is the superclass of platform classes representing numeric values that are convertible to the primitive types
+  byte, double, float, int, long, and short
+  It's extended by Byte, Double, Float, Integer, Long and Short
+  Methods
+    int intValue()
+    long longValue()
+    float floatValue()
+    double doubleValue()
+    byte byteValue()
+    short shortValue()
 
 Integer Pool
   Caches integer values between -128 and 127 (inclusive). 
@@ -71,23 +144,6 @@ How arguments are passed to methods?
     However, if you reassign the copied reference inside the method to a new object, 
       this reassignment does not affect the original reference. 
       The original reference outside the method still points to the original object
-
-Default values
-  When declared locally, primitives doesn't have a default value: they must be explicitly initialized before used
-  However in instance or static fields, if no initialization value is provided, primitives will be initialized with default values
-    char
-      '\u0000'
-    boolean
-      false
-    int
-      0
-    double
-      0.0
-    float
-      0.0f
-    long 
-      0L
-  null is the default value of all reference data types (Object, String, Boolean, Integer, etc)
 
 4 types of references in Java
   Strong/Hard
@@ -125,6 +181,12 @@ Garbage Collector
     Re-assigning the reference variable
     Objects created within a method are eligible for garbage collection once the method completes
     Objects that are isolated and not referenced by any reachable objects
+    When a thread dies, objects created inside that thread are eligible for garbage collection,
+      unless the reference of that object is still held on by some other living thread
+  Island of isolation
+    The graph of interconnected objects not reachable from an active part of the program,
+      though they are reachable through each other
+    It is considered garbage
   System.gc()
     Suggests that the Java Virtual Machine expend effort toward recycling unused objects
       however does not guarantee the execution of cleaning the eligible object

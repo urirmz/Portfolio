@@ -19,9 +19,9 @@ Initialization blocks
       }
 
 Abstract classes
-  Cannot be instatiated, but instead define properties and methods that a group of classes inheriting from them must contain
+  Cannot be instantiated, but instead define properties and methods that a group of classes inheriting from them must contain
   Abstract class methods can be abstract methods or define a default implementation,
-    that can be later overriden in inherited classes with the @Override annotation
+    that can be later overridden in inherited classes with the @Override annotation
   Abstract class can be empty
   Child of abstract class must implement the parent's abstract method
   Abstract method must not be implemented in parent class
@@ -86,7 +86,7 @@ Interfaces
     Methods like "int toString()" and "String hashCode()" are not allowed, since they change the default return type
     Methods like "String toString(int value)" are allowed, since overloading with the same return type is permitted
     Methods like "int hashCode()" and "String toString()" are allowed, since they describe methods that exist in Object class, 
-      but the don't provide an implementation
+      but they don't provide an implementation
 
 instanceOf
   The instanceOf operator allows you to tell if an object is an instance, subclass, or implements the given class
@@ -102,20 +102,50 @@ Polymorphism
   Means that the same method signature from an interface or a class 
     can have different implementations thanks to inheritance and @Override annotation
 
-Method override
-  It happens when a method supersede another method with the same name, 
-    from an interface that is implementing or a parent class that is inheriting
-  Calling an overriding method in an object of this class will execute the class implementation, 
-    not its parent nor interface implementation
-
 Inheritance rules
-  When we create instance of a child class, its parent class is firstly created
-  Fields of the parent class are not overriden by the child class, only methods are overriden
+  When we create instance of a child class, its parent class is firstly created,
+    so a constructor of parent class is always called either explicitly or by the compiler
+  Fields of the parent class are not overridden by the child class, only methods are
   When a variable with reference type of Parent and Child object type is created, 
     parent instance fields and child methods are accessed
 
+Method varargs
+  Makes passing a variable number of arguments to a method a little easier
+  Within the method body, values are an array, however the caller does not need to create an array explicitly
+  Example
+    // Can be called as double average = average(1, 2, 3, 4);
+    public double average(int... values) { 
+      if (values.length == 0) {
+        return 0;
+      }
+      double sum = 0;
+      for (int i = 0; i < values.length; i++) {
+        sum += values[i];
+      }
+      return sum / values.length;
+    } 
+  Constraints
+    1. A method cannot have more than one varargs parameter
+    2. If a varargs parameter is present, must be the last parameter of the method parameters
+
+Method return types
+  Java does not allow a method to return a value of a different type than the one specified in its declaration,
+    however, there are three exceptions:
+      1. Numeric promotion (by returning a type that performs a widening conversion)
+      2. Autoboxing/unboxing (by returning primitive or wrapper types)
+      3. It is ok for a method to return a subtype of its declared type
+
+Method override
+  It happens when a method supersede another method with the same name,
+    from an interface that is implementing or a parent class that is inheriting
+  Calling an overriding method in an object of this class will execute the class implementation,
+    not its parent nor interface implementation
+
 Method overload
-  Allows you to create methods with the same signature, but that take different parameters and have different implementation
+  Method signature includes just the method name and its ordered list of parameter types, nothing else
+  A class cannot have more than one method with the same signature, 
+    but method overloading allows you to create methods with different signature
+  To the compiler, overloaded methods are just different methods
   Rules
     The method parameters must change: either the number, order or type of the parameters must be different in the two methods
       This is the most important rule. If not accomplished method overloading won't compile
@@ -131,6 +161,16 @@ Method overload
       Example: converting int to Integer
     4. Variable arguments
       Example: convertStrings(String ... abc) taking (String a, String b, String c)
+
+Method selection
+  1. Compilation error occurs only if the compiler is not able to successfully disambiguate a particular method call
+  2. If the compiler finds a method whose parameter list is an exact match to the arguments, it is selected
+  3. If more than one method is capable of accepting a call and none of them is an exact match, the most specific one is chosen
+     For reference type variables, most specific means the closer superclass
+     Since primitive type variables have no super/subclasses, Java define their relation as 
+      double > float > long > int > char and int > short > byte
+  4. Widening goes before autoboxing
+  5. Autoboxing goes before varargs 
 
 "final" modifier
   In a class, means that it cannot be extended by another class
@@ -191,6 +231,30 @@ Object class
 "native" keyword
   Is only applicable to methods. It indicates that the method is implemented in native code using JNI (Java Native Interface)
   The methods which are implemented in C, C++ are called native methods
+
+"this" keyword
+  Can't be used to name anything such as a variable or a method
+  The type of "this" is the class in which is used
+  Can't be modified
+  Can be copied to another variable
+  Can be used only within the context of an instance class (no static methods, variables or initializers)
+
+Scopes
+  Java has four visibility scopes, also known as lexical or static scopes, for variables:
+    Class, method, block, flow
+  Java has five lifespan scopes for variables:
+    Class, instance, method, for loop and block
+  Two variables can't be declared with the same name in the same visibility scope
+  Shadowing
+    Occurs when a variable declared in an inner scope has the same name as a variable declared in an outer scope 
+    The inner variable effectively "shadows" or hides the outer variable, making the outer variable temporarily inaccessible within that inner scope.
+  Hiding
+    Occurs when a subclass defines a static method with the same signature (name and parameter types) as a static method in its superclass. 
+    In this scenario, the static method in the subclass "hides" the static method in the superclass
+  Obscuring
+    Happens when the compiler is not able to determine what a simple name refers to
+    For example, if a class has a field whose name is the same as the name of the package,
+      and you try to use that simple name in a method
 
 Yoda conditions 
   A "safe" style of writing comparison expressions when programming in languages with C syntax, 

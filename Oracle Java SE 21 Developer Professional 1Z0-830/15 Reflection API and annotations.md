@@ -157,8 +157,11 @@ Annotation
       Indicates how long annotations with the annotated interface are to be retained
       Takes a value of the RetentionPolicy enum
       If not present, the retention policy defaults to RetentionPolicy.CLASS
-    @SupressWarnings
+    @SuppressWarnings
       It is used to inform the compiler to suppress specified compiler warnings
+    @SafeVarargs
+      Is a programmer assertion that the body of a method or constructor does not perform potentially unsafe operations on its varargs parameter. 
+      It is used to suppress unchecked warnings related to non-reifiable variable arity (vararg) types and parameterized array creation at call sites.
     @Override
       It is a marker annotation that can be used only on methods. A method annotated with @Override must override a method from a superclass
     @Deprecated

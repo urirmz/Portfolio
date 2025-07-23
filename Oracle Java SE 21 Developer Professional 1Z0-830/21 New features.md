@@ -196,9 +196,11 @@ Text blocks
 
 Local Variable Type Inference ("var" reserved type name)
   Detects automatically the datatype of a variable based on the surrounding context
+  Can only be used inside a method or constructor body
   A variable can be named var
-  Constraints
-    Cannot be used in method arguments, class field declarations, as a Generic type, or to declare lambda expressions
-    Requires explicit non-null initialization
-    Is not allowed in a compound declaration  
-      var sb1 = new StringBuffer(), sb2 = new StringBuffer(); // Incorrect
+    Constraints
+      Cannot be used in method arguments, class field declarations, as a Generic type, or to declare lambda expressions
+      Requires explicit non-null initialization
+      Java prohibits type inference if the type of the array is not specified explicitly in the array initializer
+      Is not allowed in a compound declaration  
+        var sb1 = new StringBuffer(), sb2 = new StringBuffer(); // Incorrect
