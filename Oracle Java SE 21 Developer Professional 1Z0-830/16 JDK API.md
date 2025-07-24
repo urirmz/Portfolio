@@ -2,10 +2,13 @@ StringBuilder and StringBuffer
   Strings are inmutable, so in order to change them, a new instance needs to be created,
     which is be traduced in high memory and efficiency cost
   AbstractStringBuilder
+    Implements CharSequence
     Saves a reference of each part of the string, along with its arrangement, 
       instead of creating a new whole string everytime a modification is needed, 
       saving both time and memory 
     Can be instantiated with an initial String, or a predefined capacity
+    In its methods, if the position argument is negative of greater than the length
+      of the existent string, the method will throw StringIndexOutOfBoundsException
     Main methods
       int compareTo(Stringbuilder)
       StringBuilder append(Object)
@@ -18,10 +21,14 @@ StringBuilder and StringBuffer
       int lastIndexOf(String)
       int indexOf(String)
       toString()
+      void setLength(int)
+        Truncates the existing string to the length passed as argument
   StringBuilder class
     Inherits from AbstractStringBuilder, and it is its default and most popular implementation
+    It is final
   StringBuffer class
     Inherits from AbstractStringBuilder
+    It is final
     It is thread safe, and works essentially the same as StringBuilder
     Its performance is lower compared to StringBuilder
 

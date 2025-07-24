@@ -111,6 +111,17 @@ java.lang.Number abstract class
     byte byteValue()
     short shortValue()
 
+
+String class
+  Extends Object and implements CharSequence
+  It is final, so it cannot be extended
+  Strings are immutable, so it is impossible to change the contents of a string once created
+  \u escape can be used to represent unicode characters, for example \u2665 represents a ♥
+  String.format() allows to created strings with special format,
+  substituting character sequences like %s for another string, or %d for integers
+  Formatter class can be used for advance control over string format, like locale-based formatting
+  Strings can be converted into their bytes representation using the getBytes() method
+
 Integer Pool
   Caches integer values between -128 and 127 (inclusive). 
   When an integer within this range is created using autoboxing or the valueOf() method, 
@@ -123,13 +134,6 @@ String pool
     If not found, it will be added to the pool (interned) and its reference will be returned
   String.intern() method will create a new copy of the String content and store it in the String pool
   Strings created with "new" will never be stored in the thread pool
-
-Strings
-  \u escape can be used to represent unicode characters, for example \u2665 represents a ♥
-  String.format() allows to created strings with special format, 
-    substituting character sequences like %s for another string, or %d for integers
-  Formatter class can be used for advance control over string format, like locale-based formatting
-  Strings can be converted into their bytes representation using the getBytes() method
 
 How arguments are passed to methods?
   Pass-by-value

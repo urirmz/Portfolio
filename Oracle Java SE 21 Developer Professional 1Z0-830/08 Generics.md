@@ -9,6 +9,15 @@ To use it in a method, the Generic type is declared after the access modifiers i
       }
     }
 
+Parametrized type information is NOT reifiable
+  This means it is not available at runtime, so there's no way the JVM can assert that 
+    an object is of a type that you claim to be of.
+    For example, if you define a variable of type List<Number>, 
+    the JVM will only know it is a variable of type List
+  For this reason, compiler does not allow casts involving generics that cannot guarantee itself
+    ArrayList<Number> numbers = new ArrayList<Number>();
+    ArrayList<Integer> integers = (ArrayList<Integer>) numbers; // Won't compile
+
 Generic types can also be used to specify any type that extends any interface or class in the following way
   private static <T extends Comparable<T>> T maxValue(T x, T y, T z) {
     T maxValue = x;

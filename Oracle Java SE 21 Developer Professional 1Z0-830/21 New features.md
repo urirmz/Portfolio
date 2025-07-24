@@ -75,16 +75,25 @@ Record
   Record class is simple data carrier
   Record classes are final by default, so they can't be extended
   Can implement the sealed interface
+  Records are serializable
   Has private final fields and public access methods named after their fields, for example "name()"
   Their default implementation of equals() and hashCode() guarantees that 
     two record objects are equal if they are of the same type and contain equal field values.
-    However, equals and hashCode methods can be overriden with custom logic
-  Can be created inside a method
+    However, equals and hashCode methods can be overridden with custom logic
   Can have static fields, but not instance fields
+  Can have static initializers, but not instance initializers
   Can have nested classes
   Can have methods or mutable fields (like lists) if desired
-  Can have a Constructor with or without parameters, but every created Constructor must explicitly declare the assignment of all record fields via
-    the main constructor
+  Records are allowed to define an accessor method explicitly, it must be public and not have a throws clause
+  Cannot have abstract or native methods
+  Canonical constructor
+    Canonical constructor must initialize all of the components fields of the record
+      using the parameters passed to it
+    It has no throws clause
+    Every record must have exactly one canonical constructor,
+      if not provided explicitly, the compiler will provide it
+  Every declared constructor in a record must explicitly declare the assignment of all record fields via
+    the canonical constructor constructor
       Example
         public  record RecordClass(String title) {
           public RecordClass() { 
@@ -94,18 +103,31 @@ Record
         }
   A new instance of a record can be created by using keyword new
     Example
-      public record Person (String name, String address) {}
+      public record Person(String name, String address) {}
       public static void createPersonRecord() {
         Person person = new Person("John", "Dubai");
         person.name(); // Getters are created automatically based on the name of the fields
       }
-  Can have initialization blocks declared with the name of the record class
+  Compact constructor
+    There is no formal parameter list in the definition, 
+      the compiler just copies it from the canonical constructor
+    We are not assigning the value of the variables to the record fields,
+      actually we are not allowed to set or modify the component fields explicitly anywhere in the compact constructor
+    Component fields are final and are set only once by the compiler at the end of the compact constructor
+      it inserts the assignment statements of the form this.<fieldname> = fieldname;
     Example
-      public  record RecordClass(String title) {
-        public RecordClass {
-            System.out.println(title);
+      public record Person(String name, String address) {
+        public Person {
+          if (name == null || name.isEmpty()) throw new Runtime Exception("Invalid name");
+          if (address == null || address.isEmpty()) address = "";
         }
       }
+  Record serialization
+  Serialization and deserialization of records cannot be customized with
+    writeObject(), readObject(), readObjectNoData(), writeExternal or readExternal()
+  During deserialization, individual record components are deserialized and then 
+    the canonical constructor of the record is invoked.
+    The serialVersionUID of a record class, which is OL by default, is not checked
 
 Sealed classes
   Allows classes and interfaces to define their permitted subtypes
@@ -189,10 +211,21 @@ New switch statements
 
 Text blocks
   Are used to declared multiline strings
-  Quotation marks inside text blocks don't need to be escaped unless they're part of a triple quote sequence
   Start with a “”” (three double-quote marks) followed by optional whitespaces and a newline
     String example = """
       Example text""";
+  Quotation marks inside text blocks don't need to be escaped unless they're part of a triple quote sequence
+  White space characters are used to indent the text block are removed from each line,
+    these white spaces are collectively called "incidental whitespace"
+  Any space after the incidental whitespace and before the first non-whitespace character
+    is considered essential whitespace and is kept
+  All trailing whitespace is removed and each line is terminated with a new line character
+  Escape characters can be used in a text block
+  If you want to break a long string into multiple lines of code without inserting a new line,
+    you can do so, by using a backslash at the end of the line
+      String example = """
+      Hello\
+      world!""";
 
 Local Variable Type Inference ("var" reserved type name)
   Detects automatically the datatype of a variable based on the surrounding context

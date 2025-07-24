@@ -4,27 +4,13 @@ POJO
 4 principles of OOP
   Abstraction, encapsulation, inheritance and polymorphism
     
-Initialization blocks
-  The code inside the initialization block of a class will be executed everytime a new instance of this class is created,
-    just before the constructor
-  The code inside the static initialization block of a class will be executed just once in the program life time, when the class is created
-    Example
-      public Class MyClass {
-          {
-            System.out.println("This is executed everytime a new instance of this class is created, just before the constructor")
-          }
-          static {
-            System.out.println("This is executed just once in the program life time, when the class is created")
-          }
-      }
-
 Abstract classes
   Cannot be instantiated, but instead define properties and methods that a group of classes inheriting from them must contain
   Abstract class methods can be abstract methods or define a default implementation,
     that can be later overridden in inherited classes with the @Override annotation
   Abstract class can be empty
   Child of abstract class must implement the parent's abstract method
-  Abstract method must not be implemented in parent class
+  Abstract methods must not be implemented in parent class
   Abstract class can be sealed
 
 Anonymous classes
@@ -45,6 +31,8 @@ Anonymous classes
       HelloWorld englishGreeting = new EnglishGreeting();
       englishGreeting.greet();
     }
+  They are never abstract, never sealed/non-sealed, 
+    have no explicitly defined constructor and can have no subclasses
 
 Nested classes
   Java allows a class to be defined within another class. These are called Nested Classes
@@ -62,11 +50,18 @@ Nested classes
       OuterClass.StaticNestedClass staticNested = new OuterClass.StaticNestedClass();
     Can access only the static members of its outer class and the static members in other nested classes in the same outer class,
       including variables with private modifier
-  Non-static nested classes 
+    Local records, enums and interfaces are always implicitly static
+  Non-static nested classes (inner classes)
     Require an instance of its outer class to be instantiated
       OuterClass.InnerClass inner = new OuterClass().new InnerClass();
     Can access all variables of its outer class and other nested classes in the same outer class, 
-      including variables with private, static and non static modifiers
+      including variables with private, static and non-static modifiers
+  
+Local classes
+  Nested classes defined within a local scope such as a method are called local classes
+  Cannot have any access modifier, cannot be explicitly defined as static, and cannot be sealed/non-sealed
+  Local records, enums and interfaces are always implicitly static
+  Local classes are not accessible from outside the context in which they are defined
 
 Interfaces
   Define a behavioral contract that tells methods and properties that any class implementing from it must have
@@ -74,11 +69,12 @@ Interfaces
   Interface methods are by default public and abstract, but can also contain a default implementation, 
     defined with the keyword "default"
   May contain static and private methods only if the method body is also defined.
-    This methods cannot be overriden
-  May contain static members, that are implicitly public and final
+    This methods cannot be overridden
+  May contain static fields, that are implicitly public and final
   Cannot contain instance members
-  Static and instance initiliazer blocks and constructors are not allowed in interfaces
+  Static and instance initializer blocks and constructors are not allowed in interfaces
   Classes are able to implement many interfaces, but may inherit only from one class
+  Interfaces can extend other interfaces
   Interfaces cannot be declared "final"
   Interfaces and Object class methods
     Interfaces can declare methods with the same signature as Object class methods and overload them, but never override them
@@ -101,6 +97,10 @@ instanceOf
 Polymorphism
   Means that the same method signature from an interface or a class 
     can have different implementations thanks to inheritance and @Override annotation
+  If the same object behaves differently, depending on which side of the object  you are
+    looking at, then that object is polymorphic
+  For example, if you have an Apple class that extends a fruit class, then an apple can
+    behave as an Apple as well as a Fruit
 
 Inheritance rules
   When we create instance of a child class, its parent class is firstly created,
@@ -108,6 +108,10 @@ Inheritance rules
   Fields of the parent class are not overridden by the child class, only methods are
   When a variable with reference type of Parent and Child object type is created, 
     parent instance fields and child methods are accessed
+  Even if a subclass does not inherit some of the instance variables of a superclass
+    (because of access modifiers), a subclass object still consumes the space required
+    to store all the instance variables of the super class
+  A subclass can only access its immediate super class's version of members using "super"
 
 Method varargs
   Makes passing a variable number of arguments to a method a little easier
@@ -136,10 +140,20 @@ Method return types
       3. It is ok for a method to return a subtype of its declared type
 
 Method override
-  It happens when a method supersede another method with the same name,
+  It happens when a method supersede another method with the same signature,
     from an interface that is implementing or a parent class that is inheriting
   Calling an overriding method in an object of this class will execute the class implementation,
     not its parent nor interface implementation
+  When a method is overridden by a subclass, it is impossible for any unrelated class
+    to execute the super class's version of that method, however the subclass can still
+    access to it using an implicit variable named "super"
+  An overriding method must not be less accessible than the overridden method,
+    however you can make the overriding method more accessible
+  The return type of the overriding method must either be the same type of the overriden method,
+    or it must be a subtype
+  The signature (name and parameter types list) must be an exact match of the overridden method, 
+    otherwise it will count as an overload instead of an override
+  An overriding method cannot put a wider checked exception (a superclass exception)
 
 Method overload
   Method signature includes just the method name and its ordered list of parameter types, nothing else
@@ -174,12 +188,18 @@ Method selection
 
 "final" modifier
   In a class, means that it cannot be extended by another class
-  In a property, means its value cannot be modified
-  In a method, means it cannot be overriden
+  In a method, means it cannot be overridden
+  In a property, means its value cannot be modified.
+    Java doesn't assign a default value to final class properties,
+    it forces the programmer to assign it
 
 "static" modifier
   A method or property with the "static" modifier belongs to the class, not to any object instance
-  A static member can be accesed in the way "${ClassName}.${member}", without creating an object of that class
+    "this" is not available inside static members, thus instance members cannot be accessed inside a static method 
+  A static member can be accessed in the way "${ClassName}.${member}", without creating an object of that class,
+    however Java allows a static member to be accessed through any instance of the class as well
+  Since static fields belong to a class and not to an instance, there is only one copy of them
+  Interfaces or Enums cannot be declared static, they are implicitly static
 
 static import
   Allows unqualified access to static members without inheriting from the type containing the static members
@@ -198,6 +218,8 @@ Encapsulation
     If no access modifier is specified, the default modifier is applied
   "protected" modifier 
     Allows access only to child classes, or to classes in same package
+    A subclass from a different package is allowed to access a protected member of the super-class only if the
+      subclass is involved in the implementation of the class of the reference that is trying to use to access that member
   "private" modifier 
     Allows access only to methods in the same class, or inner classes
   "public" modifier 
@@ -205,10 +227,17 @@ Encapsulation
   Access level can be extended by inherited classes (for example, overriding a private or protected method with a public one)
   Access level cannot be narrowed by inherited classes 
     (for example, it's not possible to override a public method with a private or protected one)
+  A top level class (class not defined inside any other class), can only have two types of access:
+    public and default
+  A nested class can use any of the four access modifiers
+  Illegal combinations of modifiers
+    Compiler generates the error "illegal combination of modifiers" for
+      - abstract private method(), since private methods can never be overriden
+      - abstract static
 
 Object class
   All classes inherit from Object class, which has a constructor and the methods: 
-    Class<?> getClass(), int hashCode(), boolean equals(), Object clone(), String toString(), 
+    Class<?> getClass(), int hashCode(), boolean equals(), Object clone(), String toString()
     void notify(), void notifyAll(), void wait() and void finalize() (deprecated)
   int hashCode() method
     Returns an integer value that represents the object, generated by a hashing algorithm
@@ -227,6 +256,18 @@ Object class
       The result of equals() must change only when the fields involved are changed
     Inequality with null
       For any object, a.equals(null) must return false
+    String toString() method
+      Returns a string representation of the object
+      By default, when not overridden, it returns a generic string consistent in 
+        the name of the class of the object, that at-sign character '@', 
+        and the unsigned hexadecimal representation of the hash code of the object
+
+Comparing objects
+  The relational operators != and == are good for comparing two values,
+    which can be primitive values or references to objects,
+    However, when used for comparing two references, these operators only compare
+    object identity, that means, they check whether both references are pointing to 
+    the same object or not
 
 "native" keyword
   Is only applicable to methods. It indicates that the method is implemented in native code using JNI (Java Native Interface)
@@ -247,7 +288,8 @@ Scopes
   Two variables can't be declared with the same name in the same visibility scope
   Shadowing
     Occurs when a variable declared in an inner scope has the same name as a variable declared in an outer scope 
-    The inner variable effectively "shadows" or hides the outer variable, making the outer variable temporarily inaccessible within that inner scope.
+    The inner variable effectively "shadows" or hides the outer variable, making the outer variable temporarily inaccessible within that inner scope
+    The keyword "this" is used to unshadow an instance variable, if it is shadowed by a local variable of the same name
   Hiding
     Occurs when a subclass defines a static method with the same signature (name and parameter types) as a static method in its superclass. 
     In this scenario, the static method in the subclass "hides" the static method in the superclass
@@ -255,6 +297,47 @@ Scopes
     Happens when the compiler is not able to determine what a simple name refers to
     For example, if a class has a field whose name is the same as the name of the package,
       and you try to use that simple name in a method
+
+When the JVM creates a new instance of a class, it does 4 things:
+  1. Checks whether class is already initialized. If not, loads and initializes class first.
+    If the class has a super-class, and the superclass hasn't been initialized, the JVM will initialize the super-class first
+  2. Allocates memory required to hold instance variables in heap space
+  3. Initialize instance variables to default values
+  4. Executes instance initializer and constructors
+
+Constructors
+  Their name is always exactly the same as the class and cannot have a return type,
+    however they can have an empty return statement
+  Every class must have at least one constructor, 
+    but the programmer doesn't necessarily have to provide one.
+    If the programmer doesn't provide one, compiler will add a default constructor
+  Default constructor
+    Takes no arguments and has no code in its body
+    If you write any constructor for the class, the compiler provide won't provide a default constructor
+  Overloading
+    Class can have any number of constructors as long as they have different signatures
+  Chaining
+    Constructors can invoke other constructors using the keyword "this" and arguments in parentheses
+    Only restriction is that call to other constructor must be the first line of code in a constructor,
+      this implies that a constructor can invoke another constructor only once at the most
+
+Initialization blocks
+  The code inside the initialization block of a class will be executed everytime a new instance of this class is created,
+    just before the constructor
+  JVM executes all the instance initializers of the class, but just one of its constructor
+  The code inside the static initialization block of a class will be executed just once in the program life time, when the class is created
+    Example
+      public Class MyClass {
+          {
+            System.out.println("This is executed everytime a new instance of this class is created, just before the constructor")
+          }
+          static {
+            System.out.println("This is executed just once in the program life time, when the class is created")
+          }
+      }
+  A class can have any number of static blocks, and they are executed in the order they appear in the class
+  The compiler expects an instance initializer to execute without throwing an exception,
+    if it can figure out that block of code will end up with an exception, it will refuse to compile
 
 Yoda conditions 
   A "safe" style of writing comparison expressions when programming in languages with C syntax, 
