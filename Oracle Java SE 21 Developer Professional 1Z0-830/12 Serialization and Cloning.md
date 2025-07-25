@@ -84,7 +84,7 @@ Cloning
   Object Object.clone()
     Is inherited from Object class, however it has the protected access modifier, 
       so it can only be called inside an class inheriting from Object
-    It returns a shallow copy of the object
+    It returns a shallow copy of the object containing all the fields with exactly the same values of this instance
   Cloneable interface
     Contains the clone() method, so it guarantees that any class implementing it can be cloned
     By default, super.clone() method will return shallow copies, so if a deep copy is needed,
