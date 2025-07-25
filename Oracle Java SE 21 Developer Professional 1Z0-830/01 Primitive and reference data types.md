@@ -111,7 +111,6 @@ java.lang.Number abstract class
     byte byteValue()
     short shortValue()
 
-
 String class
   Extends Object and implements CharSequence
   It is final, so it cannot be extended
@@ -148,6 +147,27 @@ How arguments are passed to methods?
     However, if you reassign the copied reference inside the method to a new object, 
       this reassignment does not affect the original reference. 
       The original reference outside the method still points to the original object
+
+Casting
+  Java language allows a programmer to use their knowledge about their program to assure
+    the compiler that a reference will point to an object of the correct type at runtime using the cast operator
+    Fruit fruit = new Mango();
+    Mango mango = (Mango) fruit;
+  Casting doesn't change the actual object, 
+    it only changes the perspective from which the compiler sees the object
+  Narrowing cast (down-casting)
+    When you cast a variable to a subtype
+    Always requires a check from the JVM
+  Widening cast (up-casting)
+    When you cast a variable to a supertype
+  It the JVM sees that a reference variable is being cast to type that does not satisfy the is-a test for the class
+    of the object to which the variable is referring, it will throw a ClassCastException
+  Since a class can extend one class and implement any number of Interfaces at the same time,
+    the compiler cannot rule out cases where a reference can never point to an instance of a class implementing an interface,
+    thus you can cast any type of reference to any interface.
+    Except when a variable is final and that class does not implement the interface given in the cast
+  Static members of a type shadow the static members with the same name in the super type,
+    casting a variable to the super type is how you unshadow those members
 
 4 types of references in Java
   Strong/Hard

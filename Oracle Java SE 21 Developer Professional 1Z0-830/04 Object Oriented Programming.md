@@ -65,16 +65,36 @@ Local classes
 
 Interfaces
   Define a behavioral contract that tells methods and properties that any class implementing from it must have
-  Interfaces declare methods, but they do not implement them. Implementing classes provide the actual implementation for interface methods.
-  Interface methods are by default public and abstract, but can also contain a default implementation, 
-    defined with the keyword "default"
-  May contain static and private methods only if the method body is also defined.
-    This methods cannot be overridden
-  May contain static fields, that are implicitly public and final
-  Cannot contain instance members
+  Interfaces declare methods, but they do not implement them. Implementing classes provide the actual implementation for interface methods
+  Interfaces are implicitly abstract
+  Everything declared inside an interface is implicitly public, 
+    except methods explicitly declared private
+  All variables defined in an interface are implicitly public, static and final.
+    Interfaces cannot contain instance variables
+  Interfaces can have four kinds of methods:
+    1. abstract methods
+      Contain the method declaration and no body
+      In an interface, the keyword "abstract" is optional for abstract methods,
+        since everything in an interface is implicitly public and abstract
+    2. default methods
+      Are a way for a interface to include a default implementation for a method,
+        this implementation can be overridden by classes implementing the interface
+      Are always public and cannot be marked as private or protected
+    3. static methods
+      Belong to the interface and not the class implementing the interface
+      Must be invoked directly from the interface, like static methods of a class,
+        as static methods of interfaces are not inherited,
+        so they can't be invoked from implementing classes or instances
+      Can be marked public or private but not protected
+      Must provide a body, they cannot be marked default
+    4. private methods
+      Are primarily used as helper methods for other default or static methods within the same interface
+      Can be static or non-static
+      Must provide a body, they cannot be abstract
+      Since are not visible outside the interface, cannot be marked as default
   Static and instance initializer blocks and constructors are not allowed in interfaces
   Classes are able to implement many interfaces, but may inherit only from one class
-  Interfaces can extend other interfaces
+  Interfaces cannot implement other interfaces, but they can extend other interfaces
   Interfaces cannot be declared "final"
   Interfaces and Object class methods
     Interfaces can declare methods with the same signature as Object class methods and overload them, but never override them
@@ -83,6 +103,12 @@ Interfaces
     Methods like "String toString(int value)" are allowed, since overloading with the same return type is permitted
     Methods like "int hashCode()" and "String toString()" are allowed, since they describe methods that exist in Object class, 
       but they don't provide an implementation
+  Marker interfaces
+    Interfaces that do not contain anything at all, their purpose is to tag a class with information
+  Multiple versions of a default method
+    Since it is possible for a class to implement multiple interfaces, it is possible
+      to inherit multiple implementations of a default method. When this happens,
+      the class is forced to provide an implementation of the method of its own to remove ambiguity in invocation
 
 instanceOf
   The instanceOf operator allows you to tell if an object is an instance, subclass, or implements the given class
@@ -112,6 +138,9 @@ Inheritance rules
     (because of access modifiers), a subclass object still consumes the space required
     to store all the instance variables of the super class
   A subclass can only access its immediate super class's version of members using "super"
+  Extends clause must appear before the implements clause
+  Java allows a class to inherit multiple fields with the same name as long as you don't try to use
+    those fields ambiguously
 
 Method varargs
   Makes passing a variable number of arguments to a method a little easier
@@ -149,7 +178,7 @@ Method override
     access to it using an implicit variable named "super"
   An overriding method must not be less accessible than the overridden method,
     however you can make the overriding method more accessible
-  The return type of the overriding method must either be the same type of the overriden method,
+  The return type of the overriding method must either be the same type of the overridden method,
     or it must be a subtype
   The signature (name and parameter types list) must be an exact match of the overridden method, 
     otherwise it will count as an overload instead of an override
@@ -293,6 +322,8 @@ Scopes
   Hiding
     Occurs when a subclass defines a static method with the same signature (name and parameter types) as a static method in its superclass. 
     In this scenario, the static method in the subclass "hides" the static method in the superclass
+    Hiding does not completely replace members with the subclass version, instead the subclass
+      now has two versions of the same features
   Obscuring
     Happens when the compiler is not able to determine what a simple name refers to
     For example, if a class has a field whose name is the same as the name of the package,

@@ -2,6 +2,7 @@ Enums are used to specify a list of non-infinite keywords that match a given typ
 Enums extend java.lang.Enum<T>, so they cannot extend any other class and they, but they receive additional functionality, 
   like implementing Comparable and Serializable, or auxiliary methods like String name() or int ordinal()
   however they cannot extend 
+Enums can't be generic (for example public enum Month<T> {} won't compile)
 Enums can implement interfaces
 Enums are either implicitly final or implicitly sealed
 

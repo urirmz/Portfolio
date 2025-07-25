@@ -36,6 +36,8 @@ Collection<T> interface
     It implements the Iterable interface, which contains the Iterator<T> iterator() method
   The main interfaces that inherit the Collection interface are
     List<T> interface
+      Keeps objects in an order. Objects can be accessed, inserted or removed using an index
+      Duplicate elements as well as nulls are permitted
       Contains the following methods
         T get(int)
         T set(int, T)
@@ -44,6 +46,11 @@ Collection<T> interface
         int lastIndexOf(Object)
         ListIterator<T> listIterator(int?)
         List<T> sublist(int, int)
+          It does not return a new independent list, but a view of the original list,
+            thus any change you do to the view is reflected in the original list.
+          Furthermore, all structural modifications must be done through the view,
+            if you try to modify the list and then try to use the list, results are unpredictable,
+            or may throw ConcurrentModificationException
         void replaceAll(UnaryOperator<T>)
         void sort(Comparator<? super E>)
       Its main implementations are
@@ -69,7 +76,7 @@ Collection<T> interface
         then checks for uniqueness based on the boolean equals() method
       Its main implementations are
         EnumSet<T>
-          uses an array of bits to store values ​​(bit vector), which allows for high compactness and efficiency
+          uses an array of bits to store values (bit vector), which allows for high compactness and efficiency
           The data structure stores objects of only one Enum type, which is specified when an EnumSet instance is created
           All basic operations are performed in constant time (O(1)) and are generally somewhat faster (though not guaranteed) than their       
             counterparts in the HashSet implementation
@@ -77,11 +84,15 @@ Collection<T> interface
         HashSet<T>
           Uses a HashMap behind scenes
         LinkedHashSet<T>
+          Implements SequencedSet, which extends SequencedCollection
           Has a predictable order, because each element has a reference to the previous and next element
           The elements of the list are ordered according to their insertion order,
             unlike LinkedHashMap, LinkedHashSet doesn't support access order
         TreeSet<T>
-          When an object is inserted, it's automatically sorted in descending order, following a tree structure
+          Implements SequencedSet, which extends SequencedCollection,
+            however since it orders automatically its elements, 
+            it throws UnsupportedOperationException from its addFirst and addLast methods
+          When an object is inserted, it's automatically sorted in natural order, following a tree structure
           Does not allow duplicates according to the comparator’s logic, for example
             if comparing two Person by age then name, and the comparator finds that the age is the same as the existing in the set 
             and also the name is the same, this element is considered a duplicate and is not added to the set
@@ -308,3 +319,17 @@ Iterator<T>, Iterable<T> and ListIterator<T> interfaces
       void add()
     The void remove() and void set(Object) methods are not defined in terms of the cursor position,
       they are defined to operate on the last element returned by a call to T next() or T previous()
+
+Spliterator<T> interface
+  Traverse and partition elements of a source
+  Main methods
+    boolean tryAdvance(Consumer<? super T>)
+      If a remaining element exists: performs the given action on it, returning true; 
+        else returns false
+    void forEachRemaining(Consumer<? super T>)
+      Performs the given action for each remaining element, sequentially in the current thread, 
+        until all elements have been processed or the action throws an exception.
+    Spliterator<T> trySplit()
+      Returns a Spliterator covering some portion of the elements, 
+        or null if this spliterator cannot be split
+      The exact division of elements is not always predictable

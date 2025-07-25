@@ -31,23 +31,40 @@ Catch
     } catch (OtherExceptionType exception) {
       // Optional code to run in case we want to target different types of exception
     } finally {
-      // Optional code to run after the try and catch block, wether an exception happens or not
-      // It is always executed, unless JVM exits
-      // If an exception occurs in the try block and no catch block is defined, 
-            the finally block's return statement will execute and override any return value or exception from the try block
-            This is a common pitfall - the finally block can actually prevent exceptions from being propagated
-      // If an exception occurs in this block, it will take precedence
+      // Optional code to run after the try and catch block, whether an exception happens or not
+      // If present, always executes irrespective of what happens in the try or catch blocks
+          Even if the try block throws an exception and there is no catch block to catch that exception, the JVM will execute the finally block.
+          It will throw the exception to the caller only after the finally block finishes. 
+          The only case where the finally block is not executed is if the code in the try or the catch block forces the JVM to shut down using a call to System.exit() method.
+      // If a return statement is called in the try or catch blocks and a finally block is present,
+          the JVM will hold the value of the return statement, execute the finally block and then return the value to the caller
+      // If the finally block is present and contains a return statement, 
+          values returned from try or catch blocks are always discarded
+      // Throwing an exception from the finally block also makes the JVM discard the exceptions thrown from the try or catch blocks, 
+          these other exceptions will be pushed to the suppressed array
     }
   If it is not a try-with-resources, try block must always contain a catch or a finally block
 
-Autoclosable resources
+Multi-catch
+  Can be used to execute the same block of code for different type of exceptions
+    try {
+      // Code that may cause an exception
+    } catch (ExceptionType1 | ExceptionType2 exception) {
+      // Code to run in case of exception
+    }
+  The type of the catch variable will be the most specific superclass of the exceptions listed
+  Any number of classes may be listed in a multi-catch clause but none of them may have an
+    ancestor/successor relationship between them
+
+Auto-closable resources
   Try can also be used to autoclose an object that extends the interface Closeable or Autocloseable
   Try with resource release resources when they are not needed implicitly
   Try-with-resources resource must either be a variable declaration 
     or an expression denoting a reference to a final or effectively final variable
+  The scope of the variables defined in the try-with-resources is the try block
   When an exception is thrown inside the try block, 
-    the resources are closed in inversed creation order, thus their close() methods invoked.
-    If exceptions occur inside the close() methods, they are added to the suppresed exceptions array in the main exception
+    the resources are closed in inverse creation order, thus their close() methods invoked.
+    If exceptions occur inside the close() methods, they are added to the suppressed exceptions array in the main exception
     After this, the catch block is executed
   Example
     try (Closable autoClosableElement = new Closable()) {
@@ -56,10 +73,24 @@ Autoclosable resources
       // Code to run in case of exception
     }
 
+Throwing exception
+  Throwing an exception abandons the current flow of execution and the rest of statements in that flow are not executed
+    the control leaves the current point of execution and goes to the point where the exception is handled
+
 "throws" keyword in methods declaration
-  The "throws Throwable" keyword can be added to a method signature to indicate that the method may cause an exception
-  Methods with the "throws" keyword must be sorrounded in try-catch block when invoked, 
-    or their invoker method have the "throws" keyword also 
+  The "throws Throwable" keyword can be added to a method signature or constructor
+    to indicate that the method may cause an exception
+  If a "throws" keyword is added to a constructor of a class, 
+    any subclass must add it too, since subclass instantiation always calls parent constructor
+  If a checked exception may be thrown inside the method, and it is not caught, the throws keyword is mandatory
+  Methods with the "throws" keyword must be surrounded in try-catch block when invoked, 
+    or their invoker method have the "throws" keyword also
+  It is ok to declare a super-class in the throws class 
+    and throw a subclass exception in the method, but the reverse is not acceptable
 
 Errors
   Error is thrown in the program when hardware problems occur
+
+Thread killing
+    If an exception is not handled and reaches the top of the call chain, 
+      the JVM will handle it by killing the thread in which it was thrown

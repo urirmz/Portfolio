@@ -15,6 +15,7 @@ Concepts
 Functional interface
   Interface that has a single abstract method declared in it,
     though it can contain any number of default and static methods
+  Represent a single function without maintaining a state
   Can be declared with the annotation @FunctionalInterface
   Must have exactly one abstract method and it should not be java.lang.Object methods
   Example
@@ -26,10 +27,15 @@ Functional interface
     }
 
 Lambda expressions
-  Also called anonymous function, its used to declare a function that not necessarily have a name,
+  Also called anonymous function, are used to declare a function that not necessarily have a name,
     and can be implement right in a method body
   It is used to implement the abstract method of any FunctionalInterface, in the way
     DistanceCalculator distanceCalculator = (city1, city2) -> city1.getLogitude() - city2.getLogitude();
+  You can use the var type for declaring parameters,
+    (var a ) -> a*a;
+  It is not possible to apply annotations on the parameters you specify the type
+  it is possible to access a local variable that is in scope of the lambda expressions, 
+    only if that variable is declared final or effectively final
 
 Method references
   Lambda functions and method references are interchangeable

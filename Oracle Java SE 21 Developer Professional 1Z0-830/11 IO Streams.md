@@ -7,8 +7,29 @@ String System.lineSeparator()
   Returns the default system-dependent line separator 
     Line separator is the character that tells the system to break the line (like \n)
 
+Current directory
+  The current directory is the path from where the program is run
+  When you execute a jar file, Windows sets the current directory 
+    as the directory in which the file is located.
+    On older versions, Windows sets the current directory to C:\windows\system32
+  All relative paths are resolved against the current directory by default  
+
+Dot (.) and dot-dot (..)
+  All directories in Unix and DOS based files systems automatically get two children named. and .., 
+    where . refers to the same directory as the one in which it exists 
+    and .. refers to its parent directory
+  Canonical path
+    Absolute path that doesn't contain redundant path fragments
+      for example, the canonical path of "C:\temp\a\..\test.txt" is "C:\temp\test.txt"
+    Some operating systems allow you to create symbolic links to other files,
+      a canonical path resolves such links as well
+
 java.io.File class
   Is an abstract representation of file and directory pathnames
+  It is immutable
+  The purpose of this class is not to operate the data inside the file, 
+    but to work with the file itself in a platform independent manner
+  Notably it does not have methods to copy and move a file
   Can be created in the way
     File file = new File("testDirectory"); // testDirectory is converted into an abstract pathname
   Contains the static fields
@@ -45,6 +66,8 @@ java.io.File class
     
 java.nio.Path interface
   An interface used to locate a file in a file system. It will typically represent a system dependent file path
+  There is no publicly accessible class that implements the Path interface, 
+    which means Path objects cannot be instantiated directly
   The only static method in Path interface is
     Path of(String...)
       Returns a Path by converting a path string, or a sequence of strings
@@ -56,12 +79,21 @@ java.nio.Path interface
     Path toAbsolutePath()
       Returns a Path object representing the absolute path of this path
     Path resolve(Path) | Path resolve(String)
-      Resolve the given path against this path, for example
+      If the argument to the resolve method is a relative path,
+        the resolve method assumes that the given path is relative to the path on which the method is called
+        therefore it just joins the two paths to create the actual path to the file, for example
         if this path represents “c/drive/files”, then invoking this method with the string “file1” will result in the Path “c/drive/files/file1”
+      If the argument is an absolute path, there is nothing to resolve and it returns the same path as argument
+    Path relativize(Path)
+      Finds a path to the given file relative fo the path on which it is invoked
 
 java.nio.Files class
   Consists exclusively of static methods that operate on files, directories, or other types of files
   The main methods of Files class are
+    InputStream Files.newInputStream(Path)
+      Opens a file, returning an input stream to read from the file
+    OutputStream Files.newOutputStream(Path)
+      Opens or creates a file, returning an output stream that may be used to write bytes to the file
     Path createFile(Path, FileAttribute...)
       Creates a new and empty file in the provided Path, failing if the file already exists, and returns Path
     Path createDirectory(Path, FileAttribute...)
@@ -142,7 +174,8 @@ IO Streams
         int read()
           Reads the next byte of data from the input stream. 
           The value byte is returned as an int in the range 0 to 255. 
-          If no byte is available because the end of the stream has been reached, the value -1 is returned
+          If no byte is available because the end of the stream has been reached, the value -1 is returned,
+            this is the reason why read() method returns an int instead of a byte: it need to represent negative values 
           This method blocks until input data is available, the end of the stream is detected, or an exception is thrown
         int read(byte[], int?, int?)
           Reads some number of bytes from the input stream and stores them into the input buffer array
