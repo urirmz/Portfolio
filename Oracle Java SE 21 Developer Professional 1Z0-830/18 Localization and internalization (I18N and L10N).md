@@ -1,4 +1,4 @@
-Internazionalization (I18N) 
+Internationalization (I18N) 
   Process of designing and developing your software or mobile application product, 
     so it can be adopted and localized to different cultures, regions and languages
   Instead of coding the software for each specific language, the internationalization process replaces that code with keys
@@ -32,7 +32,11 @@ java.util.Locale
       Describes a variant dialect of a language following the BCP 47 standard extensions
     extension
       Signals extensions to the local in addition to the language and region.
-        For example, what calendar to use when displaying dates, Gregorian, Arab, Japanese, etc
+        For example, what calendar to use when displaying dates, Gregorian, Arab, Japanese, etc.
+  static enum Locale.Category  
+    A Locale also captures a "category" that tells whether locale information is meant for UI or text output
+    Contains just two constants
+      DISPLAY, FORMAT
   Some static constants
     ENGLISH, FRENCH, GERMAN, ITALIAN, JAPANESE, KOREAN, CHINESE, SIMPLIFIED_CHINESE,
     TRADITIONAL_CHINESE, FRANCE, GERMANY, ITALY, JAPAN, KOREA, UK, US, CANADA
@@ -67,6 +71,7 @@ java.util.Locale
     Locale locale1 = new Locale("en"); // Creates local of english language
     Locale locale2 = new Locale("en", "US"); // Creates local of english language and US country
     Locale locale3 = new Locale("en", "US", "SiliconValley"); // Creates local of english language, US country and variant SiliconValley
+    Locale locale4 = new Locale.Builder.setLanguage("en").setRegion("US).build(); // Creates local of english language and US country
 
 Methods that return an array of available Locale
   Locale[] DateFormat.getAvailableLocales()
@@ -76,11 +81,57 @@ Methods that return an array of available Locale
   Locale[] Locale.getAvailableLocales()
     Returns all locales
 
+java.text.NumberFormat
+  Can format a number as per the local standard
+    int oneMillion = 1_000_000;
+    Locale frFR = Locale.of("fr", "FR");
+    System.out.println(NumberFormat.getCurrencyInstance(frFR).format(oneMillion)); // Prints $1 000 000,00 €
+    System.out.println(NumberFormat.getPercentageInstance(frFR).format(0.1)); // Prints 10 %
+    Locale enUs = Locale.of("en", "US");
+    System.out.println(NumberFormat.getCurrencyInstance(enUS).format(oneMillion)); // Prints $1,000,000.00
+    System.out.println(NumberFormat.getCurrencyInstance(enUS).format(0.1)); // Prints 10%
+  NumberFormat instance can also be used to parse a string containing number written in a locale specific manner
+    NumberFormat compactNumberFormat = NumberFormat.getCompactNumberInstance();
+    Long number = compactNumberFormat.parse("1M"); // Value is 1000000
+  The return type of the parse() method is Number, 
+    but it may return a Double or a Long,
+    depending on whether the string has digits after decimal or not
+  parse() method can potentially throw java.text.ParseException, which is a checked exception
+
+java.text.MessageFormat
+  Instead of hardcoding string concatenation, you can specify parameters in the message string,
+    and at runtime, format the string by passing values for those parameters
+  Example
+    String message = "On {0, date, short}, you balance was {1, number, currency}";
+    System.out.println(MessageFormat.format(message, new Object[] {new Date(), 100})); // Will print "On 10/05/24, your balance was $100.00"
+
 Resource bundles
   When a program needs a locale-specific resource, a String for example, 
     the program can load it from the resource bundle that is appropriate for the current user's locale. 
     In this way, program code is largely independent of the user's locale isolating most, if not all, 
     of the locale-specific information in resource bundles
+  Every ResourceBundle object has a name, 
+    and the program uses that name to load files that contain locale specific entries,
+    program can just lookup up a key in that resource bundle and use the returned locale specific value
+  The name of the keys in the properties file can be anything but the code must use the same key to loop the value
+  The backslashes "\" in properties files are required to escape the space character
+  Hierarchy
+    Resource bundles are hierarchical, meaning a resource bundle always has a parent bundle,
+      unless is at the top of the hierarchy, in which case is called "base bundle"
+    Hierarchy of a resource bundle is established using a set of resource bundles
+      whose name start with a common base name.
+      The remaining part of the name is created using the following attributes:
+      baseName + "_" + language + "_" + script + "_" + country + "_" + variant,
+    Examples:
+      app.properties // Base bundle
+      app_fr.properties
+      app_fr_CA.properties
+      app_fr_FR.properties
+    When a key is not found in a particular bundle, 
+      it is automatically searched for in the parent bundle,
+      when not found in any ancestor bundles, MissingResourceException is thrown
+    Search for a key only propagates up the hierarchy and never to a child or sibling
+    Creation of a ResourceBundle triggers the creation of its parent bundle as well
   java.util.ResourceBundle abstract class
     Contain locale-specific objects
     Main methods
@@ -96,8 +147,8 @@ Resource bundles
       ResourceBundle getBundle(String, Locale?, Module?)
         Gets a resource bundle using the specified base name, the default locale, and the caller module
         Takes a bundle based on default Locale, for example supposing specified base name is MyLabels,
-          if default Locale is ru_RU, it will load from MyLabels_ru_RU.prop,
-          if default Locale is en_US, it will load from MyLabels_en_US.prop,
+          if default Locale is ru_RU, it will load from MyLabels_ru_RU.properties,
+          if default Locale is en_US, it will load from MyLabels_en_US.properties,
           if default Locale file is not found, it will load by default from MyLabels.properties 
     Example
       In program

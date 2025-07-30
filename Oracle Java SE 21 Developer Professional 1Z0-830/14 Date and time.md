@@ -56,6 +56,13 @@ SimpleDateFormat
     Date parse(String, ParsePosition)
       Parses text from a string to produce a Date
 
+java.time.format package
+  Contains helper classes for converting date/time objects to strings 
+    and parsing strings into date/time classes
+  Most used classes
+    DateTimeFormatter
+    FormatStyle
+
 TimeZone class
   Represents a time zone offset, and also figures out daylight savings
   Main methods
@@ -65,17 +72,22 @@ TimeZone class
       Converts this TimeZone object to a ZoneId
 
 java.time package
-  All of the classes it contains are inmutable,
+  All of the classes it contains are immutable,
     operation methods like plus() and minus(), with(), etc. return a copy of the instance with modified value
   Uses nanosecond precision
+  All date/time classes implement java.util.Comparable interface, which has a compareTo method
   Machine scale time classes
     Instant class
-      Represent an instant on the time line
+      Represent an instant on the timeline from the computer's view of time, 
+        described in the number of milliseconds that have elapsed since Epoch
     Duration class
       Represent a duration of time
       Deals with days, hours, seconds, millis, nanos
+      Have a static constant named ZERO, which denotes a duration of zero amount
     Period interface
-      Similar to duration, but this class models a quantity or amount of time in terms of years, months and days
+      Similar to duration, but this class models a quantity or amount of time 
+        in terms of years, months and days
+      Have a static constant named ZERO, which denotes a period of zero amount
   Human scale time classes
     Classes represent a time without a time zone in the ISO-8601 calendar system
       LocalDate
@@ -96,23 +108,44 @@ java.time package
         of(String)
           Obtains an instance of {@code ZoneId} from an ID ensuring that the ID is valid and available for use
   Common method naming for java.time package classes (API naming convention)
-    get
+    now()
+      Returns an instance that represents the current date or time in the timeline
+        that the class is meant to represent
+    get()
       Gets the specified value with
-    with
+    with()
       Returns a copy of the object with the specified value changed. 
         For example such methods as withHour, withSecond that set the specific value to a particular time unit
-    plus/minus
-      Returns a copy of the object with the specified value added/subtracted
+    plus() | minus() | with() | truncatedTo()
+      Returns a copy of the object with the specified value added, subtracted, set or truncated to
     multipliedBy/dividedBy/negated
       Returns a copy of the object with the specified value multiplied/divided/negated
-    to
+    to()
       Converts the object to another related type
-    at
+    at()
       Returns a new object consisting of this date-time at the specified argument, acting as the builder pattern
-    of 
-      Factory methods that don't involve data conversion
-    from
-      Factory methods that do involve data conversion
+    of()
+      Lets you create an object for any date or time by passing individual components of a date/time
+        LocalDate localDate = LocalDate.of(2024, 1, 10); // January 10th, 2024
+      Indexing for month starts from 1 and uses a 24 hours clock for the hour parameter
+      Throws DateTimeException if the value passed from any field is out of range
+      Unlike with/minus/plus methods, they don't build "on top of" a previous object, instead
+        they create a new object instance ignoring the reference on which they were called
+    from()
+      Lets you create an object for any date or time by passing another TemporalAccessor object
+        LocalDataTime localDateTime = LocalDateTime.now();
+        LocalDate localDate = LocalDate.from(localDateTime);
+      Throws DateTimeException if is not possible to complete the information of the new object from the passed object
+        LocalData localDate = LocalDate.now();
+        LocalDateTime localDateTime = LocalDateTime.from(localDate); // Throws DateTimeException because localDate doesn't have the time information
+    parse(CharSequence) | parse(CharSequence, DateTimeFormatter)
+      Return an object of the respective class using information present a string argument
+    equals()  
+      All date/time classes override the equals method to compare the contents of two objects
+      They only return true if the argument is the same class and their contents match
+    isAfter() | isBefore()
+      Check if this date is after or before the date/time passed in the argument
+
   TemporalUnit interface
     A unit of date-time, such as Days or Hours
     Contains the methods

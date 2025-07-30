@@ -311,3 +311,31 @@ RandomAccessFile class
     Read/write ("rw") mode. 
     "rws" mode 
       The file is opened for read/write operations and every change to the file's data is immediately written to the physical device
+
+System.out
+  Is a final public static variable
+  Refers to java.io.PrintStream object that represents the console
+  Unlike other I/O stream class, methods of PrintStream do not throw any checked exception
+    to check if any error occurred, its checkError() method can be called
+System.in
+  Is a final public static variable
+  Refers to an InputStream object that is usually connected to keyboard input of the machine
+  Since methods of InputStream may throw IO exception, a call to read requires code to handle that exception
+  The keys pressed by the user do not flow until the user presses the enter key
+java.io.Console
+  Provides a higher level of abstraction for the console associated with the Java program
+  Console class does not have any public constructor. There is only one Console object for the entire application
+  Can be acquired by calling System.console(), that may return null if no console is associated with the JVM
+  Has the methods
+    Console format(String, Object...)
+      Writes a formatted string to the console output string using the specified format string and arguments
+    Console printf(String, Object...)
+      Convenience method that works exactly the same as format() method
+    String readLine()
+      Reads a single line of text from the console
+    String readLine(String, Object...)
+      Provides a formatted prompt, then reads a single line of text from the console
+    char[] readPassword(String, Object...)
+      Reads a password or passphrase from the console with echoing disabled
+    char[] readPassword(String, Object...)
+      Provides a formatted prompt, then reads a password or passphrase from the console with echoing disable

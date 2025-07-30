@@ -49,7 +49,7 @@ Thread class
       Starts the new Thread and runs the run() method inside it
     void setPriority(int)
       Sets the priority of this Thread
-      Must be an int from 1 to 10, where higher means more priority
+      Must be an int from Thread.MIN_PRIORITY to Thread.MAX_PRIORITY, or 1 to 10, where higher means more priority
       New Threads take the same priority as its parents by default
     void setDaemon(boolean)
       Sets the daemon flag of this Thread to true
@@ -75,6 +75,12 @@ Thread class
       Returns a reference to the thread where the method is running
     void sleep(long)
       Pauses the current Thread for the provided amount of milliseconds
+      A thread does not automatically unlock any monitor that might have locked when it goes to sleep
+    Builder.OfPlatform ofPlatform()
+      Returns a builder for creating a platform Thread or ThreadFactory 
+      that creates platform threads
+    Builder.OfVirtual ofVirtual()
+      Returns a builder for creating a virtual Thread or ThreadFactory that creates virtual threads.
 
 ThreadGroup class
   Represents a set of threads
@@ -93,6 +99,39 @@ ThreadGroup class
       Copies into the specified array every live thread in this thread group and its subgroups
     int activeCount()
       Returns an estimate of the number of live platform threads in this thread group and its subgroups
+
+java.lang.Thread.State enum
+  Represents the state of threads, which tell us what is currently going on
+  Contains the following members
+    NEW 
+      A new thread that has not yet started. 
+      It will not do anything until start() method is invoked
+    RUNNABLE
+      A thread becomes runnable one its start() method is invoked
+      This state means nothing is now holding back the thread from executing the run() method of its task
+    TERMINATED
+      A thread that has exited is in this state. 
+      This happens when a thread finished executing the run() method of its task
+      Once terminated, it cannot be restarted
+    BLOCKED
+      Thread is waiting for a monitor lock in this state
+      It becomes RUNNABLE again when it gets the lock it was trying to get
+    WAITING
+      Thread is waiting indefinitely for another thread to perform a particular action
+      Typically, it goes into this state when it calls wait() or join() methods
+      Thread becomes RUNNABLE again when the other thread calls notify() or notifyAll()
+    TIMED_WAITING
+      Thread is waiting for another thread to perform an action for up to a specified waiting time
+      Typically, it goes into this state when it calls wait() with a timeout argument
+        or when it calls the sleep() method
+      Thread becomes RUNNABLE again when the other thread calls notify() or notifyAll(),
+        or when the waiting time is over
+  When the thread is BLOCKED, WAITING and TIME_WAITING stat, the scheduler will not schedule to run,
+    which implies that a thread does not consume CPU cycles when it is in one of these states
+
+Busy-waiting
+  Happens when you try to check the value of a variable in a loop until it changes
+  It is a highly inefficient coordination technique, which cause the CPU usage to spike
 
 Exceptions in Threads
   If an exception is not caught, the thread is dead, if a handler for uncaught exceptions is installed, it will receive a callback
@@ -164,15 +203,19 @@ Synchronization
     Consists of a mutex, lock object, and condition variables
      Condition variable is a container of threads that are waiting for a certain condition
   "synchronized" keyword
+    Creates an intrinsic lock. Intrinsic locks are reentrant
     Doesn't allow more than one thread to access certain method simultaneously
     In a synchronized method, the monitor of the object used to invoke the method is captured
     In a static synchronized method, the monitor of the class is capture instead
     Constructors can't be synchronized
   "synchronized" blocks
+    Creates an intrinsic lock. Intrinsic locks are reentrant
     Allows to have synchronized access only for an specific part of a method
     To create synchronized block, pass the reference to an object where you want to capture monitor
     Only one thread may enter the block, and once it leaves, it will release monitor of this class and 
       the next thread will enter this block and will capture monitor of
+    Locking the same object again just increases the lock count of that object,
+      and the thread must unlock the monitor the same number of times to make it available
     Example
       public static void increment() {
         // Thread unsafe part
@@ -180,17 +223,18 @@ Synchronization
             count++; // Thread safe part
         }
       }
-  Object synchronization methods
-    Are inherited from the Object class and can only be called inside a synchronized block or method, otherwise
-      IllegalMonitorStateException will be thrown
-    void wait(long?) 
-      Causes the current thread to wait until it is awakened, typically by being notified or interrupted
-      When an object is in wait state, its monitor is released
-      Can accept a maximum wait time, after which execution will continue unconditionally
-    void notify()
-      Wakes up a single thread that is waiting on this object's monitor
-    void notifyAll()
-      Wakes up all threads that are waiting on this object's monitor
+
+Object synchronization methods
+  Are inherited from the Object class and can only be called inside a synchronized block or method, otherwise
+    IllegalMonitorStateException will be thrown
+  void wait(long?) 
+    Causes the current thread to wait until it is awakened, typically by being notified or interrupted
+    When an object is in wait state, its monitor is released
+    Can accept a maximum wait time, after which execution will continue unconditionally
+  void notify()
+    Wakes up a single thread that is waiting on this object's monitor
+  void notifyAll()
+    Wakes up all threads that are waiting on this object's monitor
 
 All inmutable objects are considered thread safe
 

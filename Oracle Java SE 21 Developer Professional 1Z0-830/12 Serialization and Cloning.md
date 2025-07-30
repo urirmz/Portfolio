@@ -23,9 +23,19 @@ Deserialization is the process of converting a stream of bytes into objects
         return null;
     }
 
+Serialization in different variable types
+  Al primitives are serializable
+  String and wrapper classes (Integer, Double, etc.) implement serializable
+  Static fields
+    Since static fields do not constitute the state of an object, 
+      they are never serialized
+
 Serializable interface
   It is a marker interface, does not provide any method
   Classes that do not implement this interface will not have any of their state serialized or deserialized 
+  Making a class serializable is important from security perspective,
+    because an object's state may comprise confidential information 
+    and the developer may not want it shared outside the JVM
   All subclasses of a serializable class are themselves serializable,
     unless it contains a non-serializable member object not marked as transient
     Example
@@ -35,6 +45,9 @@ Serializable interface
       class D extends C {} // Serializable
       class E extends C { B b = new B(); } // Not serializable
       class E extends C { transient B b = new B(); } // Serializable
+  If a serializable class extends a non-serializable class, then the no-args constructor
+    of the non-serializable super class will be executed.
+    This means that a non-serializable super class of a serializable class must have a no-args constructor
 
 serialVersionUID property
   The serialization runtime associates with each serializable class a version number, called a serialVersionUID, 
@@ -42,6 +55,8 @@ serialVersionUID property
     for that object that are compatible with respect to serialization. 
     If the receiver has loaded a class for the object that has a different serialVersionUID than that of the corresponding sender's class, 
     then deserialization will result in an InvalidClassException
+  It can have any access modifier, but private is recommended
+  It can be initialized to any value but conventionally it is set to 1L
 
 transient keyword
   Tells to ignore this property during serialization
@@ -50,6 +65,12 @@ transient keyword
   Another example of such a field is a reference to an instance of an object that does not require or cannot be serialized
   Deserializing an object with transient fields will create them with the default type value of the field,
     for example, a transient String field will be null when deserialized
+
+Customizing object serialization
+  In case you want to tweak the logic when writing or reading serialized objects, you can implement the methods
+  private void writeObject(ObjectOutputStream) throws IOException 
+  private void readObject(ObjectInputStream) throws IOException, ClassNotFoundException 
+  private void readObjectNoData() throws ObjectStreamException
 
 Externalizable interface
   Can be implement by a class, to add a custom logic when an object of the class is serialized or deserialized,
@@ -79,6 +100,15 @@ Externalizable interface
       The purpose of this method is to return a replacement object instead of the object on which it is called
       To use it in a class, it is needed to define a method with the following signature
         <ANY_ACCESS_MODIFIER> readResolve() throws ObjectStreamException;
+
+Record serialization
+  Records too can be serialized if it implements Serializable
+  Records are not allowed to customize their serialization
+  The canonical constructor of a record is invoked even when it is being created by deserialization
+
+Enum serialization
+  All enums extend java.lang.Enum which implements Serializable,
+    therefore all enums are serializable
 
 Cloning
   Object Object.clone()
