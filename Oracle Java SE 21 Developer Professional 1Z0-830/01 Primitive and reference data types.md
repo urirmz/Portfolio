@@ -38,8 +38,6 @@ Default values
   Java doesn't have a problem if you have uninitialized variables as long as you don't try to use them
 
 Numeric literals
-  Java allows underscores between to digits in numeric literals
-    for example, 1000000 can also be written as 1_000_000 (but not as 1000000_)
   A number without a decimal is considered an int
   A number containing a decimal is considered a double
   A long literal can be written by appending lowercase of uppercase L (example: 10L)
@@ -51,6 +49,18 @@ Numeric literals
     in hexadecimal, value must start with 0x or 0X (example: 0XF)
     in octal, value must start with 0 (example: 017)
     in binary, value must start with 0b or 0B (example: 0B0001)
+
+Underscores in numeric literals
+  Java allows underscores between to digits in numeric literals
+    for example, 1000000 can also be written as 1_000_000
+  Rules:
+    1. They can't be used at the beginning or the end of a number. Thus, _2 and 2_ are invalid.
+    2. They can't be used immediately before or after a decimal. Thus, 1_.2 and 1._2 are invalid.
+    3. They can't be used before an identifying suffix such as F, D or L Thus, 1.0_f is invalid.
+    4. They can't be used immediated before or after the binary or hexadecimal identifiers b and x. Thus, 0x_1 is invalid.
+    5. Although confusing, it is legal to have multiple underscores between two digits. For example: 
+      int a = 1____3; // Variable a has a value of 13
+      int b = 1_3; // Variable b has a value of 13
 
 Primitive casting
   Widening conversion

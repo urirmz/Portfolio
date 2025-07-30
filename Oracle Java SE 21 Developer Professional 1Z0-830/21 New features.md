@@ -89,6 +89,8 @@ Record
   Can have methods or mutable fields (like lists) if desired
   Records are allowed to define an accessor method explicitly, it must be public and not have a throws clause
   Cannot have abstract or native methods
+  A record may have at most one varargs component
+    Example: public record Journal(int id, String... values) {}
   Canonical constructor
     Canonical constructor must initialize all of the components fields of the record
       using the parameters passed to it
