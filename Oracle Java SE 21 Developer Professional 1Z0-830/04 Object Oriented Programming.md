@@ -3,6 +3,14 @@ POJO
     
 4 principles of OOP
   Abstraction, encapsulation, inheritance and polymorphism
+
+Class intialization
+  A class or interface type T will be initialized immediately before the first occurrence of any one of the following:
+    T is a class and an instance of T is created.
+    T is a class and a static method declared by T is invoked.
+    A static field declared by T is assigned.
+    A static field declared by T is used and the field is not a constant variable.
+    T is a top-level class, and an assert statement lexically nested within T is executed.
     
 Abstract classes
   Cannot be instantiated, but instead define properties and methods that a group of classes inheriting from them must contain
@@ -247,8 +255,8 @@ Encapsulation
     If no access modifier is specified, the default modifier is applied
   "protected" modifier 
     Allows access only to child classes, or to classes in same package
-    A subclass from a different package is allowed to access a protected member of the super-class only if the
-      subclass is involved in the implementation of the class of the reference that is trying to use to access that member
+    A subclass in another package which extends this class will only inherit this variable, 
+      but it cannot read or modify the value of a variable of a parent class instance
   "private" modifier 
     Allows access only to methods in the same class, or inner classes
   "public" modifier 
