@@ -363,12 +363,14 @@ Initialization blocks
             System.out.println("This is executed everytime a new instance of this class is created, just before the constructor")
           }
           static {
-            System.out.println("This is executed just once in the program life time, when the class is created")
+            System.out.println("This is executed just once in the program life-time, when the class is created")
           }
       }
   A class can have any number of static blocks, and they are executed in the order they appear in the class
   The compiler expects an instance initializer to execute without throwing an exception,
     if it can figure out that block of code will end up with an exception, it will refuse to compile
+    For this reason, initializer blocks may only throw RuntimeExceptions, and when this happens,
+    they will wrap the Exception into a ExceptionInInitializerError
 
 Yoda conditions 
   A "safe" style of writing comparison expressions when programming in languages with C syntax, 

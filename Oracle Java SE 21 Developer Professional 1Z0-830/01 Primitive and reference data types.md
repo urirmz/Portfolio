@@ -57,10 +57,20 @@ Underscores in numeric literals
     1. They can't be used at the beginning or the end of a number. Thus, _2 and 2_ are invalid.
     2. They can't be used immediately before or after a decimal. Thus, 1_.2 and 1._2 are invalid.
     3. They can't be used before an identifying suffix such as F, D or L Thus, 1.0_f is invalid.
-    4. They can't be used immediated before or after the binary or hexadecimal identifiers b and x. Thus, 0x_1 is invalid.
+    4. They can't be used immediate before or after the binary or hexadecimal identifiers b and x. Thus, 0x_1 is invalid.
     5. Although confusing, it is legal to have multiple underscores between two digits. For example: 
       int a = 1____3; // Variable a has a value of 13
       int b = 1_3; // Variable b has a value of 13
+
+Binary representation for integers
+  Java does not have a native unsigned int data type
+  All primitive integer types in Java (byte, short, int, and long) are signed, 
+    meaning they use one bit to represent the sign (positive or negative) and the remaining bits for the magnitude
+  Java uses two's complement representation for negative numbers,
+    which basic rule is to take the positive, invert all bits then adda binary one. For example:
+      int x = 3; // 0b0000_0000_0000_0011
+      int y = ~x; // 0b1111_1111_1111_1100 -> y = -4;
+      int z = ~y; // 0b0000_0000_0000_0011 -> z = 3;
 
 Primitive casting
   Widening conversion
