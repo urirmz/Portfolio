@@ -1,5 +1,5 @@
 StringBuilder and StringBuffer
-  Strings are inmutable, so in order to change them, a new instance needs to be created,
+  Strings are immutable, so in order to change them, a new instance needs to be created,
     which is be traduced in high memory and efficiency cost
   AbstractStringBuilder
     Implements CharSequence
@@ -10,7 +10,7 @@ StringBuilder and StringBuffer
     In its methods, if the position argument is negative of greater than the length
       of the existent string, the method will throw StringIndexOutOfBoundsException
     Main methods
-      int compareTo(Stringbuilder)
+      int compareTo(StringBuilder)
       StringBuilder append(Object)
       StringBuilder insert(int, Object)
       StringBuilder repeat(int, int)
@@ -22,7 +22,9 @@ StringBuilder and StringBuffer
       int indexOf(String)
       toString()
       void setLength(int)
-        Truncates the existing string to the length passed as argument
+        Sets the length for the existing string to the value passed as argument
+        If the new length is lesser than the current, it truncates the existing string
+        If the new length is higher than the current, empty characters ('\u0000') are appended so that length becomes the new length
   StringBuilder class
     Inherits from AbstractStringBuilder, and it is its default and most popular implementation
     It is final

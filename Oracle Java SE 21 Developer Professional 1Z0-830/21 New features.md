@@ -245,3 +245,8 @@ Local Variable Type Inference ("var" reserved type name)
       Java prohibits type inference if the type of the array is not specified explicitly in the array initializer
       Is not allowed in a compound declaration  
         var sb1 = new StringBuffer(), sb2 = new StringBuffer(); // Incorrect
+      When initializing arrays, it needs an explicit target-type, 
+        and variable name must not contain brackets as this would imply that the type of the elements of the array is var, which is not allowed.
+          var array2D[][] = { { 0, 1, 2, 4 }, { 5, 6 } }; // Won't compile
+          var array2D =  { { 0, 1, 2, 4 }, { 5, 6 } }; // Won't compile
+          var array2D = new int[][] { { 0, 1, 2, 4 }, { 5, 6 } }; // Will compile
