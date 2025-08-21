@@ -2,6 +2,7 @@ Can be used to create class or methods that will work for different types
 
 To use it in a method, the Generic type is declared after the access modifiers inside diamond brackets,
   the the generic type can used as if was any type
+  Generics cannot be used with primitive types, for example new ArrayList<int>(); won't compile
     The following example method is able to print arrays of any type
     private static <E> void printArray(E[] array) {
       for (E element : array) {

@@ -55,9 +55,14 @@ Collection<T> interface
         void sort(Comparator<? super E>)
       Its main implementations are
         ArrayList<T>
+          Extends java.util.AbstractList
           Uses an internal array to hold objects
           Default capacity is 10. When full, a new ArrayList is created and objects copied to the new list
           It's main advantage is that allows to return objects in O(1) when using an index
+          Implements RandomAccess, which is a marker interface used by List implementations to indicate that they 
+            support fast (generally constant time) random access. 
+            The primary purpose of this interface is to allow generic algorithms to alter their behavior 
+            to provide good performance when applied to either random or sequential access lists.
         Vector<T>
           Similar to an ArrayList, the only difference is that all vector methods are synchronized, meaning it is multithread safe
         Stack<T>

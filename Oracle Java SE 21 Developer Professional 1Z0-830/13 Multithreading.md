@@ -17,6 +17,13 @@ Thread lifecycle
 
 Runnable interface
   Is a functional interface with the declared method run()
+    void run()
+
+Callable<T> functional interface
+  Functional interface that takes a generic type and declares the call() method
+  Callable.call() allows you to declare checked exceptions while Runnable.run() does not
+  T call() throws Exception
+    Returns the generic type that this Callable is representing and its signature include a throw for an exepction
 
 How to start a Thread
   1. Create a class that implements the Runnable interface and pass it to a Thread object
@@ -53,7 +60,7 @@ Thread class
       New Threads take the same priority as its parents by default
     void setDaemon(boolean)
       Sets the daemon flag of this Thread to true
-      A daemon Thread is thread that does not prevent the JVM from exiting when the program finishes but the thread is still running
+      A daemon Thread is a thread that does not prevent the JVM from exiting when the program finishes but the thread is still running
     ThreadGroup getThreadGroup()
       Returns the current ThreadGroup
     void join(long)
@@ -81,6 +88,10 @@ Thread class
       that creates platform threads
     Builder.OfVirtual ofVirtual()
       Returns a builder for creating a virtual Thread or ThreadFactory that creates virtual threads.
+
+InterruptedException
+  Will be thrown only if the interrupted thread is blocked in an invocation of the sleep, wait, or of the join methods
+  Calling thread.interrupt() will just set the interrupted flag to true, not throw any Exception
 
 ThreadGroup class
   Represents a set of threads
@@ -311,11 +322,6 @@ Recommended number of Threads
     Number of threads = Number of available cores * (1 + Waiting time / Service time)
   With multiple executors
     Number of threads = Number of available cores * Target CPU utilization * (1 + Waiting time / Service time)
-
-Callable<T> functional interface
-  Functional interface that takes a generic type and declares the call() method
-  T call() 
-    Returns the generic type that this Callable is representing and its signature include a throw for an exepction
 
 Future<T> interface
   Represents the result of an asynchronous computation

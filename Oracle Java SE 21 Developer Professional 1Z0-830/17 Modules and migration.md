@@ -226,6 +226,7 @@ javac command options (for compiling modules)
 java commands options (for running modules)
   --module-path or -p
     Specify the module path, this is a list of one or more directories that contain our modules
+    You can specify exploded module directories, directories containing modular jars, or even specific modular or non-modular jars here 
     module-path and classpath are not mutually exclusive, it is possible and sometimes necessary
       to use both switch simultaneously in a command while compiling and executing a module
   --module or -m

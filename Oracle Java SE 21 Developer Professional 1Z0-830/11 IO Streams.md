@@ -86,6 +86,18 @@ java.nio.Path interface
       If the argument is an absolute path, there is nothing to resolve and it returns the same path as argument
     Path relativize(Path)
       Finds a path to the given file relative fo the path on which it is invoked
+    String Path.getName()
+      Returns a name element of this path as a Path object. 
+      Root (i.e. c:\ or /) is not included in path names.
+      The index parameter is the index of the name element to return. The element that is closest to the root in the directory hierarchy has index 0. The element that is farthest from the root has index count-1.
+      If you pass a negative index or a value greater than or equal to the number of elements, or this path has zero name elements, 
+        java.lang.IllegalArgumentException is thrown. It DOES NOT return null.
+      Thus, for example, If your Path is "c:\\code\\java\\PathTest.java",
+        p1.getRoot()  is c:\  (For Unix based environments, the root is usually / ).
+        p1.getName(0)  is code
+        p1.getName(1)  is java
+        p1.getName(2)  is PathTest.java
+        p1.getName(3)  will cause IllegalArgumentException to be thrown.
 
 java.nio.Files class
   Consists exclusively of static methods that operate on files, directories, or other types of files

@@ -11,7 +11,7 @@ Virtual threads
   Are backward compatible with platform thread APIs
   Are mutable during their lifecycle, just like platform threads
   Are unbounded by default and their number is limited only by available memory, unlike traditional thread pools
-  Are always daemon threads
+  Are always daemon threads, calling setDaemon(false) on a virtual thread throws a java.lang.IllegalArgumentException
   Cannot be unmounted when it is executing a synchronized block, 
     this behavior is called "pinning"
   Native code that relies on thread-local storage may not work properly with virtual threads

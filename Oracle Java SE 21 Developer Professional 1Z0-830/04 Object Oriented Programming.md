@@ -11,6 +11,8 @@ Class intialization
     A static field declared by T is assigned.
     A static field declared by T is used and the field is not a constant variable.
     T is a top-level class, and an assert statement lexically nested within T is executed.
+    A reference to a static field (8.3.1.1) causes initialization of only the class or interface that actually declares it, 
+      even though it might be referred to through the name of a subclass, a subinterface, or a class that implements an interface
     
 Abstract classes
   Cannot be instantiated, but instead define properties and methods that a group of classes inheriting from them must contain
@@ -179,6 +181,8 @@ Method return types
 Method override
   It happens when a method supersede another method with the same signature,
     from an interface that is implementing or a parent class that is inheriting
+  The signature (name and parameter types list) must be an exact match of the overridden method, 
+    otherwise it will count as an overload instead of an override
   Calling an overriding method in an object of this class will execute the class implementation,
     not its parent nor interface implementation
   When a method is overridden by a subclass, it is impossible for any unrelated class
@@ -188,8 +192,8 @@ Method override
     however you can make the overriding method more accessible
   The return type of the overriding method must either be the same type of the overridden method,
     or it must be a subtype
-  The signature (name and parameter types list) must be an exact match of the overridden method, 
-    otherwise it will count as an overload instead of an override
+  The overriding method is allowed to erase the generic type specification but 
+    is not allowed to add a generic type specification if the  overridden method does not have it
   An overriding method cannot put a wider checked exception (a superclass exception)
 
 Method overload
