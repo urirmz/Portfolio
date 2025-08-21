@@ -13,17 +13,24 @@ Concepts
     The evaluation of an expression is delayed until its value is needed
 
 Functional interface
-  Interface that has a single abstract method declared in it,
+  Interface that has exactly one single abstract method declared in it,
     though it can contain any number of default and static methods
+    Object class's methods (i.e. equals and toString) do not count towards the number of abstract methods
   Represent a single function without maintaining a state
-  Can be declared with the annotation @FunctionalInterface
-  Must have exactly one abstract method and it should not be java.lang.Object methods
-  Example
+  Can be declared with the annotation @FunctionalInterface, 
+    although it is not necessary: any interface with exactly one abstract method not counting Object methods is a valid Functional Interface
+  Examples
     @FunctionalInterface
-    public interface DistanceCalculator() {
+    public interface DistanceCalculator {
       double calculateDistance(City1 city1, City2 city2);
       default void someDefaultMethod() {}
       static void someStatictMethod() {}
+      String toString();
+      boolean equals(Object o);
+    }
+    @FunctionalInterface
+    public interface Convertible {
+      Object convert();
     }
 
 Lambda expressions

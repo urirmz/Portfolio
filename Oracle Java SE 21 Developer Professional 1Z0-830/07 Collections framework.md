@@ -149,6 +149,14 @@ Collection<T> interface
           boolean removeFirstOcurrence(Object)
           boolean removeLastOcurrence(Object)
 
+FIFO and LIFO access
+  Queue is a FIFO structure (First In First Out i.e. add to the end and remove from the front), it has methods 
+    offer(e)/add(e)(for adding an element to the end or tail) and 
+    poll()/remove()(for removing an element from the front or head) for this purpose
+    Note that offer and add are similar while poll and remove are similar.
+  Stack is a LIFO structure (Last In First Out i.e. add to the front and remove from the front), it provides 
+    methods push(e) (which adds to the front) and pop() (which removes from the front) for this purpose
+
 Map<K, V> interface
   Map doesn't belong to Collection interface because some methods of the Collection interface cannot be used in Map
   Allows key-value pairs, called entries, where all keys must be unique
@@ -247,15 +255,17 @@ List.of() vs Arrays.asList() vs Collections.unmodifiableList()
       You can, however, change the contents of the objects in the list (if the objects are not immutable)
     Arrays.asList()
       Is not completely immutable, it does not have a restriction on set()
-      However, it is fixed length, so add() and remove() will throw an UnsupportedOperationException
+      Returns an unmodifiable list that is backed by the array that is used to create the list. 
+        Therefore, modifications made to the underlying array will be visible in the list.
+      AS it is backed by an array, it is fixed length, so add() and remove() will throw an UnsupportedOperationException
   Null hostility
     listOf.contains(null);  // NullPointerException
-    unmodif.contains(null); // allowed
+    unmodifiableList.contains(null); // allowed
     asList.contains(null);  // allowed
 
 Comparator<T> and Comparable<T> interfaces
-  Comparation methods are used when sorting a collection of objects
-  They return negative, positive or 0 values based on the result of the comparation
+  Comparison methods are used when sorting a collection of objects
+  They return negative, positive or 0 values based on the result of the comparison
     Example
       Supposing ascending order: Objects.compare(comparable1, comparable2, Comparator.naturalOrder()) returns ->
         -1 // comparable1 goes before comparable2
@@ -264,7 +274,7 @@ Comparator<T> and Comparable<T> interfaces
   Comparable<T> interface
     Declares the int compareTo(object) method
   Comparator interface  
-    Contains the int compare(object1, object2) method, which uses the boolean boolean Object.equals() method for comparation
+    Contains the int compare(object1, object2) method, which uses the boolean boolean Object.equals() method for comparison
   Comparation can be performed in one of the following ways
     Creating a lambda expression
     Creating an anonymous class implementing comparator interface

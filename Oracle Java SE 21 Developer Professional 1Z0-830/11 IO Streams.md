@@ -241,7 +241,7 @@ IO Streams
         ObjectOutputStream
           Converts java objects into a stream of bytes (used to serialize)
         DataOutputStream
-          Converts primitive data types into a bytestream
+          Converts primitive data types into a bytes stream
   Character streams
     Read character by character, so is useful to process text files
     Character size is typically 16 bits

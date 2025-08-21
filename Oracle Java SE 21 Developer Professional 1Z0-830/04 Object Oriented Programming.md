@@ -4,7 +4,7 @@ POJO
 4 principles of OOP
   Abstraction, encapsulation, inheritance and polymorphism
 
-Class intialization
+Class initialization
   A class or interface type T will be initialized immediately before the first occurrence of any one of the following:
     T is a class and an instance of T is created.
     T is a class and a static method declared by T is invoked.
@@ -134,9 +134,10 @@ Polymorphism
   Means that the same method signature from an interface or a class 
     can have different implementations thanks to inheritance and @Override annotation
   If the same object behaves differently, depending on which side of the object  you are
-    looking at, then that object is polymorphic
-  For example, if you have an Apple class that extends a fruit class, then an apple can
+    looking at, then that object is polymorphic.
+    For example, if you have an Apple class that extends a fruit class, then an apple can
     behave as an Apple as well as a Fruit
+  A virtual call means that the call is bound to a method at run time and not at compile time
 
 Inheritance rules
   When we create instance of a child class, its parent class is firstly created,
