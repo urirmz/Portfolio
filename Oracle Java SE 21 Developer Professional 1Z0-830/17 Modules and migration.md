@@ -50,6 +50,7 @@ Module descriptor
   Compiled version of a module declaration that's defined in a file named module-info.java
   The name of module in the descriptor must be the same as name of its root folder
   module-info.java file cannot be empty
+  module-info.java is compiled into module-info.class by the compiler
 
 Module definition vs Source module definition
   If the directory contains the source code, it is called source module definition

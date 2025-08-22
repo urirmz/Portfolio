@@ -196,6 +196,24 @@ Primitive streams
     IntStream
     DoubleStream
     LongStream
+  Modified terminal methods return types
+    sum()
+      Returns an primitve value, type int for IntStream, double for DoubleStream and long for LongStream
+      If stream is empty, returns 0
+    reduce(int | double | long, IntBinaryOperator | DoubleBinaryOperator, LongBinaryOperator)
+      Returns an primitve value, type int for IntStream, double for DoubleStream and long for LongStream
+      If stream is empty, returns the first argument
+    reduce(IntBinaryOperator | DoubleBinaryOperator, LongBinaryOperator)
+      Returns an Optional with a primitive value, type OptionalInt for IntStream, 
+        OptionalDouble for DoubleStream and OptionalDouble for LongStream
+    min()
+      Returns an Optional with a primitive value, type OptionalInt for IntStream, 
+        OptionalDouble for DoubleStream and OptionalDouble for LongStream
+    max()
+      Returns an Optional with a primitive value, type OptionalInt for IntStream, 
+        OptionalDouble for DoubleStream and OptionalDouble for LongStream
+    average()
+      Always returns an OptionalDouble
   Besides the static of() and generate() methods that can be used to create any of this primitive streams,
     IntStream and LongStream have two additional static methods for creation:
     IntStream range(int, int) and LongStream range(int, int)
