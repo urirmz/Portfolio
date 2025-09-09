@@ -22,6 +22,7 @@ Abstract classes
   Child of abstract class must implement the parent's abstract method
   Abstract methods must not be implemented in parent class
   Abstract class can be sealed
+  Only abstract classes or interfaces can have abstract methods
 
 Anonymous classes
   Can be created inside a method declaration to initialize an object, 
@@ -86,6 +87,7 @@ Interfaces
       Contain the method declaration and no body
       In an interface, the keyword "abstract" is optional for abstract methods,
         since everything in an interface is implicitly public and abstract
+      Only abstract classes or interfaces can have abstract methods
     2. default methods
       Are a way for a interface to include a default implementation for a method,
         this implementation can be overridden by classes implementing the interface

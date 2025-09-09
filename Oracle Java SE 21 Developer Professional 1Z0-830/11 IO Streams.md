@@ -86,6 +86,8 @@ java.nio.Path interface
       If the argument is an absolute path, there is nothing to resolve and it returns the same path as argument
     Path relativize(Path)
       Finds a path to the given file relative fo the path on which it is invoked
+      If one path has a root (for example, if a path starts with a // or c:) and the other does not, 
+        relativize cannot work and it will throw an IllegalArgumentException.
     String Path.getName()
       Returns a name element of this path as a Path object. 
       Root (i.e. c:\ or /) is not included in path names.

@@ -106,8 +106,15 @@ What happens if a module descriptor contains both "opens" and "opens ... to ..."
   The general directive "opens" takes precedence, and the package becomes open to all modules, 
     not just modules described by "opens ... to ..." directive
 
+Modifying module exports from command line
+  Although not recommended, it is possible to customize what packages a module exports from the command line.
+  If a module does not export a package, it can still be exported using --add-exports command line option.
+  If a module wants to read another module but only temporarily, it can request such access using command line options.
+
 Services
-  A service is an interface that outlines the functionality that it provides through its methods
+  A service is an interface or class that outlines the functionality that it provides through its methods
+  Ideally, a Service should be an interface or an abstract class but there is no such technical restriction.
+    The service must be a class type, an interface type, or an annotation type. It is a compile-time error if a provides directive specifies an enum type as the service.
   Large projects usually adopt a convention such as appending the word "Service" to the name of services
   Steps to make an application consume a service
     1. Tie the service and the service provider together in the module-info that contains the service provider,
@@ -142,6 +149,8 @@ Services
       2. Service provider may have a public static method named provider() that takes no arguments
         and has a return type assignable to the service interface or class. 
         This method will be invoked whenever an instance of the service provider is needed
+        If the Service provider class has a provider method, 
+          the provider class is not required to inherit from the provided service class
       3. If the service provider does not have a provider method, then 
         it must have a public no-args constructor, that will be used to instantiate the service provider whenever needed
 

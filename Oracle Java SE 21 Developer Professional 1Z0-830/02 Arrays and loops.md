@@ -9,6 +9,9 @@ Arrays
   public clone() method
     All array classes have this method
     Creates a shallow copy of the array
+  public boolean equals() 
+    Check whether the two references point to the same object or not. 
+    In other words, equals method of array classes returns the same result as ==
 
 Labels
   Labels are declared in the way "${label}: ${loop}"

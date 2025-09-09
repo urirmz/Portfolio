@@ -67,7 +67,9 @@ Thread class
       Joins the current thread to its parent thread, finishing this one
       Can be used with a delay
     void interrupt()
-      Sets the interrupted property to true    
+      Sets the interrupted property to true  
+      When you interrupt a thread that is sleeping (or waiting on a monitor), that thread gets an InterruptedException. 
+      When you interrupt a RUNNABLE thread, it does not get any exception but its interrupted status is set to true.
     boolean isInterrupted()
       Tests whether this thread has been interrupted
     void yield()
