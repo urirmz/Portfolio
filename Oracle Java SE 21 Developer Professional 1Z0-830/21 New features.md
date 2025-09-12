@@ -14,6 +14,8 @@ Virtual threads
   Are always daemon threads, calling setDaemon(false) on a virtual thread throws a java.lang.IllegalArgumentException
   Cannot be unmounted when it is executing a synchronized block, 
     this behavior is called "pinning"
+  A virtual thread always has the same priority and it is set to Thread.NORM_PRIORITY. 
+    A call to change its priority using the setPriority(int ) method is ignored (no exception is thrown)
   Native code that relies on thread-local storage may not work properly with virtual threads
     because they frequently switch carrier threads
   Ways to create virtual threads

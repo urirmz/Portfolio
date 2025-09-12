@@ -601,6 +601,11 @@ java.util.concurrent.locks package (Lock API)
     Maintains a pair of associated locks, one for read-only operations and one for writing
     The read lock may be held simultaneously by multiple reader threads, so long as there are no writers
     The write lock is exclusive
+    Lock downgrading is possible
+      A thread that has the write lock may acquire a read lock without releasing the write lock. 
+      However doing so, will not automatically release the write lock. It would have to release both the locks separately.
+    Lock upgrading is not allowed
+      A thread that already has the read lock will not be able to acquire the write lock unless it releases the read lock first
       Contains methods  
         readLock()
           Returns the lock used for reading

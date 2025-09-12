@@ -386,6 +386,14 @@ Initialization blocks
     if it can figure out that block of code will end up with an exception, it will refuse to compile
     For this reason, initializer blocks may only throw RuntimeExceptions, and when this happens,
     they will wrap the Exception into a ExceptionInInitializerError
+  Order of execution when an object is created
+    1. A static block is invoked as soon as a class is loaded by the JVM. 
+      The JVM loads a class when it first encounters its use in the code. 
+      A static block is executed only once (irrespective of how many instances of that class are created)
+    2. Static blocks are executed AFTER the static fields of the class are initialized to their default values.
+    3. An instance block is executed every time a new instance of that class is created.
+    4. Instance blocks are executed AFTER the instance fields of the class are initialized to their default values 
+      but BEFORE the constructor of that class is executed.
 
 Yoda conditions 
   A "safe" style of writing comparison expressions when programming in languages with C syntax, 

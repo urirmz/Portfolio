@@ -55,6 +55,7 @@ Multi-catch
   The type of the catch variable will be the most specific superclass of the exceptions listed
   Any number of classes may be listed in a multi-catch clause but none of them may have an
     ancestor/successor relationship between them
+  The exception parameter in a multi-catch clause is implicitly final, so unlike single catch it can't be reassigned
 
 Auto-closable resources
   Try can also be used to autoclose an object that extends the interface Closeable or Autocloseable
