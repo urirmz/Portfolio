@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AWS SAA-C03 Study Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:         #F0F4F8;
+    --surface:    #FFFFFF;
+    --navy:       #1B2A4A;
+    --navy-light: #243660;
+    --orange:     #FF9900;
+    --orange-dim: #FFF3D6;
+    --green:      #1E9B6A;
+    --green-dim:  #D4F0E6;
+    --red-dim:    #FDECEA;
+    --red:        #C0392B;
+    --muted:      #6B7A99;
+    --border:     #DDE3ED;
+    --text:       #1B2A4A;
+    --text-light: #4A5568;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    max-width: 860px;
+    margin: 0 auto 48px;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .cert-badge {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    background: var(--orange);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--navy);
+    text-align: center;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+  }
+  .header-text h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .header-text p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .meta-pill span { color: var(--orange); font-weight: 700; }
+
+  /* ── DOMAIN BAR ── */
+  .domain-section {
+    max-width: 860px;
+    margin: 0 auto 40px;
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 24px;
+  }
+  .domain-section h2 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .domain-bar {
+    display: flex;
+    height: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .domain-bar div { transition: width 0.3s; }
+  .d1 { background: #4C72B8; flex: 30; }
+  .d2 { background: #2ECC71; flex: 26; }
+  .d3 { background: #9B59B6; flex: 24; }
+  .d4 { background: var(--orange); flex: 20; }
+  .domain-legend {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-light);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .legend-item strong { color: var(--text); font-weight: 600; }
+
+  /* ── PHASE LABEL ── */
+  .phase-label {
+    max-width: 860px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .phase-label .phase-num {
+    background: var(--navy);
+    color: white;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .phase-label h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .phase-label .phase-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .phase-line {
+    max-width: 860px;
+    margin: 0 auto 32px;
+    border: none;
+    border-top: 2px dashed var(--border);
+  }
+
+  /* ── WEEK CARD ── */
+  .week-grid {
+    max-width: 860px;
+    margin: 0 auto 12px;
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 0;
+  }
+  .week-num {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+  }
+  .week-circle {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .week-circle.orange { border-color: var(--orange); color: var(--orange); background: var(--orange-dim); }
+  .week-connector {
+    width: 2px;
+    flex: 1;
+    background: var(--border);
+    margin-top: 8px;
+    min-height: 24px;
+  }
+  .week-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 12px;
+  }
+  .week-card.highlight {
+    border-color: #FFD080;
+    background: #FFFDF5;
+  }
+  .week-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .domain-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .tag-blue   { background: #E8EEF9; color: #4C72B8; }
+  .tag-green  { background: #D4F0E6; color: #1E9B6A; }
+  .tag-purple { background: #F0E8F9; color: #7D3CB5; }
+  .tag-orange { background: var(--orange-dim); color: #B86A00; }
+  .tag-navy   { background: #E0E6F2; color: var(--navy); }
+  .tag-exam   { background: #FDECEA; color: var(--red); }
+
+  .week-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+  }
+  .week-hrs {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+  }
+
+  .topic-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .topic-list li {
+    font-size: 13px;
+    color: var(--text-light);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .topic-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  .week-footer {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .resource-chip {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 8px;
+    color: var(--text-light);
+  }
+
+  .alert-bar {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: var(--orange-dim);
+    border: 1px solid #FFD080;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #7A5000;
+    margin-bottom: 14px;
+  }
+  .alert-bar .icon { flex-shrink: 0; font-size: 14px; }
+
+  /* ── RESOURCES ── */
+  .resources-section {
+    max-width: 860px;
+    margin: 40px auto 0;
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 28px;
+    color: white;
+  }
+  .resources-section h2 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #8FA0BE;
+    margin-bottom: 20px;
+  }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .resource-card {
+    background: var(--navy-light);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .resource-card .emoji { font-size: 20px; margin-bottom: 8px; display: block; }
+  .resource-card h3 { font-size: 13px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .resource-card p { font-size: 12px; color: #8FA0BE; line-height: 1.4; }
+  .resource-card .tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(255,153,0,0.2);
+    color: var(--orange);
+  }
+  .resource-card .tag.free { background: rgba(30,155,106,0.2); color: #4DE8A8; }
+
+  /* ── TIPS ── */
+  .tips-section {
+    max-width: 860px;
+    margin: 20px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .tip-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .tip-card h3 {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+  }
+  .tip-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .tip-card ul li {
+    font-size: 13px;
+    color: var(--text-light);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .tip-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; font-size: 11px; top: 1px; }
+
+  @media (max-width: 600px) {
+    .tips-section { grid-template-columns: 1fr; }
+    .domain-legend { grid-template-columns: 1fr; }
+    .header { flex-direction: column; gap: 16px; }
+    .week-grid { grid-template-columns: 56px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="cert-badge">AWS<br>SAA<br>C03</div>
+  <div class="header-text">
+    <h1>Solutions Architect – Associate</h1>
+    <p>SAA-C03 · 10-week study plan · Tailored for Senior Backend Engineers</p>
+    <div class="header-meta">
+      <div class="meta-pill">⏱ <span>6–8</span> hrs / week</div>
+      <div class="meta-pill">📅 <span>10</span> weeks</div>
+      <div class="meta-pill">~<span>70</span> hrs total</div>
+      <div class="meta-pill">🎯 Target score <span>≥ 780</span> / 1000</div>
+    </div>
+  </div>
+</div>
+
+<!-- DOMAIN DISTRIBUTION -->
+<div class="domain-section">
+  <h2>Exam Domain Weights</h2>
+  <div class="domain-bar">
+    <div class="d1"></div><div class="d2"></div><div class="d3"></div><div class="d4"></div>
+  </div>
+  <div class="domain-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#4C72B8"></div><strong>Domain 1</strong> &nbsp;Design Secure Architectures — 30%</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2ECC71"></div><strong>Domain 2</strong> &nbsp;Design Resilient Architectures — 26%</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#9B59B6"></div><strong>Domain 3</strong> &nbsp;Design High-Performing Architectures — 24%</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#FF9900"></div><strong>Domain 4</strong> &nbsp;Design Cost-Optimized Architectures — 20%</div>
+  </div>
+</div>
+
+<!-- ───────── PHASE 1 ───────── -->
+<div class="phase-label">
+  <div class="phase-num">1</div>
+  <h2>Core Content</h2>
+  <span class="phase-sub">Weeks 1–7 · ~49 hrs</span>
+</div>
+<hr class="phase-line" />
+
+<!-- Week 1 -->
+<div class="week-grid">
+  <div class="week-num"><div class="week-circle orange">W1</div><div class="week-connector"></div></div>
+  <div class="week-card highlight">
+    <div class="week-header">
+      <span class="domain-tag tag-blue">Domain 1</span>
+      <span class="week-title">IAM & Security Foundations</span>
+      <span class="week-hrs">6–8 hrs</span>
+    </div>
+    <div class="alert-bar"><span class="icon">⚠️</span>Domain 1 is 30% of the exam — the highest weight. Do not rush through this.</div>
+    <ul class="topic-list">
+      <li>IAM: users, groups, roles, policies, permission boundaries</li>
+      <li>Service Control Policies (SCP) and AWS Organizations</li>
+      <li>KMS key types, key policies, encryption in transit vs at rest</li>
+      <li>CloudHSM, ACM (Certificate Manager), Secrets Manager vs Parameter Store</li>
+      <li>S3 security: bucket policies, ACLs, Block Public Access, Object Ownership</li>
+    </ul>
+    <div class="week-footer">
+      <span class="resource-chip">Maarek § IAM</span>
+      <span class="resource-chip">Maarek § KMS</span>
+      <span class="resource-chip">Maarek § S3 Security</span>
+    </div>
+  </div>
+</div>
+
+<!-- Week 2 -->
+<div class="week-grid">
+  <div class="week-num"><div class="week-circle orange">W2</div><div class="week-connector"></div></div>
+  <div class="week-card highlight">
+    <div class="week-header">
+      <span class="domain-tag tag-blue">Domain 1</span>
+      <span class="week-title">Networking & Edge Security</span>
+      <span class="week-hrs">6–8 hrs</span>
+    </div>
+    <div class="alert-bar"><span class="icon">⚠️</span>Known weak spot for backend engineers. Invest extra time here — VPC questions appear in every domain.</div>
+    <ul class="topic-list">
+      <li>VPC deep-dive: subnets (public/private), route tables, IGW, NAT Gateway vs NAT Instance</li>
+      <li>Security Groups (stateful) vs NACLs (stateless) — know the difference cold</li>
+      <li>VPC Peering, Transit Gateway, VPC Endpoints (Gateway vs Interface)</li>
+      <li>Site-to-Site VPN, Client VPN, AWS Direct Connect (Dedicated vs Hosted)</li>
+      <li>CloudFront, WAF, Shield (Standard vs Advanced), Global Accelerator</li>
+    </ul>
+    <div class="week-footer">
+      <span class="resource-chip">Maarek § VPC</span>
+      <span class="resource-chip">Maarek § CloudFront</span>
+      <span class="resource-chip">AWS VPC FAQ</span>
+    </div>
+  </div>
+</div>
+
+<!-- Week 3 -->
+<div class="week-grid">
+  <div class="week-num"><div class="week-circle">W3</div><div class="week-connector"></div></div>
+  <div class="week-card">
+    <div class="week-header">
+      <span class="domain-tag tag-green">Domain 2</span>
+      <span class="week-title">Compute & High Availability</span>
+      <span class="week-hrs">6–8 hrs</span>
+    </div>
+    <ul class="topic-list">
+      <li>EC2 instance types, placement groups (Cluster, Spread, Partition)</li>
+      <li>Launch Templates, Auto Scaling Groups — scaling policies & lifecycle hooks</li>
+      <li>ELB types: ALB (Layer 7), NLB (Layer 4), GWLB — when to use each</li>
+      <li>Lambda: invocation models (sync, async, event source mapping), concurrency limits</li>
+      <li>API Gateway: REST vs HTTP vs WebSocket, throttling, caching, deployment stages</li>
+    </ul>
+    <div class="week-footer">
+      <span class="resource-chip">Maarek § EC2</span>
+      <span class="resource-chip">Maarek § ELB & ASG</span>
+      <span class="resource-chip">Maarek § Lambda</span>
+    </div>
+  </div>
+</div>
+
+<!-- Week 4 -->
+<div class="week-grid">
+  <div class="week-num"><div class="week-circle">W4</div><div class="week-connector"></div></div>
+  <div class="week-card">
+    <div class="week-header">
+      <span class="domain-tag tag-green">Domain 2</span>
+      <span class="week-title">Storage, Databases & Disaster Recovery</span>
+      <span class="week-hrs">6–8 hrs</span>
+    </div>
+    <ul class="topic-list">
+      <li>S3: versioning, replication (CRR/SRR), lifecycle policies, S3 Transfer Acceleration</li>
+      <li>EBS volume types (gp3 vs io2 vs st1 vs sc1), snapshots, EFS vs FSx</li>
+      <li>RDS: Multi-AZ (synchronous standby) vs Read Replicas (async) — understand the distinction</li>
+      <li>Aurora: cluster architecture, Global Database, Serverless v2, backtrack</li>
+      <li>DynamoDB: partition keys, GSI/LSI, DAX, streams, global tables, on-demand vs provisioned</li>
+      <li>DR strategies: Backup & Restore → Pilot Light → Warm Standby → Active-Active</li>
+    </ul>
+    <div class="week-footer">
+      <span class="resource-chip">Maarek § RDS / Aurora</span>
+      <span class="resource-chip">Maarek § DynamoDB</span>
+      <span class="resource-chip">Maarek § S3</span>
+    </div>
+  </div>
+</div>
+
+<!-- Week 5 -->
+<div class="week-grid">
+  <div class="week-num"><div class="week-circle">W5</div><div class="week-connector"></div></div>
+  <div class="week-card">
+    <div class="week-header">
+      <span class="domain-tag tag-purple">Domain 3</span>
+      <span class="week-title">Decoupling, Messaging & Streaming</span>
+      <span class="week-hrs">6–8 hrs</span>
+    </div>
+    <ul class="topic-list">
+      <li>SQS: standard vs FIFO, visibility timeout, DLQ, long polling — Java SDK patterns</li>
+      <li>SNS: fan-out pattern, message filtering, FIFO SNS + SQS combo</li>
+      <li>EventBridge: event bus, rules, targets, schema registry</li>
+      <li>Kinesis: Data Streams (shards/consumers) vs Firehose (delivery) vs Analytics</li>
+      <li>Step Functions: Standard vs Express workflows, error handling, parallel states</li>
+    </ul>
+    <div class="week-footer">
+      <span class="resource-chip">Maarek § SQS / SNS</span>
+      <span class="resource-chip">Maarek § Kinesis</span>
+      <span class="resource-chip">Maarek § Step Functions</span>
+    </div>
+  </div>
+</div>
+
+<!-- Week 6 -->
+<div class="week-grid">
+  <div class="week-num"><div class="week-circle">W6</div><div class="week-connector"></div></div>
+  <div class="week-card">
+    <div class="week-header">
+      <span class="domain-tag tag-purple">Domain 3</span>
+      <span class="week-title">Containers, Caching & Analytics</span>
+      <span class="week-hrs">6–8 hrs</span>
+    </div>
+    <ul class="topic-list">
+      <li>ECS (EC2 vs Fargate launch types), EKS (managed node groups), task definitions</li>
+      <li>ElastiCache: Redis (persistence, pub/sub, sorted sets) vs Memcached (simple caching, multithreaded)</li>
+      <li>CloudFront caching: cache behaviors, TTL, cache invalidation, signed URLs vs signed cookies</li>
+      <li>Redshift (columnar OLAP), Athena (serverless SQL on S3), Glue (ETL), OpenSearch</li>
+      <li>App Runner, Elastic Beanstalk — when to recommend managed compute vs DIY</li>
+    </ul>
+    <div class="week-footer">
+      <span class="resource-chip">Maarek § ECS / EKS</span>
+      <span class="resource-chip">Maarek § ElastiCache</span>
+      <span class="resource-chip">Maarek § Analytics</span>
+    </div>
+  </div>
+</div>
+
+<!-- Week 7 -->
+<div class="week-grid">
+  <div class="week-num"><div class="week-circle orange">W7</div><div class="week-connector"></div></div>
+  <div class="week-card highlight">
+    <div class="week-header">
+      <span class="domain-tag tag-orange">Domain 4</span>
+      <span class="week-title">Cost Optimization</span>
+      <span class="week-hrs">6–8 hrs</span>
+    </div>
+    <div class="alert-bar"><span class="icon">⚠️</span>Another known weak spot for devs. Cost reasoning is pure architect thinking — master the trade-offs.</div>
+    <ul class="topic-list">
+      <li>EC2 pricing: On-Demand, Standard Reserved, Convertible Reserved, Savings Plans, Spot (interruptions!), Dedicated Hosts vs Instances</li>
+      <li>S3 storage classes: Standard → IA → Glacier Instant → Glacier Flexible → Deep Archive — know retrieval times</li>
+      <li>S3 lifecycle policies: transition rules, expiration rules, minimum storage durations</li>
+      <li>Cost Explorer, AWS Budgets, Cost Anomaly Detection, Trusted Advisor cost checks</li>
+      <li>Right-sizing, serverless cost patterns (pay-per-invocation vs always-on)</li>
+    </ul>
+    <div class="week-footer">
+      <span class="resource-chip">Maarek § EC2 Pricing</span>
+      <span class="resource-chip">Maarek § S3 Classes</span>
+      <span class="resource-chip">AWS Pricing Calculator</span>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── PHASE 2 ───────── -->
+<div class="phase-label" style="margin-top:32px">
+  <div class="phase-num">2</div>
+  <h2>Architecture Thinking</h2>
+  <span class="phase-sub">Week 8 · ~7 hrs</span>
+</div>
+<hr class="phase-line" />
+
+<!-- Week 8 -->
+<div class="week-grid">
+  <div class="week-num"><div class="week-circle">W8</div><div class="week-connector"></div></div>
+  <div class="week-card">
+    <div class="week-header">
+      <span class="domain-tag tag-navy">Patterns</span>
+      <span class="week-title">Well-Architected Framework & Design Patterns</span>
+      <span class="week-hrs">6–8 hrs</span>
+    </div>
+    <ul class="topic-list">
+      <li>AWS Well-Architected Framework: 6 pillars (Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, Sustainability)</li>
+      <li>Serverless architecture patterns: Lambda + API GW + DynamoDB, event-driven fan-out</li>
+      <li>Microservices on AWS: ECS/EKS + ALB + SQS, service mesh with App Mesh</li>
+      <li>Migration strategies — the 7 Rs: Retire, Retain, Rehost, Replatform, Repurchase, Refactor, Relocate</li>
+      <li>CloudFormation & CDK: stacks, nested stacks, change sets, drift detection</li>
+      <li>Scenario drills: given a requirement → select the right AWS services + justify the trade-offs</li>
+    </ul>
+    <div class="week-footer">
+      <span class="resource-chip">AWS Well-Architected Labs</span>
+      <span class="resource-chip">Maarek § CloudFormation</span>
+      <span class="resource-chip">AWS Architecture Center</span>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── PHASE 3 ───────── -->
+<div class="phase-label" style="margin-top:32px">
+  <div class="phase-num">3</div>
+  <h2>Exam Prep</h2>
+  <span class="phase-sub">Weeks 9–10 · ~14 hrs</span>
+</div>
+<hr class="phase-line" />
+
+<!-- Week 9 -->
+<div class="week-grid">
+  <div class="week-num"><div class="week-circle">W9</div><div class="week-connector"></div></div>
+  <div class="week-card">
+    <div class="week-header">
+      <span class="domain-tag tag-exam">Exam Prep</span>
+      <span class="week-title">Practice Exams — Round 1 & Gap Analysis</span>
+      <span class="week-hrs">6–8 hrs</span>
+    </div>
+    <ul class="topic-list">
+      <li>Full mock exam #1 (TutorialsDojo) — timed, 65 questions, no help</li>
+      <li>Review every wrong answer — understand why the correct answer is correct, not just why yours was wrong</li>
+      <li>Map mistakes back to domains — identify your personal weak spots</li>
+      <li>Targeted review session on the 2 domains with the most errors</li>
+      <li>Full mock exam #2 — measure improvement</li>
+    </ul>
+    <div class="week-footer">
+      <span class="resource-chip">TutorialsDojo (Jon Bonso)</span>
+      <span class="resource-chip">AWS Official Practice</span>
+    </div>
+  </div>
+</div>
+
+<!-- Week 10 -->
+<div class="week-grid">
+  <div class="week-num"><div class="week-circle orange">W10</div></div>
+  <div class="week-card highlight">
+    <div class="week-header">
+      <span class="domain-tag tag-exam">Exam Prep</span>
+      <span class="week-title">Final Push & Exam Day</span>
+      <span class="week-hrs">6–8 hrs</span>
+    </div>
+    <ul class="topic-list">
+      <li>Full mock exam #3 — aim for 80%+ before booking</li>
+      <li>Review cheat sheets: VPC components, EC2 pricing models, S3 storage classes, DB comparison table</li>
+      <li>Re-read AWS FAQs for services you're weakest on (15 min per service)</li>
+      <li>Schedule and sit the exam — 130 min, 65 questions, $150 USD, passing score 720/1000</li>
+    </ul>
+    <div class="week-footer">
+      <span class="resource-chip">TutorialsDojo cheat sheets</span>
+      <span class="resource-chip">AWS Certification portal</span>
+    </div>
+  </div>
+</div>
+
+<!-- RESOURCES -->
+<div class="resources-section">
+  <h2>Recommended Resources</h2>
+  <div class="resource-grid">
+    <div class="resource-card">
+      <span class="emoji">🎓</span>
+      <h3>Stephane Maarek — SAA-C03 Course</h3>
+      <p>~27 hrs of video. The gold standard for SAA prep. Clear, comprehensive, constantly updated.</p>
+      <span class="tag">Udemy · ~$15</span>
+    </div>
+    <div class="resource-card">
+      <span class="emoji">📝</span>
+      <h3>TutorialsDojo Practice Exams</h3>
+      <p>6 full practice tests by Jon Bonso. The closest thing to the real exam. Detailed explanations for every answer.</p>
+      <span class="tag">Udemy · ~$15</span>
+    </div>
+    <div class="resource-card">
+      <span class="emoji">☁️</span>
+      <h3>AWS Skill Builder</h3>
+      <p>Official AWS learning platform. Has a free official practice question set (20 questions) from Amazon.</p>
+      <span class="tag free">Free tier available</span>
+    </div>
+    <div class="resource-card">
+      <span class="emoji">📐</span>
+      <h3>AWS Architecture Center</h3>
+      <p>Reference architectures and whitepapers. Great for Week 8 scenario-thinking and understanding real-world patterns.</p>
+      <span class="tag free">Free</span>
+    </div>
+  </div>
+</div>
+
+<!-- TIPS -->
+<div class="tips-section">
+  <div class="tip-card">
+    <h3>Exam Strategy</h3>
+    <ul>
+      <li>Eliminate obviously wrong answers first — usually 2 options are clearly off</li>
+      <li>When in doubt, AWS favors managed services over self-managed</li>
+      <li>For cost questions, Spot &gt; Reserved &gt; On-Demand for savings</li>
+      <li>Flag difficult questions and return — don't get stuck</li>
+      <li>Read questions to the end — the constraint is usually in the last sentence</li>
+    </ul>
+  </div>
+  <div class="tip-card">
+    <h3>Weekly Rhythm</h3>
+    <ul>
+      <li>Split into 3 sessions of ~2 hrs each, not one 7-hr marathon</li>
+      <li>Watch video → take notes → do 10–15 practice questions on that topic</li>
+      <li>Keep a running "mistake log" of wrong practice answers</li>
+      <li>After Week 7, stop watching new videos — only review and practice</li>
+      <li>Don't book the exam until scoring 80%+ on 2 consecutive full mocks</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
