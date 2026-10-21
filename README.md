@@ -1,5 +1,5 @@
 <h1 align="center">Welcome to Uriel Ramirez' portfolio</h1>
-<h3 align="center">A passionate full stack developer</h3>
+<h3 align="center">A passionate Senior Software Engineer</h3>
 
 <h3 align="left">Structure of the portfolio:</h3>
 <p align="left"> 
