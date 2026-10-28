@@ -1,0 +1,2 @@
+tests_timeout_ms: 20000
+sandbox_image: eu.gcr.io/moocfi-public/tmc-sandbox-python
