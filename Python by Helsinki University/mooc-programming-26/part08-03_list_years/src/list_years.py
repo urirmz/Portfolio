@@ -1,3 +1,4 @@
-# Write your solution here
-# Remember the import statement
-# from datetime import date
+from datetime import datetime
+
+def list_years(dates: list[datetime]):
+  return sorted([date.year for date in dates])

@@ -19,3 +19,5 @@ class ShoppingList:
 # -------------------------
 # Write your solution here:
 # -------------------------
+def total_units(list: ShoppingList):
+    return sum([product[1] for product in list.products])
